@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "90661597107",
+    "project_id": "adminschoolbus",
+    "storage_bucket": "adminschoolbus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90661597107:android:81a8271e70ebb1739825c6",
+        "android_client_info": {
+          "package_name": "com.example.school_bus_tracking_management_system_admin_module"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90661597107-71eddis94hk11d4pabcd3rlqlrpunkdg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyuJPF9ta7Ics-ihdPlosi7e6ilQuoCWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90661597107-71eddis94hk11d4pabcd3rlqlrpunkdg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
