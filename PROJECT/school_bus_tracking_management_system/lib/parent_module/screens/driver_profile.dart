@@ -92,60 +92,10 @@ class _DriverProfileState extends State<DriverProfile> {
                   ),
                 ),
               );
-              //Text(data['title']);
+              
             },
           )
-          // Card(
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(15.0),
-          //     child: Column(
-          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //       children: [
-          //         CircleAvatar(
-          //           radius: 75,
-          //         ),
-          //         SizedBox(
-          //           height: 27,
-          //         ),
-          //         Row(
-          //           children: [
-          //             Text(
-          //               "Driver's Name:",
-          //               style:
-          //                   TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          //             ),
-          //             SizedBox(
-          //               width: 10,
-          //             ),
-          //             Text(
-          //               //'PETER',
-          //               "${userdataprovider.driverFirstName}" + "${userdataprovider.driverLastName}",
-          //               style: TextStyle(fontSize: 17),
-          //             )
-          //           ],
-          //         ),
-          //         Row(
-          //           children: [
-          //             Text("Contacts:",
-          //                 style: TextStyle(
-          //                     fontSize: 15, fontWeight: FontWeight.bold)),
-          //             SizedBox(
-          //               width: 10,
-          //             ),
-          //             Icon(Icons.phone),
-          //             SizedBox(
-          //               width: 7,
-          //             ),
-          //             Text(
-          //               //'56784903',
-          //               "${userdataprovider.contact}",
-          //                 style: TextStyle(fontSize: 17))
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
+          
           ),
     );
   }

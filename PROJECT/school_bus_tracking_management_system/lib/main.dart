@@ -6,7 +6,6 @@ import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
 import 'parent_module/providers/user_data_provider.dart';
-//import 'parent_module/authentication/login_page.dart';
 
 Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +17,7 @@ runApp(MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => UserData()),
       ],
       child: const MyApp()));
-  //runApp(const MyApp());
+  
 }
 
 

@@ -16,7 +16,7 @@ class _StudentsListPageState extends State<StudentsListPage> {
         title:Text("Students List") ,
         centerTitle:true ,
       ) ,
-      body:Text("students") ,
+      body:Center(child: Text("List of students assigned to bus ....")) ,
     );
   }
 }

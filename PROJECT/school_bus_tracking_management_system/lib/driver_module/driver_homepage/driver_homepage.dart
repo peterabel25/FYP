@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 
+import '../driver_screens/student_list.dart';
+import '../driver_screens/view_route.dart';
+
 class DriverHomepage extends StatefulWidget {
   const DriverHomepage({Key? key}) : super(key: key);
 
@@ -10,15 +13,30 @@ class DriverHomepage extends StatefulWidget {
 }
 
 class _DriverHomepageState extends State<DriverHomepage> {
+int _selectedTab = 0;
+List _pages = [
+  ViewRoute(),
+  Text("driver emergency"),
+  Text("Notifications")
+];
+
+
+ _changeTab(int index) {
+    setState(() {
+      _selectedTab = index;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("School bus Tracker"),
           centerTitle: true,
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.notifications_active))
-          ],
+          // actions: [
+          //   IconButton(onPressed: () {}, icon: Icon(Icons.notifications_active))
+          // ],
         ),
         drawer: Drawer(
           width: 240,
@@ -30,23 +48,11 @@ class _DriverHomepageState extends State<DriverHomepage> {
                 CircleAvatar(
                   radius: 45,
                   backgroundImage: AssetImage("assets/schoolbus.png"),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Text("View Bus Route"),
+                ), 
                 SizedBox(
                   height: 20,
                 ),
-                Text("Declare Emergency"),
-                SizedBox(
-                  height: 20,
-                ),
-                Text("Notifications"),
-                SizedBox(
-                  height: 20,
-                ),
-                Text("Settings"),
+                Text(" Account Settings"),
                 SizedBox(
                   height: 20,
                 ),
@@ -55,124 +61,21 @@ class _DriverHomepageState extends State<DriverHomepage> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        // Navigator.of(context).push(
-                        //     MaterialPageRoute(builder: ((_) => UserProfile())));
-                      },
-                      child: SizedBox(
-                        height: 180,
-                        width: 150,
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              // ignore: prefer_const_literals_to_create_immutables
-                              children: [
-                                // Image.asset("assets/userprofile.png", width: 120),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text("View Route")
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    SizedBox(
-                      height: 180,
-                      width: 160,
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            children: [
-                              Image.asset("assets/emergencyalert.jpeg",
-                                  width: 120),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text("Emergency")
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        // Navigator.of(context)
-                        //     .push(MaterialPageRoute(builder: ((_) => BusInfo())));
-                      },
-                      child: SizedBox(
-                        height: 180,
-                        width: 150,
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              children: [
-                                Image.asset("assets/bus.jpeg", width: 120),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text("Student List")
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        // Navigator.of(context).push(
-                        //     MaterialPageRoute(builder: ((_) => DriverProfile())));
-                      },
-                      child: SizedBox(
-                        height: 180,
-                        width: 160,
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              children: [
-                                Image.asset("assets/settings.png",
-                                    width: 120, height: 122),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text("Settings")
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ));
+         body:_pages[_selectedTab],
+          bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedTab,
+        onTap: (index) => _changeTab(index),
+       // selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.grey,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.telegram), label: "View Route"),
+          BottomNavigationBarItem(icon: Icon(Icons.emergency), label: "Emergency"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications), label: "Notifications"),
+         
+        ],
+      ),
+        
+        );
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class ViewRoute extends StatefulWidget {
@@ -10,6 +12,10 @@ class ViewRoute extends StatefulWidget {
 class _ViewRouteState extends State<ViewRoute> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child:Text("bus movement + student's pickup points")
+      ),
+    );
   }
 }
