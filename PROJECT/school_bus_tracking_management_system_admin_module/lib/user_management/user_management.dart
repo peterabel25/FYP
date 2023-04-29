@@ -51,7 +51,6 @@ class _UserManagementPageState extends State<UserManagementPage> {
 
                                 ]
                               )
-                                 // Text("STUDENT AND PARENT REGISTRATION",style:TextStyle(fontSize:15 ) ,)
                                 
                               )
                             ),
@@ -80,7 +79,6 @@ class _UserManagementPageState extends State<UserManagementPage> {
                                   Text("REGISTER DRIVER",style:TextStyle(fontSize:18 ) ,),
                                 ]
                               )
-                              //Text("REGISTER DRIVER",style:TextStyle(fontSize:15 ) ,),
                             ),
                           ),
                         ),

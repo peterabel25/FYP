@@ -52,7 +52,6 @@ class _RouteManagementPageState extends State<RouteManagementPage> {
                                 Text("REGISTER ROUTE",style:TextStyle(fontSize:18 )),  
                                 ]
                               )
-                              //Text("REGISTER ROUTE"),
                             ),
                           ),
                         ),

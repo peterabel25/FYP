@@ -38,7 +38,6 @@ class _DriverHomepageState extends State<DriverHomepage> {
         child: Padding(
           padding: const EdgeInsets.only(top: 50),
           child: Column(
-            // ignore: prefer_const_literals_to_create_immutables
             children: [
               CircleAvatar(
                 radius: 45,
