@@ -25,17 +25,19 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[300],
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.only(top: 100),
         child: Column(
           children: [
-            CircleAvatar(
-                radius: 60,
-                backgroundImage: AssetImage(
-                  "assets/childandparent.png",
-                )),
+            Image.asset("assets/childandparent.jpg",height:150, ),
+            // CircleAvatar(
+            //  // backgroundColor:Colors.grey[600],
+            //     radius: 60,
+            //     backgroundImage: AssetImage(
+            //       "assets/childandparent.jpg",
+            //     )),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20, top: 50),
               child: Form(
@@ -75,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: passwordController,
                     decoration: InputDecoration(
                         hintText: "Password",
-                        prefixIcon: Icon(Icons.password),
+                       prefixIcon: Icon(Icons.lock),
                         // suffixIcon: Icon(Icons.remove_red_eye_rounded),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),

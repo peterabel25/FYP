@@ -19,10 +19,10 @@ class _DriverProfileState extends State<DriverProfile> {
     UserData userdataprovider = Provider.of<UserData>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Drivers Profile"),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: Text("Drivers Profile"),
+      //   centerTitle: true,
+      // ),
       body: Padding(
           padding: const EdgeInsets.fromLTRB(12, 50, 12, 60),
           child: StreamBuilder<DocumentSnapshot>(

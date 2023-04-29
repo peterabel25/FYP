@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:firebase_auth_web/firebase_auth_web.dart';
 import 'package:school_bus_tracking_management_system_admin_module/authentication/usermodal.dart';
 
 import '../user_management/database.dart';

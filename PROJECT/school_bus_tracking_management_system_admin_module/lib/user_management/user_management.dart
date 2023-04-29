@@ -16,30 +16,21 @@ class _UserManagementPageState extends State<UserManagementPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[100],
+      color: Colors.grey[200],
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: SingleChildScrollView(
             primary: false,
-            //scrollDirection: Axis.vertical,
             child: Column(
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                Text(
-                  "USER MANAGEMENT",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
+                
                 Row(
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     SizedBox(
-                      width: 50,
+                      width: 40,
                     ),
                     Expanded(
                       child: InkWell(
@@ -48,18 +39,28 @@ class _UserManagementPageState extends State<UserManagementPage> {
                                 builder: ((_) => StudentRegistration())));
                         },
                         child: SizedBox(
-                          height: 200,
+                          height: 250,
                           width: 400,
                           child: Card(
                             child: Center(
-                              child: Text("STUDENT AND PARENT REGISTRATION"),
+                              child: Column(
+                                children:[
+                                Image.asset('momanddad.jpg' ,height:200,width:200),
+
+                                 Text("STUDENT AND PARENT REGISTRATION",style:TextStyle(fontSize:18 ) ,)
+
+                                ]
+                              )
+                                 // Text("STUDENT AND PARENT REGISTRATION",style:TextStyle(fontSize:15 ) ,)
+                                
+                              )
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    
                     SizedBox(
-                      width: 60,
+                      width: 47,
                     ),
                     Expanded(
                       child: InkWell(
@@ -68,11 +69,18 @@ class _UserManagementPageState extends State<UserManagementPage> {
                                 builder: ((_) => DriverRegistration())));
                         },
                         child: SizedBox(
-                          height: 200,
+                          height: 250,
                           width: 400,
                           child: Card(
                             child: Center(
-                              child: Text("REGISTER DRIVER"),
+                              child: Column(
+                                children:[
+                                  Image.asset('driver.jpeg' ,height:200,width:200),
+                                 // SizedBox(height:8),
+                                  Text("REGISTER DRIVER",style:TextStyle(fontSize:18 ) ,),
+                                ]
+                              )
+                              //Text("REGISTER DRIVER",style:TextStyle(fontSize:15 ) ,),
                             ),
                           ),
                         ),
@@ -87,29 +95,29 @@ class _UserManagementPageState extends State<UserManagementPage> {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     SizedBox(
-                      width: 50,
+                      width: 40,
                     ),
                     Expanded(
                       child: SizedBox(
-                        height: 200,
+                        height: 250,
                         width: 400,
                         child: Card(
                           child: Center(
-                            child: Text("UPDATE STUDENT'S INFO"),
+                            child: Text("UPDATE STUDENT'S INFO",style:TextStyle(fontSize:15 ) ,),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 47,
                     ),
                     Expanded(
                       child: SizedBox(
-                        height: 200,
+                        height: 250,
                         width: 400,
                         child: Card(
                           child: Center(
-                            child: Text("UPDATE DRIVER'S INFO"),
+                            child: Text("UPDATE DRIVER'S INFO",style:TextStyle(fontSize:15 ) ,),
                           ),
                         ),
                       ),

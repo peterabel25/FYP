@@ -26,33 +26,35 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final authservice = Provider.of<AuthService>(context);
     return Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[300],
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 80),
             child: Center(
               child: SizedBox(
-                height: 450,
-                width: 350,
+                height: 500,
+                width: 380,
                 child: Card(
                     child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
                   child: Form(
                     key: formkey,
                     child: Column(children: [
-                      CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.account_circle_sharp,
-                            size: 80,
-                          ),
-                          radius: 40),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Sign In",
+                      Text("WELCOME BACK !",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20)),
+                               SizedBox(
+                        height: 20,
+                      ),
+                      // CircleAvatar(
+                      //    // backgroundColor: Colors.white,
+                      //     child: Icon(
+                      //       Icons.person,
+                      //       size: 80,
+                      //     ),
+                      //     radius: 40),
+                     Image.asset("childandparent.png",height:100),
+
                       SizedBox(
                         height: 30,
                       ),
@@ -107,16 +109,14 @@ class _LoginPageState extends State<LoginPage> {
                                   authservice.signInWithEmailAndPassword(
                                       emailController.text,
                                       passwordController.text);
-                                  // Navigator.of(context).pushReplacement(
-                                  //     MaterialPageRoute(
-                                  //         builder: ((_) => Homepage())));
+                                 
                                 }
                               },
                               child: Text("Login",
                                   style: TextStyle(
                                       fontSize: 17, letterSpacing: 1)))),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       InkWell(
                           onTap: () {

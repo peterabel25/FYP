@@ -63,12 +63,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                 controller: passwordController,
                 decoration: InputDecoration(hintText: "password"),
               ),
-              // TextFormField(
-              //   initialValue:"parent" ,
-              //   decoration:InputDecoration(
-              //     hintText:"Role"
-              //   ) ,
-              // ),
+              
             ],
           ),
         ),

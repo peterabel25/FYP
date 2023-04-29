@@ -21,15 +21,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
           child: Column(
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                "NOTIFICATIONS",
-                style: TextStyle( 
-                  fontSize: 20,
-                ),
-              ),
+              
               SizedBox(height: 23),
               Card(
                 child: ListTile(

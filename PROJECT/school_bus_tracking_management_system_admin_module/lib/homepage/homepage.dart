@@ -41,7 +41,7 @@ class _HomepageState extends State<Homepage> {
                       radius: 30,
                       child: Icon(Icons.person),
                     ),
-                    title: Text("Peter Abel"),
+                    title: Text("School Admin"),
                     subtitle: Text("peter@udsm.com")),
                 footer: SideNavigationBarFooter(
                     label: InkWell(

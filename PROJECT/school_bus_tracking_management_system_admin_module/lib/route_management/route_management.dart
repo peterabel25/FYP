@@ -15,29 +15,23 @@ class RouteManagementPage extends StatefulWidget {
 class _RouteManagementPageState extends State<RouteManagementPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey[100],
+    return 
+    Container(
+      color: Colors.grey[200],
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: SingleChildScrollView(
             primary:false,
-            //scrollDirection: Axis.vertical,
             child: Column(
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                Text("ROUTE MANAGEMENT",
-                style: TextStyle(
-                  fontSize: 20,
-                ),),
-                SizedBox(
-                  height: 30,
-                ),
+                
                 Row(
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     SizedBox(
-                      width: 50,
+                      width: 40,
                     ),
                     Expanded(
                       child: InkWell(
@@ -46,18 +40,26 @@ class _RouteManagementPageState extends State<RouteManagementPage> {
                                 builder: ((_) => RouteRegister())));
                         },
                         child: SizedBox(
-                          height: 200,
+                          height: 250,
                           width: 400,
                           child: Card(
                             child: Center(
-                              child: Text("REGISTER ROUTE"),
+                              child: Column(
+                                children:[
+                                  SizedBox(height:8 ,),
+                                Image.asset('route.jpg' ,height:150,width:200),
+                                 SizedBox(height:20),
+                                Text("REGISTER ROUTE",style:TextStyle(fontSize:18 )),  
+                                ]
+                              )
+                              //Text("REGISTER ROUTE"),
                             ),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 47,
                     ),
                     Expanded(
                       child: InkWell(
@@ -66,11 +68,19 @@ class _RouteManagementPageState extends State<RouteManagementPage> {
                                 builder: ((_) => BusRegister())));
                         },
                         child: SizedBox(
-                          height: 200,
+                          height: 250,
                           width: 400,
                           child: Card(
                             child: Center(
-                              child: Text("REGISTER AND ASSIGN BUS TO ROUTE "),
+                              child: Column(
+                                children:[
+                                Image.asset('schoolbusicon.jpg' ,height:150,width:200),
+                                 SizedBox(height:20),
+
+                                Text("REGISTER AND ASSIGN BUS TO ROUTE ",style:TextStyle(fontSize:18 )),
+                                ]
+                              )
+                              //Text("REGISTER AND ASSIGN BUS TO ROUTE "),
                             ),
                           ),
                         ),
@@ -85,11 +95,11 @@ class _RouteManagementPageState extends State<RouteManagementPage> {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     SizedBox(
-                      width: 50,
+                      width: 40,
                     ),
                     Expanded(
                       child: SizedBox(
-                        height: 200,
+                        height: 250,
                         width: 400,
                         child: Card(
                           child: Center(
@@ -99,11 +109,11 @@ class _RouteManagementPageState extends State<RouteManagementPage> {
                       ),
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 47,
                     ),
                     Expanded(
                       child: SizedBox(
-                        height: 200,
+                        height: 250,
                         width: 400,
                         child: Card(
                           child: Center(
