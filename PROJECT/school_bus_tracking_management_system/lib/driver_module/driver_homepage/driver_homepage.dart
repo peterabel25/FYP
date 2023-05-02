@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:school_bus_tracking_management_system/driver_module/driver_screens/driver_notification.dart';
 import '../../authentication/auth_service.dart';
 import '../../authentication/login_page.dart';
+import '../driver_data_provider.dart';
 import '../driver_screens/driver_emergency.dart';
 import '../driver_screens/view_route.dart';
 
@@ -15,6 +17,13 @@ class DriverHomepage extends StatefulWidget {
 }
 
 class _DriverHomepageState extends State<DriverHomepage> {
+
+  @override
+  void initState() {
+    DriverData driverdataprovider = Provider.of<DriverData>(context, listen: false);
+    driverdataprovider.fetchDriverData();
+    super.initState();
+  }
   int _selectedTab = 0;
   List _pages = [ViewRoute(), DriverEmergency(), DriverNotification()];
 

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/user_data_provider.dart';
+import '../providers/parent_data_provider.dart';
 
 class BusInfo extends StatefulWidget {
   const BusInfo({Key? key}) : super(key: key);

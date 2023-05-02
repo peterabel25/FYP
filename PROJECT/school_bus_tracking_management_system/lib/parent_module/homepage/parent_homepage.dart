@@ -6,7 +6,7 @@ import 'package:school_bus_tracking_management_system/parent_module/screens/bus_
 import 'package:school_bus_tracking_management_system/parent_module/screens/notification_parent.dart';
 import '../../authentication/auth_service.dart';
 import '../../authentication/login_page.dart';
-import '../providers/user_data_provider.dart';
+import '../providers/parent_data_provider.dart';
 //import '../screens/driver_profile.dart';
 import '../screens/parent_emergency.dart';
 import '../screens/track_bus.dart';

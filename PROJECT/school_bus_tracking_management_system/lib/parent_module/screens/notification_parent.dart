@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-import '../providers/user_data_provider.dart';
+import '../providers/parent_data_provider.dart';
 class NotificationsPage extends StatelessWidget {
   // NotificationsPage({super.key});
   final CollectionReference<Map<String, dynamic>> _userRecordsCollection =

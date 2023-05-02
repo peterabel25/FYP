@@ -2,10 +2,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'authentication/login_page.dart';
+import 'driver_module/driver_data_provider.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
-import 'parent_module/providers/user_data_provider.dart';
+import 'parent_module/providers/parent_data_provider.dart';
 
 Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,9 @@ Future<void> main() async {
 );
 
 runApp(MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => UserData()),
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserData()),
+        ChangeNotifierProvider(create: (_) => DriverData()),
       ],
       child: const MyApp()));
   

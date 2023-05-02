@@ -2,17 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
-class UserData with ChangeNotifier {
-  //DocumentSnapshot? busData;
-  String? plateNo;
-  String? busNo;
-  String? contact;
-  String? assignedDriver;
-  String? driverFirstName;
-  String? driverLastName;
-
+class DriverData with ChangeNotifier {
+   String? driverBusNo;
+  
 //function to fetch the user's document
-  Future fetchUserData() async {
+  Future fetchDriverData() async {
     auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
     if (user != null) {
@@ -21,7 +15,7 @@ class UserData with ChangeNotifier {
           .collection('userRecords')
           .doc(uid)
           .get();
-      busNo = snapshot['busAssigned'];
+      driverBusNo = snapshot['busPewa'];
       // notifyListeners();
     }
   }

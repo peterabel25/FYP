@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
-import '../../parent_module/providers/user_data_provider.dart';
+import '../../parent_module/providers/parent_data_provider.dart';
+import '../driver_data_provider.dart';
 
 class DriverNotification extends StatelessWidget {
   // const DriverNotification({super.key});
@@ -14,13 +15,13 @@ class DriverNotification extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-      UserData userdataprovider = Provider.of<UserData>(context);
+      DriverData driverdataprovider = Provider.of<DriverData>(context);
 
     return Scaffold(
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: _userRecordsCollection
             .where('role', isEqualTo: 'parent')
-            .where('assignedBus', isEqualTo:userdataprovider.busNo )
+            .where('busAssigned', isEqualTo:driverdataprovider.driverBusNo )
             .snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
