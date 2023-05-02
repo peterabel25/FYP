@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_conditional_assignment
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_conditional_assignment, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -28,30 +28,30 @@ class AuthService {
     final email = prefs.getString('email');
     final password = prefs.getString('password');
     if (email != null && password != null) {
-      return auth.EmailAuthProvider.credential(email: email, password: password);
+      return auth.EmailAuthProvider.credential(
+          email: email, password: password);
     }
     return null;
   }
 
- // Method to store the user credentials in SharedPreferences
+  // Method to store the user credentials in SharedPreferences
   Future<void> storeCredentials(String email, String password) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('email', email);
     await prefs.setString('password', password);
   }
 
-
-
   Stream<User?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
 //Function for user to login to the system
-Future<User?> signInWithEmailAndPassword(
+  Future<User?> signInWithEmailAndPassword(
       BuildContext context, String email, String password) async {
     auth.AuthCredential? credential = await getStoredCredentials();
     if (credential == null) {
-      credential = auth.EmailAuthProvider.credential(email: email, password: password);
+      credential =
+          auth.EmailAuthProvider.credential(email: email, password: password);
     }
     final result = await _firebaseAuth.signInWithCredential(credential);
 
@@ -76,19 +76,14 @@ Future<User?> signInWithEmailAndPassword(
     return _userFromFirebase(result.user);
   }
 
-
-
-
-
-
   // Future<User?> signInWithEmailAndPassword(
   //     BuildContext context, String email, String password) async {
-        
+
   //   final credential = await _firebaseAuth.signInWithEmailAndPassword(
   //       email: email, password: password);
 
   //   currentUserUid = credential.user!.uid;
-    
+
   //   DocumentSnapshot snapshot = await FirebaseFirestore.instance
   //       .collection('userRecords')
   //       .doc(currentUserUid)
@@ -105,30 +100,59 @@ Future<User?> signInWithEmailAndPassword(
   //   return _userFromFirebase(credential.user);
   // }
 
+  void SendEmergency() {
+    auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
+    if (user != null) {
+      String uid = user.uid;
 
-void checkUser(){
-  auth.User? user = auth.FirebaseAuth.instance.currentUser;
+      DocumentReference parentDocRef =
+          FirebaseFirestore.instance.collection('userRecords').doc(uid);
 
-if (user != null) {
- // String uid = user.uid;
+      CollectionReference messagesCollectionRef =
+          parentDocRef.collection('messages');
 
- // print('UID: $uid');
-} else {
- // print('No user is currently authenticated');
-}
+      // Create a new message document
+      Map<String, dynamic> newMessage = {
+        'messageBody': 'Hello Driver!',
+        'sender': uid,
+        // 'timestamp': FieldValue.serverTimestamp(),
+      };
 
-}
+      messagesCollectionRef.add(newMessage);
+    }
+  }
+
+  void driverEmergency() {
+    auth.User? user = auth.FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      String uid = user.uid;
+
+      DocumentReference driverDocRef =
+          FirebaseFirestore.instance.collection('userRecords').doc(uid);
+
+      CollectionReference messagesCollectionRef =
+          driverDocRef.collection('messages');
+
+      // Create a new message document
+      Map<String, dynamic> newMessage = {
+        'messageBody': 'Hello Driver!',
+        'sender': uid,
+        // 'timestamp': FieldValue.serverTimestamp(),
+      };
+
+      messagesCollectionRef.add(newMessage);
+    }
+  }
 
 //Function for user to logout of the system
   Future<void> signOut() async {
- final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     await prefs.remove('email');
     await prefs.remove('password');
     await _firebaseAuth.signOut();
 
-
-
-   // return await _firebaseAuth.signOut();
+    // return await _firebaseAuth.signOut();
   }
 }

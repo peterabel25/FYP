@@ -7,7 +7,8 @@ import 'package:school_bus_tracking_management_system/parent_module/screens/noti
 import '../../authentication/auth_service.dart';
 import '../../authentication/login_page.dart';
 import '../providers/user_data_provider.dart';
-import '../screens/driver_profile.dart';
+//import '../screens/driver_profile.dart';
+import '../screens/parent_emergency.dart';
 import '../screens/track_bus.dart';
 
 class Homepage extends StatefulWidget {
@@ -31,7 +32,7 @@ class _HomepageState extends State<Homepage> {
   List _pages = [
     TrackBus(),
     BusInfo(),
-    Center(child:Text('emergency') ,)
+    EmergencyPage(),
   ];
 
   _changeTab(int index) {
