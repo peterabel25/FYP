@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:school_bus_tracking_management_system_admin_module/authentication/usermodal.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +31,8 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    final authservice = Provider.of<AuthService>(context);
+    final authservice = Provider.of<AuthService>(context); 
+    auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
     return Scaffold(
         appBar: AppBar(centerTitle: true, title: Text("School bus Tracker")),
@@ -39,10 +42,11 @@ class _HomepageState extends State<Homepage> {
                 header: SideNavigationBarHeader(
                     image: CircleAvatar(
                       radius: 30,
-                      child: Icon(Icons.person),
+                      child: Icon(Icons.person,size:40),
                     ),
-                    title: Text("School Admin"),
-                    subtitle: Text("peter@udsm.com")),
+                    title: Text("School Admin",style:TextStyle(fontSize:18 ) ,),
+                    
+                    subtitle:Text("Admin@email.com")),
                 footer: SideNavigationBarFooter(
                     label: InkWell(
                         onTap: () async {

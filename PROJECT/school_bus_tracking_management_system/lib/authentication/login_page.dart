@@ -32,12 +32,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             Image.asset("assets/childandparent.jpg",height:150, ),
-            // CircleAvatar(
-            //  // backgroundColor:Colors.grey[600],
-            //     radius: 60,
-            //     backgroundImage: AssetImage(
-            //       "assets/childandparent.jpg",
-            //     )),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20, top: 50),
               child: Form(

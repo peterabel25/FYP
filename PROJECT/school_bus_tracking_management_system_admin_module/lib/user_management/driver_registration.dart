@@ -12,7 +12,7 @@ class DriverRegistration extends StatefulWidget {
 }
 
 class _DriverRegistrationState extends State<DriverRegistration> {
-  TextEditingController passwordController = TextEditingController();
+ // TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController fnameController = TextEditingController();
   TextEditingController lnameController = TextEditingController();
@@ -90,26 +90,10 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                       hintText: "Email")),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                      label: Text("Password"),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      hintText: "Password")),
-              SizedBox(
-                height: 20,
-              ),
-              // TextFormField(
-              //     initialValue: "driver",
-              //     decoration: InputDecoration(
-              //         label: Text("Role"),
-              //         border: OutlineInputBorder(
-              //             borderRadius: BorderRadius.circular(10.0)),
-              //         hintText: "Role")),
+             
+              
+            
+              
               SizedBox(
                 height: 20,
               ),
@@ -141,7 +125,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                     emailController.clear();
                     fnameController.clear();
                     lnameController.clear();
-                    passwordController.clear();
+                   // passwordController.clear();
                   },
                   child: Text("Register"))
             ],

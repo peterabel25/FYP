@@ -7,6 +7,7 @@ import '../../authentication/auth_service.dart';
 import '../../authentication/login_page.dart';
 import '../driver_data_provider.dart';
 import '../driver_screens/driver_emergency.dart';
+import '../driver_screens/driver_profile.dart';
 import '../driver_screens/view_route.dart';
 
 class DriverHomepage extends StatefulWidget {
@@ -55,7 +56,12 @@ class _DriverHomepageState extends State<DriverHomepage> {
               SizedBox(
                 height: 20,
               ),
-              Text(" Account Settings"),
+              InkWell(
+                onTap:(){
+                   Navigator.of(context)
+                         .push(MaterialPageRoute(builder: ((_) => DriverProfile())));
+                },
+                child: Text(" Profile Settings")),
               SizedBox(
                 height: 20,
               ),

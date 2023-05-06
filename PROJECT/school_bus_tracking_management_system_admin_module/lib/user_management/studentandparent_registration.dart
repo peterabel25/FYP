@@ -59,10 +59,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                 controller: emailController,
                 decoration: InputDecoration(hintText: "Email"),
               ),
-              TextFormField(
-                controller: passwordController,
-                decoration: InputDecoration(hintText: "password"),
-              ),
+              
               
             ],
           ),
@@ -78,12 +75,12 @@ class _StudentRegistrationState extends State<StudentRegistration> {
             children: [
               TextFormField(
                 controller: studentfnameController,
-                decoration: InputDecoration(hintText: " student's first name"),
+                decoration: InputDecoration(hintText: " student's name"),
               ),
-              TextFormField(
-                controller: studentlnameController,
-                decoration: InputDecoration(hintText: "student's last name"),
-              ),
+              // TextFormField(
+              //   controller: studentlnameController,
+              //   decoration: InputDecoration(hintText: "student's last name"),
+              // ),
               TextFormField(
                 controller: studentclassController,
                 decoration: InputDecoration(hintText: "student's class"),
@@ -95,7 +92,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
       Step(
         state: currentStep > 2 ? StepState.complete : StepState.indexed,
         isActive: currentStep >= 2,
-        title: Text("Address Info"),
+        title: Text("Bus Assignment"),
         content: Form(
           key: formKeys[2],
           child: Column(
@@ -104,15 +101,11 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                 controller: residenceController,
                 decoration: InputDecoration(hintText: "Residence"),
               ),
-              TextFormField(
-                controller: pickuppointController,
-                decoration: InputDecoration(hintText: "pickup point "),
-              ),
               // TextFormField(
-              //   decoration:InputDecoration(
-              //     hintText:"Route Assigned "
-              //   ) ,
+              //   controller: pickuppointController,
+              //   decoration: InputDecoration(hintText: "pickup point "),
               // ),
+              
               TextFormField(
                 controller: busassignedController,
                 decoration: InputDecoration(hintText: "Bus Assigned "),

@@ -4,6 +4,7 @@ import 'package:school_bus_tracking_management_system_admin_module/authenticatio
 import '../user_management/database.dart';
 
 class AuthService {
+  String? userEmail;
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
 
   User? _userFromFirebase(auth.User? user) {
@@ -22,6 +23,7 @@ class AuthService {
       String email, String password) async {
     final credential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
+    userEmail = email;
     return _userFromFirebase(credential.user);
   }
 
@@ -83,24 +85,17 @@ class AuthService {
         email: email, password: password);
 
     await UserDatabaseService(uid: credential.user!.uid).createParentRecord(
-       
-        firstName:firstName,
-        lastName:lastName,
-        contact:contact,
-        email:email,
-        password:password,
-        studentFname:studentFname,
-        studentLname:studentLname,
-        studentClass:studentClass,
-        residence:residence,
-        pickuppoint:pickuppoint,
-        busAssigned:busAssigned
-      
-
-
-
-
-    );
+        firstName: firstName,
+        lastName: lastName,
+        contact: contact,
+        email: email,
+        password: password,
+        studentFname: studentFname,
+        studentLname: studentLname,
+        studentClass: studentClass,
+        residence: residence,
+        pickuppoint: pickuppoint,
+        busAssigned: busAssigned);
     return _userFromFirebase(credential.user);
   }
 }

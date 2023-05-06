@@ -15,7 +15,7 @@ class _BusRegisterState extends State<BusRegister> {
   TextEditingController busnumberController = TextEditingController();
   TextEditingController platenumberController = TextEditingController();
   TextEditingController routeassignedController = TextEditingController();
-  TextEditingController driverassignedController = TextEditingController();
+ TextEditingController driverassignedController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +43,11 @@ class _BusRegisterState extends State<BusRegister> {
                 decoration: InputDecoration(hintText: "Route Assigned"),
               ),
               SizedBox(height: 20),
-              TextFormField(
-                controller: driverassignedController,
-                decoration: InputDecoration(hintText: "Driver Assigned"),
-              ),
-              SizedBox(height: 20),
+              // TextFormField(
+              //   controller: driverassignedController,
+              //   decoration: InputDecoration(hintText: "Driver Assigned"),
+              // ),
+             // SizedBox(height: 20),
               SizedBox(
                   height: 36,
                   width: 200,
@@ -57,7 +57,8 @@ class _BusRegisterState extends State<BusRegister> {
                             busnumberController.text,
                             platenumberController.text,
                             routeassignedController.text,
-                            driverassignedController.text);
+                            driverassignedController.text
+                            );
                       },
                       child: Text("Register")))
             ],

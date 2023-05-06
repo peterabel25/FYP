@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../../parent_module/providers/parent_data_provider.dart';
 import '../driver_data_provider.dart';
+import 'package:intl/intl.dart';
+
 
 class DriverNotification extends StatelessWidget {
   // const DriverNotification({super.key});
@@ -43,7 +45,7 @@ class DriverNotification extends StatelessWidget {
                   document.reference.collection('messages');
 
               return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: messagesCollection.snapshots(),
+                stream: messagesCollection.orderBy('timestamp', descending: true).snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
@@ -61,9 +63,15 @@ class DriverNotification extends StatelessWidget {
                     itemCount: messages.length,
                     itemBuilder: (BuildContext context, int index) {
                       final message = messages[index];
+
+                       DateTime date = message['timestamp'].toDate();
+                   String formattedDate = DateFormat('dd/MM hh:mm a').format(date);
                       return ListTile(
-                        title: Text(message['messageBody']),
-                        subtitle: Text(message['sender']),
+                        title: Text(message['Title']),
+                        subtitle:Text(message['messageBody']),
+                        trailing:Text(formattedDate) ,
+                        // title: Text(message['messageBody']),
+                        // subtitle: Text(formattedDate),
                       );
                     },
                   );

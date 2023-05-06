@@ -46,44 +46,17 @@ class AuthService {
   }
 
 //Function for user to login to the system
-  Future<User?> signInWithEmailAndPassword(
-      BuildContext context, String email, String password) async {
-    auth.AuthCredential? credential = await getStoredCredentials();
-    if (credential == null) {
-      credential =
-          auth.EmailAuthProvider.credential(email: email, password: password);
-    }
-    final result = await _firebaseAuth.signInWithCredential(credential);
-
-    currentUserUid = result.user!.uid;
-    // print(currentUserUid);
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance
-        .collection('userRecords')
-        .doc(currentUserUid)
-        .get();
-    String userRole = snapshot['role'];
-    if (userRole == 'parent') {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: ((_) => Homepage())));
-    } else if (userRole == 'driver') {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: ((_) => DriverHomepage())));
-    }
-
-    // Store the user credentials for future use
-    await storeCredentials(email, password);
-
-    return _userFromFirebase(result.user);
-  }
-
   // Future<User?> signInWithEmailAndPassword(
   //     BuildContext context, String email, String password) async {
+  //   auth.AuthCredential? credential = await getStoredCredentials();
+  //   if (credential == null) {
+  //     credential =
+  //         auth.EmailAuthProvider.credential(email: email, password: password);
+  //   }
+  //   final result = await _firebaseAuth.signInWithCredential(credential);
 
-  //   final credential = await _firebaseAuth.signInWithEmailAndPassword(
-  //       email: email, password: password);
-
-  //   currentUserUid = credential.user!.uid;
-
+  //   currentUserUid = result.user!.uid;
+  //   // print(currentUserUid);
   //   DocumentSnapshot snapshot = await FirebaseFirestore.instance
   //       .collection('userRecords')
   //       .doc(currentUserUid)
@@ -97,10 +70,37 @@ class AuthService {
   //         MaterialPageRoute(builder: ((_) => DriverHomepage())));
   //   }
 
-  //   return _userFromFirebase(credential.user);
+  //   // Store the user credentials for future use
+  //   await storeCredentials(email, password);
+
+  //   return _userFromFirebase(result.user);
   // }
 
-  void SendEmergency() {
+  Future<User?> signInWithEmailAndPassword(
+      BuildContext context, String email, String password) async {
+
+    final credential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+
+    currentUserUid = credential.user!.uid;
+
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection('userRecords')
+        .doc(currentUserUid)
+        .get();
+    String userRole = snapshot['role'];
+    if (userRole == 'parent') {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: ((_) => Homepage())));
+    } else if (userRole == 'driver') {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: ((_) => DriverHomepage())));
+    }
+
+    return _userFromFirebase(credential.user);
+  }
+
+  void SendEmergency(String dropdownValue,String description) {
     auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
     if (user != null) {
@@ -114,16 +114,17 @@ class AuthService {
 
       // Create a new message document
       Map<String, dynamic> newMessage = {
-        'messageBody': 'Hello Driver!',
+        'messageBody': description,
+        'Title':dropdownValue,
         'sender': uid,
-        // 'timestamp': FieldValue.serverTimestamp(),
+         'timestamp': FieldValue.serverTimestamp(),  
       };
 
       messagesCollectionRef.add(newMessage);
     }
   }
 
-  void driverEmergency() {
+  void driverEmergency(String dropdownValue,String description) {
     auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
     if (user != null) {
@@ -137,9 +138,10 @@ class AuthService {
 
       // Create a new message document
       Map<String, dynamic> newMessage = {
-        'messageBody': 'Hello Driver!',
+        'messageBody': description,
+        'Title':dropdownValue,
         'sender': uid,
-        // 'timestamp': FieldValue.serverTimestamp(),
+         'timestamp': FieldValue.serverTimestamp(),
       };
 
       messagesCollectionRef.add(newMessage);

@@ -14,7 +14,7 @@ class _ViewRouteState extends State<ViewRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child:Text("bus movement + student's pickup points") 
+        child:Text("A map to display bus movement + student's pickup points") 
       ),
     );
   }

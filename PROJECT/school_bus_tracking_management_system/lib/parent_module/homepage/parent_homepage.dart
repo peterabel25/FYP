@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_bus_tracking_management_system/parent_module/screens/bus_info.dart';
 import 'package:school_bus_tracking_management_system/parent_module/screens/notification_parent.dart';
+import 'package:school_bus_tracking_management_system/parent_module/screens/parent_profile.dart';
 import '../../authentication/auth_service.dart';
 import '../../authentication/login_page.dart';
 import '../providers/parent_data_provider.dart';
@@ -71,7 +72,12 @@ class _HomepageState extends State<Homepage> {
                 height: 40,
               ),
              
-              Text("Settings"),
+              InkWell(
+                onTap:(){
+                   Navigator.of(context)
+                         .push(MaterialPageRoute(builder: ((_) => ParentProfile())));
+                } ,
+                child: Text("Profile Settings")),
               SizedBox(
                 height: 20,
               ),

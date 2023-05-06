@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 import '../providers/parent_data_provider.dart';
+import 'package:intl/intl.dart';
+
 class NotificationsPage extends StatelessWidget {
   // NotificationsPage({super.key});
   final CollectionReference<Map<String, dynamic>> _userRecordsCollection =
@@ -13,17 +14,17 @@ class NotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  UserData userdataprovider = Provider.of<UserData>(context);
+    UserData userdataprovider = Provider.of<UserData>(context);
 
     return Scaffold(
-      appBar:AppBar(
-        title:Text('Notifications') ,
-        centerTitle:true ,
+      appBar: AppBar(
+        title: Text('Notifications'),
+        centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: _userRecordsCollection
             .where('role', isEqualTo: 'driver')
-            .where('busPewa', isEqualTo:userdataprovider.busNo )
+            .where('busPewa', isEqualTo: userdataprovider.busNo)
             .snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -45,7 +46,7 @@ class NotificationsPage extends StatelessWidget {
                   document.reference.collection('messages');
 
               return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: messagesCollection.snapshots(),
+                stream: messagesCollection.orderBy('timestamp', descending: true).snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
@@ -63,9 +64,15 @@ class NotificationsPage extends StatelessWidget {
                     itemCount: messages.length,
                     itemBuilder: (BuildContext context, int index) {
                       final message = messages[index];
+                     DateTime date = message['timestamp'].toDate();
+                   String formattedDate = DateFormat('dd/MM hh:mm a').format(date);
+                     
+                      
                       return ListTile(
-                        title: Text(message['messageBody']),
-                        subtitle: Text(message['sender']),
+                        title: Text(message['Title']),
+                        subtitle:Text(message['messageBody']),
+                        trailing:Text(formattedDate) ,
+                        // Text(formattedDate),
                       );
                     },
                   );
@@ -78,4 +85,3 @@ class NotificationsPage extends StatelessWidget {
     );
   }
 }
-
