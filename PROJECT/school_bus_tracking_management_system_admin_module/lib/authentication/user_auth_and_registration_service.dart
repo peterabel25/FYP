@@ -76,10 +76,10 @@ class AuthService {
       required String email,
       required String password,
       required String studentFname,
-      required String studentLname,
+     // required String studentLname,
       required String studentClass,
       required String residence,
-      required String pickuppoint,
+     // required String pickuppoint,
       required String busAssigned}) async {
     final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
@@ -91,10 +91,10 @@ class AuthService {
         email: email,
         password: password,
         studentFname: studentFname,
-        studentLname: studentLname,
+       // studentLname: studentLname,
         studentClass: studentClass,
         residence: residence,
-        pickuppoint: pickuppoint,
+       // pickuppoint: pickuppoint,
         busAssigned: busAssigned);
     return _userFromFirebase(credential.user);
   }

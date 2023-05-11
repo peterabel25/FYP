@@ -19,7 +19,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   ];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AuthService authService = AuthService();
-  TextEditingController passwordController = TextEditingController();
+  //TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController fnameController = TextEditingController();
   TextEditingController lnameController = TextEditingController();
@@ -173,13 +173,34 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                   lastName: lnameController.text,
                   contact: contactController.text,
                   email: emailController.text,
-                  password: passwordController.text,
+                  password: contactController.text,
                   studentFname: studentfnameController.text,
-                  studentLname: studentlnameController.text,
+                  // studentLname: studentlnameController.text,
                   studentClass: studentclassController.text,
                   residence: residenceController.text,
-                  pickuppoint: pickuppointController.text,
-                  busAssigned: bussAssignedController.text);
+                  // pickuppoint: pickuppointController.text,
+                  busAssigned: busassignedController.text);
+
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text('User Registered')));
+
+              emailController.clear();
+              fnameController.clear();
+              lnameController.clear();
+              contactController.clear();
+              licensenoController.clear();
+              bussAssignedController.clear();
+              studentfnameController.clear();
+              studentlnameController.clear();
+              studentclassController.clear();
+              residenceController.clear();
+              pickuppointController.clear();
+              busassignedController.clear();
+
+              setState(() {
+                currentStep =0;
+              });
+
               //Do something with this information
             } else {
               if (formKeys[currentStep].currentState!.validate()) {

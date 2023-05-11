@@ -16,25 +16,25 @@ class UserDatabaseService {
       required String email,
       required String password,
       required String studentFname,
-      required String studentLname,
+     // required String studentLname,
       required String studentClass,
       required String residence,
-      required String pickuppoint,
+     // required String pickuppoint,
       required String busAssigned}) async {
     return await userRecords.doc(uid).set({
       'firstName': firstName,
       'lastName': lastName,
       'contact': contact,
       'email': email,
-      'password': password,
+     'password': password,
       'residence': residence,
-      'pickuppoint': pickuppoint,
+     // 'pickuppoint': pickuppoint,
       'busAssigned': busAssigned,
       'role': 'parent'
     }).then((value) async{
 return await userRecords.doc(uid).collection('students').add({
       'studentFname': studentFname,
-      'studentLname': studentLname,
+     // 'studentLname': studentLname,
       'studentClass':studentClass
     });
 
