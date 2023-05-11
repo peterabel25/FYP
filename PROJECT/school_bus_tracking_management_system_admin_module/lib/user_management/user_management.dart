@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:school_bus_tracking_management_system_admin_module/user_management/update_driver.dart';
+import 'package:school_bus_tracking_management_system_admin_module/user_management/update_student.dart';
 
 import 'driver_registration.dart';
 import 'studentandparent_registration.dart';
@@ -25,7 +27,6 @@ class _UserManagementPageState extends State<UserManagementPage> {
             child: Column(
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                
                 Row(
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
@@ -36,50 +37,47 @@ class _UserManagementPageState extends State<UserManagementPage> {
                       child: InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                                builder: ((_) => StudentRegistration())));
+                              builder: ((_) => StudentRegistration())));
                         },
                         child: SizedBox(
                           height: 250,
                           width: 400,
                           child: Card(
-                            child: Center(
-                              child: Column(
-                                children:[
-                                Image.asset('momanddad.jpg' ,height:200,width:200),
-
-                                 Text("STUDENT AND PARENT REGISTRATION",style:TextStyle(fontSize:18 ) ,)
-
-                                ]
-                              )
-                                
-                              )
-                            ),
-                          ),
+                              child: Center(
+                                  child: Column(children: [
+                            Image.asset('momanddad.jpg',
+                                height: 200, width: 200),
+                            Text(
+                              "STUDENT AND PARENT REGISTRATION",
+                              style: TextStyle(fontSize: 18),
+                            )
+                          ]))),
                         ),
                       ),
-                    
+                    ),
                     SizedBox(
                       width: 47,
                     ),
                     Expanded(
                       child: InkWell(
-                        onTap:(){
+                        onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                                builder: ((_) => DriverRegistration())));
+                              builder: ((_) => DriverRegistration())));
                         },
                         child: SizedBox(
                           height: 250,
                           width: 400,
                           child: Card(
                             child: Center(
-                              child: Column(
-                                children:[
-                                  Image.asset('driver.jpeg' ,height:200,width:200),
-                                 // SizedBox(height:8),
-                                  Text("REGISTER DRIVER",style:TextStyle(fontSize:18 ) ,),
-                                ]
-                              )
-                            ),
+                                child: Column(children: [
+                              Image.asset('driver.jpeg',
+                                  height: 200, width: 200),
+                              // SizedBox(height:8),
+                              Text(
+                                "REGISTER DRIVER",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ])),
                           ),
                         ),
                       ),
@@ -99,9 +97,18 @@ class _UserManagementPageState extends State<UserManagementPage> {
                       child: SizedBox(
                         height: 250,
                         width: 400,
-                        child: Card(
-                          child: Center(
-                            child: Text("UPDATE STUDENT'S INFO",style:TextStyle(fontSize:15 ) ,),
+                        child: InkWell(
+                          onTap:(){
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: ((_) => UpdateStudentInfo())));
+                          },
+                          child: Card(
+                            child: Center(
+                              child: Text(
+                                "UPDATE STUDENT'S INFO",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -113,9 +120,20 @@ class _UserManagementPageState extends State<UserManagementPage> {
                       child: SizedBox(
                         height: 250,
                         width: 400,
-                        child: Card(
-                          child: Center(
-                            child: Text("UPDATE DRIVER'S INFO",style:TextStyle(fontSize:15 ) ,),
+                        child: InkWell(
+                          onTap:(){
+ Navigator.of(context).push(MaterialPageRoute(
+                              builder: ((_) => UpdateDriverInfo())));
+
+
+                          },
+                          child: Card(
+                            child: Center(
+                              child: Text(
+                                "UPDATE DRIVER'S INFO",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
                           ),
                         ),
                       ),

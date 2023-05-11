@@ -33,7 +33,7 @@ class _RouteRegisterState extends State<RouteRegister> {
                 children: [
                   TextFormField(
                     validator: (value) {
-                      if (value == null) {
+                      if (value == '') {
                         return "Route Name is required";
                       }
                       return null;
@@ -45,7 +45,7 @@ class _RouteRegisterState extends State<RouteRegister> {
                   SizedBox(height: 20),
                   TextFormField(
                     validator: (value) {
-                      if (value == null) {
+                      if (value == '') {
                         return "start point is required";
                       }
                       return null;
@@ -56,7 +56,7 @@ class _RouteRegisterState extends State<RouteRegister> {
                   SizedBox(height: 20),
                   TextFormField(
                     validator: (value) {
-                      if (value == null) {
+                      if (value == '') {
                         return "End Point is required";
                       }
                       return null;

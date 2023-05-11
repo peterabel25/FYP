@@ -31,7 +31,7 @@ class _BusRegisterState extends State<BusRegister> {
                 children: [
                   TextFormField(
                     validator: (value) {
-                      if (value == null) {
+                      if (value == '') {
                         return "Bus Number is required";
                       }
                       return null;
@@ -42,7 +42,7 @@ class _BusRegisterState extends State<BusRegister> {
                   SizedBox(height: 20),
                   TextFormField(
                     validator: (value) {
-                      if (value == null) {
+                      if (value == '') {
                         return "Plate Number is required";
                       }
                       return null;
@@ -53,7 +53,7 @@ class _BusRegisterState extends State<BusRegister> {
                   SizedBox(height: 20),
                   TextFormField(
                     validator: (value) {
-                      if (value == null) {
+                      if (value == '') {
                         return "Assign Route to bus";
                       }
                       return null;

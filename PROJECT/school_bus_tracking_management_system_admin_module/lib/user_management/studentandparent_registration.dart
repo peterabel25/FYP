@@ -45,7 +45,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
             children: [
               TextFormField(
                 validator: (value) {
-                  if (value == null) return "First name is required";
+                  if (value == '') return "First name is required";
                   return null;
                 },
                 controller: fnameController,
@@ -53,7 +53,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
               ),
               TextFormField(
                 validator: (value) {
-                  if (value == null) return "Last name is required";
+                  if (value == '') return "Last name is required";
                   return null;
                 },
                 controller: lnameController,
@@ -61,7 +61,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
               ),
               TextFormField(
                 validator: (value) {
-                  if (value == null) return "Contact is required";
+                  if (value == '') return "Contact is required";
                   return null;
                 },
                 controller: contactController,
@@ -69,7 +69,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
               ),
               TextFormField(
                 validator: (value) {
-                  if (value == null) return "Email is required";
+                  if (value == '') return "Email is required";
                   return null;
                 },
                 controller: emailController,
@@ -89,7 +89,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
             children: [
               TextFormField(
                 validator: (value) {
-                  if (value == null) return "Student name is required";
+                  if (value == '') return "Student name is required";
                   return null;
                 },
                 controller: studentfnameController,
@@ -101,7 +101,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
               // ),
               TextFormField(
                 validator: (value) {
-                  if (value == null) return "Student class is required";
+                  if (value == '') return "Student class is required";
                   return null;
                 },
                 controller: studentclassController,
@@ -121,7 +121,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
             children: [
               TextFormField(
                 validator: (value) {
-                  if (value == null) return "Student's residence is required";
+                  if (value == '') return "Student's residence is required";
                   return null;
                 },
                 controller: residenceController,
@@ -134,7 +134,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
 
               TextFormField(
                 validator: (value) {
-                  if (value == null) return "Assign bus to student";
+                  if (value == '') return "Assign bus to student";
                   return null;
                 },
                 controller: busassignedController,
