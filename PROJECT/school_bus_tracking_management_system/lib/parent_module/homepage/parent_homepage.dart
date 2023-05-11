@@ -64,10 +64,10 @@ class _HomepageState extends State<Homepage> {
           padding: const EdgeInsets.only(top: 50),
           child: Column(
             children: [
-              CircleAvatar(
-                radius: 45,
-                backgroundImage: AssetImage("assets/childandparent.jpg"),
-              ),
+
+               UserAccountsDrawerHeader(currentAccountPicture:CircleAvatar(radius: 45, backgroundImage:AssetImage("assets/childandparent.jpg") ,) ,
+                accountName: Text("username"), accountEmail: Text("parent@email.com")),
+             
               SizedBox(
                 height: 40,
               ),

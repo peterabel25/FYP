@@ -46,13 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                                SizedBox(
                         height: 20,
                       ),
-                      // CircleAvatar(
-                      //    // backgroundColor: Colors.white,
-                      //     child: Icon(
-                      //       Icons.person,
-                      //       size: 80,
-                      //     ),
-                      //     radius: 40),
+                      
                      Image.asset("childandparent.png",height:100),
 
                       SizedBox(

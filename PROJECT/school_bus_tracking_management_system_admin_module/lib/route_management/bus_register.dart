@@ -15,7 +15,7 @@ class _BusRegisterState extends State<BusRegister> {
   TextEditingController busnumberController = TextEditingController();
   TextEditingController platenumberController = TextEditingController();
   TextEditingController routeassignedController = TextEditingController();
- TextEditingController driverassignedController = TextEditingController();
+  TextEditingController driverassignedController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,43 +26,66 @@ class _BusRegisterState extends State<BusRegister> {
         child: Padding(
           padding: const EdgeInsets.all(50.0),
           child: Form(
+              key: formkey,
               child: Column(
-            children: [
-              TextFormField(
-                controller: busnumberController,
-                decoration: InputDecoration(hintText: "Bus No"),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: platenumberController,
-                decoration: InputDecoration(hintText: "Plate No"),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: routeassignedController,
-                decoration: InputDecoration(hintText: "Route Assigned"),
-              ),
-              SizedBox(height: 20),
-              // TextFormField(
-              //   controller: driverassignedController,
-              //   decoration: InputDecoration(hintText: "Driver Assigned"),
-              // ),
-             // SizedBox(height: 20),
-              SizedBox(
-                  height: 36,
-                  width: 200,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        databaseService.RegisterBus(
-                            busnumberController.text,
-                            platenumberController.text,
-                            routeassignedController.text,
-                            driverassignedController.text
-                            );
-                      },
-                      child: Text("Register")))
-            ],
-          )),
+                children: [
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return "Bus Number is required";
+                      }
+                      return null;
+                    },
+                    controller: busnumberController,
+                    decoration: InputDecoration(hintText: "Bus No"),
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return "Plate Number is required";
+                      }
+                      return null;
+                    },
+                    controller: platenumberController,
+                    decoration: InputDecoration(hintText: "Plate No"),
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return "Assign Route to bus";
+                      }
+                      return null;
+                    },
+                    controller: routeassignedController,
+                    decoration: InputDecoration(hintText: "Route Assigned"),
+                  ),
+                  SizedBox(height: 20),
+
+                  // TextFormField(
+                  //   controller: driverassignedController,
+                  //   decoration: InputDecoration(hintText: "Driver Assigned"),
+                  // ),
+                  // SizedBox(height: 20),
+                  SizedBox(
+                      height: 36,
+                      width: 200,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            if (formkey.currentState!.validate()) {
+                                databaseService.RegisterBus(
+                                busnumberController.text,
+                                platenumberController.text,
+                                routeassignedController.text,
+                                driverassignedController.text);
+                            }
+
+                           
+                          },
+                          child: Text("Register")))
+                ],
+              )),
         ),
       ),
     );

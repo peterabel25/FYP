@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:school_bus_tracking_management_system/driver_module/driver_homepage/driver_homepage.dart';
 import 'package:school_bus_tracking_management_system/parent_module/homepage/parent_homepage.dart';
 import 'user_modal.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
@@ -23,23 +23,23 @@ class AuthService {
   String? get getCurrentUserUid => currentUserUid;
 
   // Method to get the stored credentials from SharedPreferences
-  Future<auth.AuthCredential?> getStoredCredentials() async {
-    final prefs = await SharedPreferences.getInstance();
-    final email = prefs.getString('email');
-    final password = prefs.getString('password');
-    if (email != null && password != null) {
-      return auth.EmailAuthProvider.credential(
-          email: email, password: password);
-    }
-    return null;
-  }
+  // Future<auth.AuthCredential?> getStoredCredentials() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final email = prefs.getString('email');
+  //   final password = prefs.getString('password');
+  //   if (email != null && password != null) {
+  //     return auth.EmailAuthProvider.credential(
+  //         email: email, password: password);
+  //   }
+  //   return null;
+  // }
 
   // Method to store the user credentials in SharedPreferences
-  Future<void> storeCredentials(String email, String password) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('email', email);
-    await prefs.setString('password', password);
-  }
+  // Future<void> storeCredentials(String email, String password) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('email', email);
+  //   await prefs.setString('password', password);
+  // }
 
   Stream<User?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
@@ -150,11 +150,11 @@ class AuthService {
 
 //Function for user to logout of the system
   Future<void> signOut() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('email');
-    await prefs.remove('password');
-    await _firebaseAuth.signOut();
+    // final prefs = await SharedPreferences.getInstance();
+    // await prefs.remove('email');
+    // await prefs.remove('password');
+    // await _firebaseAuth.signOut();
 
-    // return await _firebaseAuth.signOut();
+     return await _firebaseAuth.signOut();
   }
 }

@@ -49,10 +49,10 @@ class _DriverHomepageState extends State<DriverHomepage> {
           padding: const EdgeInsets.only(top: 50),
           child: Column(
             children: [
-              CircleAvatar(
-                radius: 45,
-                backgroundImage: AssetImage("assets/schoolbus.png"),
-              ),
+
+               UserAccountsDrawerHeader(currentAccountPicture:CircleAvatar(radius: 45, backgroundImage:AssetImage("assets/schoolbus.png") ,) ,
+                accountName: Text("driver username"), accountEmail: Text("driver@email.com")),
+              
               SizedBox(
                 height: 20,
               ),

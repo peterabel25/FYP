@@ -32,16 +32,35 @@ class _RouteRegisterState extends State<RouteRegister> {
               child: Column(
                 children: [
                   TextFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return "Route Name is required";
+                      }
+                      return null;
+                    },
                     controller: routenameController,
-                    decoration: InputDecoration(hintText: "Route Name"),
+                    decoration: InputDecoration(
+                        hintText: "Route Name , label as Route A..."),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return "start point is required";
+                      }
+                      return null;
+                    },
                     controller: startpointController,
                     decoration: InputDecoration(hintText: "Start point"),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return "End Point is required";
+                      }
+                      return null;
+                    },
                     controller: endpointController,
                     decoration: InputDecoration(hintText: "End point"),
                   ),
@@ -51,10 +70,13 @@ class _RouteRegisterState extends State<RouteRegister> {
                       width: 200,
                       child: ElevatedButton(
                           onPressed: () {
-                            databaseService.RegisterRoute(
+                            if (formkey.currentState!.validate()) {
+                              databaseService.RegisterRoute(
                                 routenameController.text,
                                 startpointController.text,
                                 endpointController.text);
+                            }
+                            
                           },
                           child: Text("Register")))
                 ],

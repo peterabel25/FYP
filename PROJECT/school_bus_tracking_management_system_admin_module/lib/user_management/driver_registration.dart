@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,9 @@ class DriverRegistration extends StatefulWidget {
 }
 
 class _DriverRegistrationState extends State<DriverRegistration> {
- // TextEditingController passwordController = TextEditingController();
+  final formkey = GlobalKey<FormState>();
+
+  // TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController fnameController = TextEditingController();
   TextEditingController lnameController = TextEditingController();
@@ -31,106 +33,130 @@ class _DriverRegistrationState extends State<DriverRegistration> {
       ),
       body: Center(
         child: Form(
+            key: formkey,
             child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            children: [
-              Row(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: TextFormField(
-                        controller: fnameController,
-                        decoration: InputDecoration(
-                            label: Text("First name"),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            hintText: "First name")),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                            validator: (value) {
+                              if (value == null)
+                                return "First name is required";
+                              return null;
+                            },
+                            controller: fnameController,
+                            decoration: InputDecoration(
+                                label: Text("First name"),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                hintText: "First name")),
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                            validator: (value) {
+                              if (value == null) return "Last name is required";
+                              return null;
+                            },
+                            controller: lnameController,
+                            decoration: InputDecoration(
+                                label: Text("Last name"),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                hintText: "Last name")),
+                      ),
+                    ],
                   ),
                   SizedBox(
-                    width: 30,
+                    height: 20,
                   ),
-                  Expanded(
-                    child: TextFormField(
-                        controller: lnameController,
-                        decoration: InputDecoration(
-                            label: Text("Last name"),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            hintText: "Last name")),
+                  TextFormField(
+                      validator: (value) {
+                        if (value == null) return "License Number is required";
+                        return null;
+                      },
+                      controller: licensenoController,
+                      decoration: InputDecoration(
+                          label: Text("License No"),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          hintText: "License No")),
+                  SizedBox(
+                    height: 20,
                   ),
+                  TextFormField(
+                      validator: (value) {
+                        if (value == null) return "Contact is required";
+                        return null;
+                      },
+                      controller: contactController,
+                      decoration: InputDecoration(
+                          label: Text("Contact"),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          hintText: "Contact")),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                      validator: (value) {
+                        if (value == null) return "Email is required";
+                        return null;
+                      },
+                      controller: emailController,
+                      decoration: InputDecoration(
+                          label: Text("Email"),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          hintText: "Email")),
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  //Dropdown to show all registered buses
+                  TextFormField(
+                      controller: bussAssignedController,
+                      decoration: InputDecoration(
+                          label: Text("Bus Assigned "),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          hintText: "bus assigned ")),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        if (formkey.currentState!.validate()) {
+                    await authservice.createDriverWithEmailAndPassword(
+                          busAssigned: bussAssignedController.text,
+                          contact: contactController.text,
+                          email: emailController.text,
+                          firstName: fnameController.text,
+                          lastName: lnameController.text,
+                          licenseNo: licensenoController.text,
+                          password: contactController.text,
+                        );
+                        }
+
+                        
+
+                        contactController.clear();
+                        licensenoController.clear();
+                        bussAssignedController.clear();
+                        emailController.clear();
+                        fnameController.clear();
+                        lnameController.clear();
+                        // passwordController.clear();
+                      },
+                      child: Text("Register"))
                 ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                  controller: licensenoController,
-                  decoration: InputDecoration(
-                      label: Text("License No"),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      hintText: "License No")),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                  controller: contactController,
-                  decoration: InputDecoration(
-                      label: Text("Contact"),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      hintText: "Contact")),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                      label: Text("Email"),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      hintText: "Email")),
-             
-              
-            
-              
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                  controller: bussAssignedController,
-                  decoration: InputDecoration(
-                      label: Text("Bus Assigned "),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)),
-                      hintText: "bus assigned ")),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    await authservice.createDriverWithEmailAndPassword(
-                      busAssigned: bussAssignedController.text,
-                      contact: contactController.text,
-                      email: emailController.text,
-                      firstName: fnameController.text,
-                      lastName: lnameController.text,
-                      licenseNo: licensenoController.text,
-                      password: contactController.text,
-                    );
-
-                    contactController.clear();
-                    licensenoController.clear();
-                    bussAssignedController.clear();
-                    emailController.clear();
-                    fnameController.clear();
-                    lnameController.clear();
-                   // passwordController.clear();
-                  },
-                  child: Text("Register"))
-            ],
-          ),
-        )),
+            )),
       ),
     );
   }

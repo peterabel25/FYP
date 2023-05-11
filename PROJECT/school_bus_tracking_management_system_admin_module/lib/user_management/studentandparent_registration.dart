@@ -44,23 +44,37 @@ class _StudentRegistrationState extends State<StudentRegistration> {
           child: Column(
             children: [
               TextFormField(
+                validator: (value) {
+                  if (value == null) return "First name is required";
+                  return null;
+                },
                 controller: fnameController,
                 decoration: InputDecoration(hintText: "First name"),
               ),
               TextFormField(
+                validator: (value) {
+                  if (value == null) return "Last name is required";
+                  return null;
+                },
                 controller: lnameController,
                 decoration: InputDecoration(hintText: "Last name"),
               ),
               TextFormField(
+                validator: (value) {
+                  if (value == null) return "Contact is required";
+                  return null;
+                },
                 controller: contactController,
                 decoration: InputDecoration(hintText: "contact"),
               ),
               TextFormField(
+                validator: (value) {
+                  if (value == null) return "Email is required";
+                  return null;
+                },
                 controller: emailController,
                 decoration: InputDecoration(hintText: "Email"),
               ),
-              
-              
             ],
           ),
         ),
@@ -74,6 +88,10 @@ class _StudentRegistrationState extends State<StudentRegistration> {
           child: Column(
             children: [
               TextFormField(
+                validator: (value) {
+                  if (value == null) return "Student name is required";
+                  return null;
+                },
                 controller: studentfnameController,
                 decoration: InputDecoration(hintText: " student's name"),
               ),
@@ -82,6 +100,10 @@ class _StudentRegistrationState extends State<StudentRegistration> {
               //   decoration: InputDecoration(hintText: "student's last name"),
               // ),
               TextFormField(
+                validator: (value) {
+                  if (value == null) return "Student class is required";
+                  return null;
+                },
                 controller: studentclassController,
                 decoration: InputDecoration(hintText: "student's class"),
               ),
@@ -98,6 +120,10 @@ class _StudentRegistrationState extends State<StudentRegistration> {
           child: Column(
             children: [
               TextFormField(
+                validator: (value) {
+                  if (value == null) return "Student's residence is required";
+                  return null;
+                },
                 controller: residenceController,
                 decoration: InputDecoration(hintText: "Residence"),
               ),
@@ -105,8 +131,12 @@ class _StudentRegistrationState extends State<StudentRegistration> {
               //   controller: pickuppointController,
               //   decoration: InputDecoration(hintText: "pickup point "),
               // ),
-              
+
               TextFormField(
+                validator: (value) {
+                  if (value == null) return "Assign bus to student";
+                  return null;
+                },
                 controller: busassignedController,
                 decoration: InputDecoration(hintText: "Bus Assigned "),
               ),
@@ -138,7 +168,6 @@ class _StudentRegistrationState extends State<StudentRegistration> {
           onStepContinue: () {
             bool isLastStep = (currentStep == getSteps().length - 1);
             if (isLastStep) {
-              
               authService.createParentWithEmailAndPassword(
                   firstName: fnameController.text,
                   lastName: lnameController.text,
@@ -153,14 +182,16 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                   busAssigned: bussAssignedController.text);
               //Do something with this information
             } else {
-              setState(() {
-                currentStep += 1;
-              });
+              if (formKeys[currentStep].currentState!.validate()) {
+                setState(() {
+                  currentStep += 1;
+                });
+              }
             }
           },
-          onStepTapped: (step) => setState(() {
-            currentStep = step;
-          }),
+          // onStepTapped: (step) => setState(() {
+          //   currentStep = step;
+          // }),
           steps: getSteps(),
         )),
       ),
