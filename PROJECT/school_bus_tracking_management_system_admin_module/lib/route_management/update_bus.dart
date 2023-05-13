@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class UpdateRouteInfo extends StatefulWidget {
-  const UpdateRouteInfo({super.key});
+
+class UpdateBusInfo extends StatefulWidget {
+  const UpdateBusInfo({super.key});
 
   @override
-  State<UpdateRouteInfo> createState() => _UpdateRouteInfoState();
+  State<UpdateBusInfo> createState() => _UpdateBusInfoState();
 }
 
-class _UpdateRouteInfoState extends State<UpdateRouteInfo> {
+class _UpdateBusInfoState extends State<UpdateBusInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +18,7 @@ class _UpdateRouteInfoState extends State<UpdateRouteInfo> {
         centerTitle:true
       ) ,
       body:StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('route').snapshots(),
+        stream: FirebaseFirestore.instance.collection('bus').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -33,18 +34,18 @@ return ListView(
               return ListTile(
                title: Row(
                  children: [
-                   Text('Start Point:'),
+                   Text('Bus Number :'),
                     SizedBox(width:10 ,),
 
-                   Text(data['startPoint']),
+                   Text(document.id),
 
                  ],
                ),
                 subtitle: Row(
                   children: [
-                    Text("End Point:"),
+                    Text("Plate Number:"),
                     SizedBox(width:10 ,),
-                    Text(data['endPoint']),
+                    Text(data['plateNo']),
                   ],
                 ),
                // trailing: Icon(Icons.arrow_forward),
@@ -57,6 +58,5 @@ return ListView(
         },
       ),
     );
-
   }
 }

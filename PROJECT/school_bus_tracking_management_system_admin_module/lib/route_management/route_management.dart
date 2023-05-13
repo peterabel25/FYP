@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:school_bus_tracking_management_system_admin_module/route_management/update_bus.dart';
+import 'package:school_bus_tracking_management_system_admin_module/route_management/update_route.dart';
 
 import 'bus_register.dart';
 import 'route_register.dart';
@@ -100,9 +102,16 @@ class _RouteManagementPageState extends State<RouteManagementPage> {
                       child: SizedBox(
                         height: 250,
                         width: 400,
-                        child: Card(
-                          child: Center(
-                            child: Text("UPDATE ROUTE"),
+                        child: InkWell(
+                          onTap:(){
+
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: ((_) => UpdateRouteInfo())));
+                          },
+                          child: Card(
+                            child: Center(
+                              child: Text("UPDATE ROUTE"),
+                            ),
                           ),
                         ),
                       ),
@@ -114,9 +123,15 @@ class _RouteManagementPageState extends State<RouteManagementPage> {
                       child: SizedBox(
                         height: 250,
                         width: 400,
-                        child: Card(
-                          child: Center(
-                            child: Text("UPDATE BUS INFO"),
+                        child: InkWell(
+                          onTap:(){
+                             Navigator.of(context).push(MaterialPageRoute(
+                                builder: ((_) => UpdateBusInfo())));
+                          },
+                          child: Card(
+                            child: Center(
+                              child: Text("UPDATE BUS INFO"),
+                            ),
                           ),
                         ),
                       ),
