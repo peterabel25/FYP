@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, prefer_adjacent_string_concatenation
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,13 +18,14 @@ class DriverHomepage extends StatefulWidget {
 }
 
 class _DriverHomepageState extends State<DriverHomepage> {
-
   @override
   void initState() {
-    DriverData driverdataprovider = Provider.of<DriverData>(context, listen: false);
+    DriverData driverdataprovider =
+        Provider.of<DriverData>(context, listen: false);
     driverdataprovider.fetchDriverData();
     super.initState();
   }
+
   int _selectedTab = 0;
   List _pages = [ViewRoute(), DriverEmergency(), DriverNotification()];
 
@@ -35,9 +36,9 @@ class _DriverHomepageState extends State<DriverHomepage> {
   }
 
   AuthService authservice = AuthService();
-
   @override
   Widget build(BuildContext context) {
+    DriverData driverdataprovider = Provider.of<DriverData>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("School bus Tracker"),
@@ -49,27 +50,30 @@ class _DriverHomepageState extends State<DriverHomepage> {
           padding: const EdgeInsets.only(top: 50),
           child: Column(
             children: [
-
-               UserAccountsDrawerHeader(currentAccountPicture:CircleAvatar(radius: 45, backgroundImage:AssetImage("assets/schoolbus.png") ,) ,
-                accountName: Text("driver username"), accountEmail: Text("driver@email.com")),
-              
-              SizedBox(
-                height: 20,
-              ),
-              InkWell(
-                onTap:(){
-                   Navigator.of(context)
-                         .push(MaterialPageRoute(builder: ((_) => DriverProfile())));
-                },
-                child: Text(" Profile Settings")),
+              UserAccountsDrawerHeader(
+                  currentAccountPicture: CircleAvatar(
+                    radius: 45,
+                    backgroundImage: AssetImage("assets/schoolbus.png"),
+                  ),
+                  accountName: Text("${driverdataprovider.firstName}" +
+                      "${driverdataprovider.lastName}"),
+                  accountEmail: Text("${driverdataprovider.email}")),
               SizedBox(
                 height: 20,
               ),
               InkWell(
                   onTap: () {
-                    authservice.signOut();
-                    Navigator.of(context)
-                         .pushReplacement(MaterialPageRoute(builder: ((_) => LoginPage())));
+                    //  getLocation();
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: ((_) => DriverProfile())));
+                  },
+                  child: Text(" Profile Settings")),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                  onTap: () {
+                    _showAlertDialog();
                   },
                   child: Text("Logout")),
             ],
@@ -90,6 +94,42 @@ class _DriverHomepageState extends State<DriverHomepage> {
               icon: Icon(Icons.notifications), label: "Notifications"),
         ],
       ),
+    );
+  }
+
+  Future<void> _showAlertDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // <-- SEE HERE
+          title: const Text('Declare Emergency'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Are you sure want to logout?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                authservice.signOut();
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: ((_) => LoginPage())));
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

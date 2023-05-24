@@ -39,6 +39,11 @@ class _BusInfoState extends State<BusInfo> {
                   }
                   Map<String, dynamic> data =
                       snapshot.data!.data() as Map<String, dynamic>;
+
+                      GeoPoint location = data['location'];
+                     double latitude = location.latitude;
+                     double longitude = location.longitude;
+
                   // Use the data to build your widget
                   return Card(
                       child: Padding(
@@ -77,7 +82,36 @@ class _BusInfoState extends State<BusInfo> {
                             SizedBox(
                               width: 10,
                             ),
-                            Text(data['plateNo'],
+                            Text(data['plateNo'] ,
+                                style: TextStyle(fontSize: 17)),
+
+                                
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("latitude:",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(latitude.toString() ,
+                                style: TextStyle(fontSize: 17)),
+
+                                
+                          ],
+                        ),
+
+                        Row(
+                          children: [
+                            Text("longitude:",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(longitude.toString() ,
                                 style: TextStyle(fontSize: 17)),
 
                                 

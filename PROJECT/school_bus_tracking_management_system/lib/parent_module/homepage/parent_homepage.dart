@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,6 +44,7 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    UserData userdataprovider = Provider.of<UserData>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("School bus Tracker"),
@@ -66,7 +67,9 @@ class _HomepageState extends State<Homepage> {
             children: [
 
                UserAccountsDrawerHeader(currentAccountPicture:CircleAvatar(radius: 45, backgroundImage:AssetImage("assets/childandparent.jpg") ,) ,
-                accountName: Text("username"), accountEmail: Text("parent@email.com")),
+                // ignore: prefer_adjacent_string_concatenation
+                accountName: Text("${userdataprovider.firstName}" + " " + "${userdataprovider.lastName}"), 
+                accountEmail: Text("${userdataprovider.email }")),
              
               SizedBox(
                 height: 40,

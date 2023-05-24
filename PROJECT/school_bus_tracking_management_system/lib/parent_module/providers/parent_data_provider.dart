@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class UserData with ChangeNotifier {
-  //DocumentSnapshot? busData;
-  // String? plateNo;
-   String? busNo;
-  // String? contact;
-  // String? assignedDriver;
-  // String? driverFirstName;
-  // String? driverLastName;
+  String? busNo;
+  String? firstName;
+  String? lastName;
+  String? email;
 
 //function to fetch the user's document
   Future fetchUserData() async {
@@ -21,10 +18,11 @@ class UserData with ChangeNotifier {
           .collection('userRecords')
           .doc(uid)
           .get();
+      firstName = snapshot['firstName'];
+      lastName = snapshot['lastName'];
       busNo = snapshot['busAssigned'];
-      // notifyListeners();
+      email=snapshot['email'];
+      notifyListeners();
     }
   }
-
-  
 }
