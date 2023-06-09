@@ -63,7 +63,6 @@ class _DriverHomepageState extends State<DriverHomepage> {
               ),
               InkWell(
                   onTap: () {
-                    //  getLocation();
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: ((_) => DriverProfile())));
                   },
@@ -104,7 +103,7 @@ class _DriverHomepageState extends State<DriverHomepage> {
       builder: (BuildContext context) {
         return AlertDialog(
           // <-- SEE HERE
-          title: const Text('Declare Emergency'),
+          title: const Text('Logout'),
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
@@ -123,8 +122,8 @@ class _DriverHomepageState extends State<DriverHomepage> {
               child: const Text('Yes'),
               onPressed: () {
                 authservice.signOut();
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: ((_) => LoginPage())));
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: ((_) => LoginPage())));
               },
             ),
           ],

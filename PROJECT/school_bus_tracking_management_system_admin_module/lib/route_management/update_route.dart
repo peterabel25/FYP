@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,7 +15,7 @@ class _UpdateRouteInfoState extends State<UpdateRouteInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title:Text('Registered Routes') ,
+        title:Text('Registered Routes'),
         centerTitle:true
       ) ,
       body:StreamBuilder<QuerySnapshot>(
@@ -30,27 +32,30 @@ return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
-              return ListTile(
-               title: Row(
-                 children: [
-                   Text('Start Point:'),
-                    SizedBox(width:10 ,),
-
-                   Text(data['startPoint']),
-
-                 ],
-               ),
-                subtitle: Row(
-                  children: [
-                    Text("End Point:"),
-                    SizedBox(width:10 ,),
-                    Text(data['endPoint']),
-                  ],
+              return Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ListTile(
+                 title: Row(
+                   children: [
+                     Text('Route Name:'),
+                      SizedBox(width:10 ,),
+              
+                     Text(document.id),
+              
+                   ],
+                 ),
+                  subtitle: Row(
+                    children: [
+                      Text("start Point:"),
+                      SizedBox(width:10 ,),
+                      Text(data['startPoint']),
+                    ],
+                  ),
+                  trailing: Icon(Icons.edit),
+                  onTap: () {
+                    // do something when tile is tapped
+                  },
                 ),
-               // trailing: Icon(Icons.arrow_forward),
-                onTap: () {
-                  // do something when tile is tapped
-                },
               );
             }).toList(),
           );

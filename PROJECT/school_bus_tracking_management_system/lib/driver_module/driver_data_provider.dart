@@ -15,7 +15,7 @@ class DriverData with ChangeNotifier {
   String? lastName;
   List<GeoPoint> pickupPoints = [];
 
-//function to fetch the user's document
+//METHOD TO FETCH DRIVER'S DATA , PERSONAL INFO,PARENTS IN THE ROUTE ,BUS CURRENT LOCATION AND SEND IT TO DB
   Future fetchDriverData() async {
     auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
@@ -40,7 +40,6 @@ class DriverData with ChangeNotifier {
         snapshot.docs.forEach((DocumentSnapshot document) {
           GeoPoint pickupPoint = document['pickuppoint'];
           pickupPoints.add(pickupPoint);
-         // print(pickupPoints[0].longitude);
         });
       });
 
@@ -67,30 +66,3 @@ class DriverData with ChangeNotifier {
     notifyListeners();
   }
 }
-
-
-
-//deadcode
-// final PermissionStatus status = await Permission.location.request();
-    // if (status.isGranted) {
-    //   Timer.periodic(Duration(seconds: 30), (timer) async {
-        
-    //     Position position = await Geolocator.getCurrentPosition(
-    //       desiredAccuracy: LocationAccuracy.high,
-    //     );
-
-    //     double latitude = position.latitude;
-    //     double longitude = position.longitude;
-
-    //     GeoPoint location = GeoPoint(latitude, longitude);
-
-    //     await FirebaseFirestore.instance
-    //         .collection('bus')
-    //         .doc(driverBusNo)
-    //         .update({
-    //       'location': location,
-    //     });
-    //     print(location.latitude);
-    //   });
-     
-    // }

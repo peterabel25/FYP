@@ -19,11 +19,12 @@ class DatabaseService {
   }
 
   Future RegisterBus(
-      String busNo, String plateNo, String routeAssigned,String driverAssigned) async {
+      String busNo, String plateNo, String routeAssigned,
+      ) async {
     return await busCollection.doc(busNo).set({
       'plateNo':plateNo,
       'routeAssigned':routeAssigned,
-      'driverAssigned':driverAssigned
+      //'driverAssigned':driverAssigned
     });
   }
 }

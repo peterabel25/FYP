@@ -1,5 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'user_details_screens/parents_details.dart';
 
 class UpdateStudentInfo extends StatefulWidget {
   const UpdateStudentInfo({super.key});
@@ -41,6 +45,12 @@ return ListView(
                 subtitle: Text(data['email']),
                // trailing: Icon(Icons.arrow_forward),
                 onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ParentsDetails(data: data),
+                    ),
+                  );
                   // do something when tile is tapped
                 },
               );

@@ -22,9 +22,9 @@ class _HomepageState extends State<Homepage> {
     UserManagementPage(),
     RouteManagementPage(),
     NotificationsPage(),
-    Center(
-      child: Text("Settings"),
-    ),
+    // Center(
+    //   child: Text("Settings"),
+    // ),
   ];
 
   int selectedIndex = 0;
@@ -32,7 +32,6 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     final authservice = Provider.of<AuthService>(context); 
-    //auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
     return Scaffold(
         appBar: AppBar(centerTitle: true, title: Text("School bus Tracker")),
@@ -62,8 +61,8 @@ class _HomepageState extends State<Homepage> {
                       icon: Icons.telegram, label: "Route Management"),
                   SideNavigationBarItem(
                       icon: Icons.notifications_active, label: "Notifications"),
-                  SideNavigationBarItem(
-                      icon: Icons.settings, label: "Settings"),
+                  // SideNavigationBarItem(
+                  //     icon: Icons.settings, label: "Settings"),
                 ],
                 onTap: (index) {
                   setState(() {

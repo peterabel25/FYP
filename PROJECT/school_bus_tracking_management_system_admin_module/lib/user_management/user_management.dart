@@ -104,9 +104,17 @@ class _UserManagementPageState extends State<UserManagementPage> {
                           },
                           child: Card(
                             child: Center(
-                              child: Text(
-                                "UPDATE STUDENT'S INFO",
-                                style: TextStyle(fontSize: 15),
+                              child: Column(
+                                children: [
+                                  SizedBox(height:18),
+                                  Image.asset('edituser.png',
+                                  height: 130, width: 150),
+                                  SizedBox(height:10),
+                                  Text(
+                                    "UPDATE STUDENT'S INFO",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -129,9 +137,15 @@ class _UserManagementPageState extends State<UserManagementPage> {
                           },
                           child: Card(
                             child: Center(
-                              child: Text(
-                                "UPDATE DRIVER'S INFO",
-                                style: TextStyle(fontSize: 15),
+                              child: Column(
+                                children: [
+                                   Image.asset('userupdate.jpg',
+                                  height: 150, width: 200),
+                                  Text(
+                                    "UPDATE DRIVER'S INFO",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

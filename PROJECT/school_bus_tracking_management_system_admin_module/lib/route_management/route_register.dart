@@ -40,7 +40,9 @@ class _RouteRegisterState extends State<RouteRegister> {
                     },
                     controller: routenameController,
                     decoration: InputDecoration(
-                        hintText: "Route Name , label as Route A..."),
+                        border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                        hintText: " label as Route A.."),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
@@ -51,7 +53,10 @@ class _RouteRegisterState extends State<RouteRegister> {
                       return null;
                     },
                     controller: startpointController,
-                    decoration: InputDecoration(hintText: "Start point"),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                      hintText: "Start point"),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
@@ -62,21 +67,31 @@ class _RouteRegisterState extends State<RouteRegister> {
                       return null;
                     },
                     controller: endpointController,
-                    decoration: InputDecoration(hintText: "End point"),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                      hintText: "End point"),
                   ),
                   SizedBox(height: 20),
                   SizedBox(
-                      height: 36,
+                      height: 36, 
                       width: 200,
                       child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () { 
                             if (formkey.currentState!.validate()) {
                               databaseService.RegisterRoute(
                                 routenameController.text,
                                 startpointController.text,
-                                endpointController.text);
+                                endpointController.text
+                                );
+
+                                 ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Route Registered')));
+                                routenameController.clear();
+                                startpointController.clear();
+                                endpointController.clear();
                             }
-                            
+
                           },
                           child: Text("Register")))
                 ],

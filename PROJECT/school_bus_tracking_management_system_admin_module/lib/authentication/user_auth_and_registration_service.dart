@@ -4,7 +4,7 @@ import 'package:school_bus_tracking_management_system_admin_module/authenticatio
 import '../user_management/database.dart';
 
 class AuthService {
-  //String? userEmail;
+  
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
 
   User? _userFromFirebase(auth.User? user) {

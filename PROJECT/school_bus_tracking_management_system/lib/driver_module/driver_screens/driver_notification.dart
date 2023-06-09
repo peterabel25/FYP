@@ -9,12 +9,16 @@ import '../driver_data_provider.dart';
 import 'package:intl/intl.dart';
 
 
-class DriverNotification extends StatelessWidget {
-  // const DriverNotification({super.key});
+class DriverNotification extends StatefulWidget {
+
+  @override
+  State<DriverNotification> createState() => _DriverNotificationState();
+}
+
+class _DriverNotificationState extends State<DriverNotification> {
   final CollectionReference<Map<String, dynamic>> _userRecordsCollection =
       FirebaseFirestore.instance.collection('userRecords');
 
-  
   @override
   Widget build(BuildContext context) {
       DriverData driverdataprovider = Provider.of<DriverData>(context);
@@ -65,13 +69,11 @@ class DriverNotification extends StatelessWidget {
                       final message = messages[index];
 
                        DateTime date = message['timestamp'].toDate();
-                   String formattedDate = DateFormat('dd/MM hh:mm a').format(date);
+                       String formattedDate = DateFormat('dd/MM hh:mm a').format(date);
                       return ListTile(
                         title: Text(message['Title']),
                         subtitle:Text(message['messageBody']),
                         trailing:Text(formattedDate) ,
-                        // title: Text(message['messageBody']),
-                        // subtitle: Text(formattedDate),
                       );
                     },
                   );

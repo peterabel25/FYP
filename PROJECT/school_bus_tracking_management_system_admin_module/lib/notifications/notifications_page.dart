@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, depend_on_referenced_packages
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -20,14 +20,10 @@ final CollectionReference<Map<String, dynamic>> _userRecordsCollection =
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Notifications'),
-      //   centerTitle: true,
-      // ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: _userRecordsCollection
             .where('role', isEqualTo: 'driver')
-            .where('busPewa')
+           // .where('busPewa')
             .snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -75,7 +71,6 @@ final CollectionReference<Map<String, dynamic>> _userRecordsCollection =
                         title: Text(message['Title']),
                         subtitle:Text(message['messageBody']),
                         trailing:Text(formattedDate) ,
-                        // Text(formattedDate),
                       );
                     },
                   );
@@ -86,33 +81,6 @@ final CollectionReference<Map<String, dynamic>> _userRecordsCollection =
         },
       ),
     );
-    // Padding(
-    //   padding: const EdgeInsets.all(12.0),
-    //   child: Container(
-    //     color: Colors.grey[100],
-    //     child: Padding(
-    //       padding: const EdgeInsets.all(12.0),
-    //       child: Column(
-    //         // ignore: prefer_const_literals_to_create_immutables
-    //         children: [
-              
-    //           SizedBox(height: 23),
-    //           Card(
-    //             child: ListTile(
-    //               title: Text("Emergency alert ! "),
-    //               subtitle: Text("heavy traffic via Nyerere Road"),
-    //             ),
-    //           ),
-    //           Card(
-    //             child: ListTile(
-    //               title: Text("Emergency alert ! "),
-    //               subtitle: Text("heavy traffic via Nyerere Road"),
-    //             ),
-    //           )
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
+    
   }
 }

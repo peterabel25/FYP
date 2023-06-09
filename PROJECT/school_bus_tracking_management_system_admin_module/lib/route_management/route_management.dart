@@ -110,7 +110,16 @@ class _RouteManagementPageState extends State<RouteManagementPage> {
                           },
                           child: Card(
                             child: Center(
-                              child: Text("UPDATE ROUTE"),
+                              child: Column(
+                                children: [
+                                  SizedBox(height:18),
+                                  Image.asset('routeupdate.png',
+                                  height: 150, width: 200),
+                                  SizedBox(height:10),
+                                  Text("UPDATE ROUTE",
+                                    style: TextStyle(fontSize: 18),),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -130,7 +139,14 @@ class _RouteManagementPageState extends State<RouteManagementPage> {
                           },
                           child: Card(
                             child: Center(
-                              child: Text("UPDATE BUS INFO"),
+                              child: Column(
+                                children: [
+                                  Image.asset('info.jpg',
+                                  height: 200, width: 200),
+                                  Text("UPDATE BUS INFO",
+                                    style: TextStyle(fontSize: 18),),
+                                ],
+                              ),
                             ),
                           ),
                         ),
