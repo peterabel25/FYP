@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:school_bus_tracking_management_system/authentication/splash_screen.dart';
 import 'authentication/login_page.dart';
 import 'driver_module/driver_data_provider.dart';
 import 'firebase_options.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
         ),
-        home: LoginPage());
+        home: SplashScreen());
   }
 
 

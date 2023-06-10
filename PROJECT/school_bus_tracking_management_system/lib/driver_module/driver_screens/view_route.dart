@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, dead_code
+// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, dead_code, prefer_collection_literals
 
 import 'dart:async';
 
