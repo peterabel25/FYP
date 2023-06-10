@@ -16,6 +16,8 @@ class _RouteRegisterState extends State<RouteRegister> {
   TextEditingController startpointController = TextEditingController();
   TextEditingController endpointController = TextEditingController();
 
+  final pointValidator = RegExp(r"^[A-Za-z]+\s[A-Za-z]+$");
+
   @override
   Widget build(BuildContext context) {
     DatabaseService databaseService = DatabaseService();
@@ -33,65 +35,66 @@ class _RouteRegisterState extends State<RouteRegister> {
                 children: [
                   TextFormField(
                     validator: (value) {
-                      if (value == '') {
-                        return "Route Name is required";
+                      if (value == '') return "Route name is required";
+                      if (!pointValidator.hasMatch(value!)) {
+                        return "Route name not valid";
                       }
                       return null;
                     },
                     controller: routenameController,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
+                            borderRadius: BorderRadius.circular(10.0)),
                         hintText: " label as Route A.."),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
                     validator: (value) {
-                      if (value == '') {
-                        return "start point is required";
+                      if (value == '') return "Start point is required";
+                      if (!pointValidator.hasMatch(value!)) {
+                        return " Start point not valid";
                       }
                       return null;
                     },
                     controller: startpointController,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                      hintText: "Start point"),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        hintText: "Start point"),
                   ),
                   SizedBox(height: 20),
                   TextFormField(
                     validator: (value) {
-                      if (value == '') {
-                        return "End Point is required";
+                      if (value == '') return "Start point is required";
+                      if (!pointValidator.hasMatch(value!)) {
+                        return " End point not valid";
                       }
                       return null;
                     },
                     controller: endpointController,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                      hintText: "End point"),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        hintText: "End point"),
                   ),
                   SizedBox(height: 20),
                   SizedBox(
-                      height: 36, 
+                      height: 36,
                       width: 200,
                       child: ElevatedButton(
-                          onPressed: () { 
+                          onPressed: () {
                             if (formkey.currentState!.validate()) {
                               databaseService.RegisterRoute(
-                                routenameController.text,
-                                startpointController.text,
-                                endpointController.text
-                                );
+                                  routenameController.text,
+                                  startpointController.text,
+                                  endpointController.text);
 
-                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Route Registered')));
-                                routenameController.clear();
-                                startpointController.clear();
-                                endpointController.clear();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Route Registered')));
+                              routenameController.clear();
+                              startpointController.clear();
+                              endpointController.clear();
                             }
-
                           },
                           child: Text("Register")))
                 ],

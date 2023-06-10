@@ -18,6 +18,10 @@ class _BusRegisterState extends State<BusRegister> {
   TextEditingController routeassignedController = TextEditingController();
   TextEditingController driverassignedController = TextEditingController();
 
+  final alphabetRegex = RegExp(r'[a-zA-Z]');
+  final numberRegex = RegExp(r'\d');
+  final plateNumberValidator = RegExp(r'^[A-Z]{1,2}\d{1,4}\s[A-Z]{1,3}$');
+
   List<String> availableRoutes = [];
   String selectedRoute = '';
   String? routeAssignmentError;
@@ -72,10 +76,11 @@ class _BusRegisterState extends State<BusRegister> {
                   TextFormField(
                     //   initialValue: "Bus ...",
                     validator: (value) {
-                      if (value == '') {
-                        return "Bus Number is required";
-                      }
-                      return null;
+                       if (value == '') return "Bus number is required";
+                    if (!alphabetRegex.hasMatch(value!)&&!numberRegex.hasMatch(value!)) {
+                      return " Bus number not valid";
+                    }
+                    return null;
                     },
                     controller: busnumberController,
                     decoration: InputDecoration(
@@ -86,10 +91,11 @@ class _BusRegisterState extends State<BusRegister> {
                   SizedBox(height: 20),
                   TextFormField(
                     validator: (value) {
-                      if (value == '') {
-                        return "Plate Number is required";
-                      }
-                      return null;
+                       if (value == '') return "Plate Number is required";
+                    if (!plateNumberValidator.hasMatch(value!)) {
+                      return " Plate number not valid";
+                    }
+                    return null;
                     },
                     controller: platenumberController,
                     decoration: InputDecoration(

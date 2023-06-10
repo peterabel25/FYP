@@ -222,26 +222,26 @@ class _StudentRegistrationState extends State<StudentRegistration> {
               //Text("Assign Bus :", style: TextStyle(fontSize: 20)),
               //SizedBox(width: 25),
               DropdownButtonFormField<String>(
-  value: selectedBus,
-  onChanged: (String? newValue) {
-    setState(() {
-      selectedBus = newValue!;
-    });
-  },
-  items: busList.map((String busId) {
-    return DropdownMenuItem<String>(
-      value: busId,
-      child: Text(busId, style: TextStyle(fontSize: 18)),
-    );
-  }).toList(),
-  decoration: InputDecoration(
-    labelText: 'Bus Assigned',
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10.0),
-    ),
-    hintText: 'Select a bus',
-  ),
-)
+                value: selectedBus,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedBus = newValue!;
+                  });
+                },
+                items: busList.map((String busId) {
+                  return DropdownMenuItem<String>(
+                    value: busId,
+                    child: Text(busId, style: TextStyle(fontSize: 18)),
+                  );
+                }).toList(),
+                decoration: InputDecoration(
+                  labelText: 'Bus Assigned',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  hintText: 'Select a bus',
+                ),
+              )
             ],
           ),
         ),
@@ -270,8 +270,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
         busList = buses;
         selectedBus = buses.first; // Select the first bus by default
       });
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   @override

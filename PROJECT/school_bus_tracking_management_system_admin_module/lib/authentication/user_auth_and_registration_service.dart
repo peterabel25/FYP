@@ -1,10 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:school_bus_tracking_management_system_admin_module/authentication/usermodal.dart';
 
 import '../user_management/database.dart';
 
 class AuthService {
-  
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
 
   User? _userFromFirebase(auth.User? user) {
@@ -18,12 +18,38 @@ class AuthService {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
+//function to delete a user 
+  Future<void> deleteRegisteredUser(String email, String password) async {
+    try {
+      auth.UserCredential credential =
+          await auth.FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      await credential.user?.delete();
+      
+      print('User deleted from Firebase Authentication successfully.');
+    } catch (e) {
+      print('Failed to delete user from Firebase Authentication: $e');
+    }
+  }
+
+  Future<void> deleteUserData(String userId) async {
+    try {
+      await FirebaseFirestore.instance.collection('userRecords').doc(userId).delete();
+      print('User data deleted successfully.');
+    } catch (e) {
+      print('Failed to delete user data: $e');
+    }
+  }
+
 //Function for user(admin) to login to the system
   Future<User?> signInWithEmailAndPassword(
       String email, String password) async {
     final credential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-   // userEmail = email;
+    // userEmail = email;
     return _userFromFirebase(credential.user);
   }
 
@@ -76,10 +102,10 @@ class AuthService {
       required String email,
       required String password,
       required String studentFname,
-     // required String studentLname,
+      // required String studentLname,
       required String studentClass,
       required String residence,
-     // required String pickuppoint,
+      // required String pickuppoint,
       required String busAssigned}) async {
     final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
@@ -91,11 +117,13 @@ class AuthService {
         email: email,
         password: password,
         studentFname: studentFname,
-       // studentLname: studentLname,
+        // studentLname: studentLname,
         studentClass: studentClass,
         residence: residence,
-       // pickuppoint: pickuppoint,
+        // pickuppoint: pickuppoint,
         busAssigned: busAssigned);
     return _userFromFirebase(credential.user);
   }
+
+//function to delete a user
 }
