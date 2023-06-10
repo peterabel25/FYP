@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
 //import 'package:firebase_auth/firebase_auth.dart' as auth;
 //import 'package:school_bus_tracking_management_system_admin_module/authentication/usermodal.dart';
 
@@ -9,6 +9,8 @@ import 'package:school_bus_tracking_management_system_admin_module/notifications
 import 'package:school_bus_tracking_management_system_admin_module/route_management/route_management.dart';
 import 'package:school_bus_tracking_management_system_admin_module/user_management/user_management.dart';
 import 'package:side_navigation/side_navigation.dart';
+
+import '../providers/admin_provider.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -31,7 +33,8 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    final authservice = Provider.of<AuthService>(context); 
+    final authservice = Provider.of<AuthService>(context);
+    final adminprovider = Provider.of<AdminProvider>(context);
 
     return Scaffold(
         appBar: AppBar(centerTitle: true, title: Text("School bus Tracker")),
@@ -41,11 +44,13 @@ class _HomepageState extends State<Homepage> {
                 header: SideNavigationBarHeader(
                     image: CircleAvatar(
                       radius: 30,
-                      child: Icon(Icons.person,size:40),
+                      child: Icon(Icons.person, size: 40),
                     ),
-                    title: Text("School Admin",style:TextStyle(fontSize:18 ) ,),
-                    
-                    subtitle:Text("Admin@email.com")),
+                    title: Text(
+                      "School Admin",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    subtitle: Text("${adminprovider.adminEmail}")),
                 footer: SideNavigationBarFooter(
                     label: InkWell(
                         onTap: () async {
@@ -61,8 +66,6 @@ class _HomepageState extends State<Homepage> {
                       icon: Icons.telegram, label: "Route Management"),
                   SideNavigationBarItem(
                       icon: Icons.notifications_active, label: "Notifications"),
-                  // SideNavigationBarItem(
-                  //     icon: Icons.settings, label: "Settings"),
                 ],
                 onTap: (index) {
                   setState(() {

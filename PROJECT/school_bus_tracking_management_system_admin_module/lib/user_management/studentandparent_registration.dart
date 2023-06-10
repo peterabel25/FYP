@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unused_field, valid_regexps
+// ignore_for_file: prefer_const_constructors, unused_field, valid_regexps, empty_catches
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -271,7 +271,6 @@ class _StudentRegistrationState extends State<StudentRegistration> {
         selectedBus = buses.first; // Select the first bus by default
       });
     } catch (error) {
-      print('Error fetching buses: $error');
     }
   }
 

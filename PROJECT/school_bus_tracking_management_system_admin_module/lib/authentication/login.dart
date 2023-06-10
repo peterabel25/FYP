@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:school_bus_tracking_management_system_admin_module/authentication/admin_register.dart';
 //import 'package:school_bus_tracking_management_system_admin_module/homepage/homepage.dart';
 
+import '../providers/admin_provider.dart';
 import 'user_auth_and_registration_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final authservice = Provider.of<AuthService>(context);
+    final adminprovider = Provider.of<AdminProvider>(context);
     return Scaffold(
         backgroundColor: Colors.grey[300],
         body: SingleChildScrollView(
@@ -43,12 +45,10 @@ class _LoginPageState extends State<LoginPage> {
                       Text("WELCOME BACK !",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20)),
-                               SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
-                      
-                     Image.asset("childandparent.png",height:100),
-
+                      Image.asset("childandparent.png", height: 100),
                       SizedBox(
                         height: 30,
                       ),
@@ -103,7 +103,8 @@ class _LoginPageState extends State<LoginPage> {
                                   authservice.signInWithEmailAndPassword(
                                       emailController.text,
                                       passwordController.text);
-                                 
+                                  adminprovider.adminEmail =
+                                      emailController.text;
                                 }
                               },
                               child: Text("Login",

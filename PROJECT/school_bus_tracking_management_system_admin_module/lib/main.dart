@@ -6,11 +6,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'authentication/user_auth_and_registration_service.dart';
 import 'authentication/wrapper.dart';
 import 'firebase_options.dart';
+import 'providers/admin_provider.dart';
 
 Future<void> main() async {
+  Provider.debugCheckInvalidValueType = null;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
+  );
   runApp(const MyApp());
 }
 
@@ -20,20 +22,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers:[
-        Provider<AuthService>(create: (_) => AuthService(),),
+      providers: [
+        Provider<AuthService>(
+          create: (_) => AuthService(),
+        ),
+        Provider<AdminProvider>(
+          create: (_) => AdminProvider(),
+        ),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner:false ,
-        title: 'school bus tracker',
-        theme: ThemeData(
-          
-          primarySwatch: Colors.deepPurple,
-        ),
-        home:Wrapper()
-        
-      ),
+          debugShowCheckedModeBanner: false,
+          title: 'school bus tracker',
+          theme: ThemeData(
+            primarySwatch: Colors.deepPurple,
+          ),
+          home: Wrapper()),
     );
   }
 }
-

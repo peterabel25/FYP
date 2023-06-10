@@ -16,7 +16,7 @@ class _UpdateBusInfoState extends State<UpdateBusInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title:Text('Registered Routes') ,
+        title:Text('Registered Buses') ,
         centerTitle:true
       ) ,
       body:StreamBuilder<QuerySnapshot>(
