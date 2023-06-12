@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables
 
 
 import 'package:flutter/material.dart';
@@ -34,22 +34,42 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     final authservice = Provider.of<AuthService>(context);
     final adminprovider = Provider.of<AdminProvider>(context);
-
+ 
     return Scaffold(
-        appBar: AppBar(centerTitle: true, title: Text("School bus Tracker")),
+         appBar: AppBar(
+          actions:[
+                        Icon(Icons.notifications,color:Colors.black),
+
+                     SizedBox(width:10),
+
+            Icon(Icons.chat,color:Colors.black),
+         SizedBox(width:10),
+          Icon(Icons.person,color:Colors.black),
+                   SizedBox(width:15),
+
+            //  Text("Admin",style:TextStyle(
+            // color:Colors.black,fontWeight:FontWeight.bold,fontSize:15)),
+          
+          ],
+         // leading:Image.asset("assets/udsm.jpg"),
+           backgroundColor:Colors.grey[200],
+          centerTitle: true, title: Text("SCHOOL BUS TRACKER",style:TextStyle(
+            color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
+          ))),
         body: Row(
           children: [
             SideNavigationBar(
-                header: SideNavigationBarHeader(
-                    image: CircleAvatar(
-                      radius: 30,
-                      child: Icon(Icons.person, size: 40),
-                    ),
-                    title: Text(
-                      "School Admin",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    subtitle: Text("${adminprovider.adminEmail}")),
+                // header: SideNavigationBarHeader(
+                //     image: CircleAvatar(
+                //       backgroundColor:Colors.grey[200],
+                //       radius: 25,
+                //       child: Icon(Icons.person, size: 35,color:const Color.fromARGB(255, 139, 139, 139)),
+                //     ),
+                //     title: Text(
+                //       "School Admin",
+                //       style: TextStyle(fontSize: 18),
+                //     ),
+                //     subtitle: Text("${adminprovider.adminEmail}")),
                 footer: SideNavigationBarFooter(
                     label: InkWell(
                         onTap: () async {

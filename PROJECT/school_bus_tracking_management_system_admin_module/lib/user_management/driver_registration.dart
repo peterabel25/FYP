@@ -26,11 +26,8 @@ class _DriverRegistrationState extends State<DriverRegistration> {
   final emailValidator = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
-  // final phonenumberValidator =
-  //     RegExp(r"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$");
 
   final licenseValidator = RegExp(r"^[A-Z](?:\d[- ]*){14}$");
-  //final nameValidator = RegExp(r"/^[A-Z]+$/i");
   final phoneNumberValidator =
       RegExp(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$');
 
@@ -60,8 +57,6 @@ class _DriverRegistrationState extends State<DriverRegistration> {
     return null;
   }
 
- 
-
   @override
   void initState() {
     super.initState();
@@ -83,9 +78,14 @@ class _DriverRegistrationState extends State<DriverRegistration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Driver Registration"),
-        centerTitle: true,
-      ),
+           backgroundColor:Colors.grey[200],
+          centerTitle: true, title: Text("DRIVER REGISTRATION",style:TextStyle(
+            color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
+          ))),
+      // appBar: AppBar(
+      //   title: Text("Driver Registration"),
+      //   centerTitle: true,
+      // ),
       body: SingleChildScrollView(
         child: Center(
           child: Form(

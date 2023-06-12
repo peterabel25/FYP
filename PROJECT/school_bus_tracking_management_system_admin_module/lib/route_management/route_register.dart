@@ -23,9 +23,14 @@ class _RouteRegisterState extends State<RouteRegister> {
     DatabaseService databaseService = DatabaseService();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Route Registration"),
-        centerTitle: true,
-      ),
+           backgroundColor:Colors.grey[200],
+          centerTitle: true, title: Text("ROUTE REGISTRATION",style:TextStyle(
+            color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
+          ))),
+      // appBar: AppBar(
+      //   title: Text("Route Registration"),
+      //   centerTitle: true,
+      // ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(50.0),
@@ -48,35 +53,44 @@ class _RouteRegisterState extends State<RouteRegister> {
                         hintText: " label as Route A.."),
                   ),
                   SizedBox(height: 20),
-                  TextFormField(
-                    validator: (value) {
-                      if (value == '') return "Start point is required";
-                      if (!pointValidator.hasMatch(value!)) {
-                        return " Start point not valid";
-                      }
-                      return null;
-                    },
-                    controller: startpointController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        hintText: "Start point"),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == '') return "Start point is required";
+                            if (!pointValidator.hasMatch(value!)) {
+                              return " Start point not valid";
+                            }
+                            return null;
+                          },
+                          controller: startpointController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              hintText: "Start point"),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                  Expanded(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == '') return "Start point is required";
+                        if (!pointValidator.hasMatch(value!)) {
+                          return " End point not valid";
+                        }
+                        return null;
+                      },
+                      controller: endpointController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          hintText: "End point"),
+                    ),
                   ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    validator: (value) {
-                      if (value == '') return "Start point is required";
-                      if (!pointValidator.hasMatch(value!)) {
-                        return " End point not valid";
-                      }
-                      return null;
-                    },
-                    controller: endpointController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        hintText: "End point"),
+                    ],
                   ),
+                  
                   SizedBox(height: 20),
                   SizedBox(
                       height: 36,

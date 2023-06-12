@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+
+import '../authentication/user_auth_and_registration_service.dart';
 
 class UpdateDriverInfo extends StatefulWidget {
   const UpdateDriverInfo({super.key});
@@ -11,18 +14,17 @@ class UpdateDriverInfo extends StatefulWidget {
 }
 
 class _UpdateDriverInfoState extends State<UpdateDriverInfo> {
-// final CollectionReference<Map<String, dynamic>> _userRecordsCollection =
-//       FirebaseFirestore.instance.collection('userRecords');
-
   @override
   Widget build(BuildContext context) {
+    final authservice = Provider.of<AuthService>(context);
+
     return Scaffold(
-      appBar:AppBar(
-        title:Text('Registered Drivers') ,
-        centerTitle:true
-      ) ,
-      body:StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('userRecords').where('role', isEqualTo: 'driver').snapshots(),
+      appBar: AppBar(title: Text('Registered Drivers'), centerTitle: true),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('userRecords')
+            .where('role', isEqualTo: 'driver')
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -31,22 +33,79 @@ class _UpdateDriverInfoState extends State<UpdateDriverInfo> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-return ListView(
+          return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
 
               return ListTile(
-               title: Row(
-                 children: [
-                   Text(data['firstName']),
-                   Text(data['lastName']),
-
-                 ],
-               ),
+                title: Row(
+                  children: [
+                    Text(data['firstName']),
+                    Text(data['lastName']),
+                  ],
+                ),
                 subtitle: Text(data['email']),
-               // trailing: Icon(Icons.arrow_forward),
+                trailing: InkWell(
+                    onTap: () {
+                      authservice.deleteRegisteredUser(
+                          data['email'], data['password']);
+
+                      authservice.deleteUserData(document.id);
+                    },
+                    child: Icon(Icons.delete)),
                 onTap: () {
-                  // do something when tile is tapped
+                  void showParentDetailsDialog(
+                    BuildContext context,
+                  ) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Parent Details"),
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'First name :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(data['firstName']),
+                              SizedBox(height: 8),
+                              Text(
+                                'Last name',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(data['lastName']),
+                              SizedBox(height: 8),
+                              Text(
+                                'contact',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(data['contact']),
+                              SizedBox(height: 8),
+                              Text(
+                                'Bus Assigned',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(data['busPewa']),
+                            ],
+                          ),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Close'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+
+                  showParentDetailsDialog(context);
                 },
               );
             }).toList(),
@@ -54,13 +113,5 @@ return ListView(
         },
       ),
     );
-
-
-
-
-
-
-
-    
   }
 }

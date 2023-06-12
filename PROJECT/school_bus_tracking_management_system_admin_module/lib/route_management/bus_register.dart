@@ -65,44 +65,60 @@ class _BusRegisterState extends State<BusRegister> {
   Widget build(BuildContext context) {
     DatabaseService databaseService = DatabaseService();
     return Scaffold(
-      appBar: AppBar(title: Text("Register and Assign Bus"), centerTitle: true),
+      backgroundColor:Colors.grey[100],
+      appBar: AppBar(
+           backgroundColor:Colors.grey[300],
+          centerTitle: true, title: Text("REGISTER BUS ",style:TextStyle(
+            color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
+          ))),
+      // appBar: AppBar(title: Text("Register and Assign Bus"), centerTitle: true),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(50.0),
+          padding: const EdgeInsets.all(60.0),
           child: Form(
               key: formkey,
               child: Column(
                 children: [
-                  TextFormField(
-                    //   initialValue: "Bus ...",
-                    validator: (value) {
-                       if (value == '') return "Bus number is required";
-                    if (!alphabetRegex.hasMatch(value!)&&!numberRegex.hasMatch(value!)) {
-                      return " Bus number not valid";
-                    }
-                    return null;
-                    },
-                    controller: busnumberController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        hintText: "Bus Number"),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          //   initialValue: "Bus ...",
+                          validator: (value) {
+                             if (value == '') return "Bus number is required";
+                          if (!alphabetRegex.hasMatch(value!)&&!numberRegex.hasMatch(value!)) {
+                            return " Bus number not valid";
+                          }
+                          return null;
+                          },
+                          controller: busnumberController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              hintText: "Bus Number"),
+                        ),
+                      ),
+                                        SizedBox(width: 15),
+
+                      Expanded(
+                        child: TextFormField(
+                                          validator: (value) {
+                         if (value == '') return "Plate Number is required";
+                                          if (!plateNumberValidator.hasMatch(value!)) {
+                        return " Plate number not valid";
+                                          }
+                                          return null;
+                                          },
+                                          controller: platenumberController,
+                                          decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          hintText: "Plate No"),
+                                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    validator: (value) {
-                       if (value == '') return "Plate Number is required";
-                    if (!plateNumberValidator.hasMatch(value!)) {
-                      return " Plate number not valid";
-                    }
-                    return null;
-                    },
-                    controller: platenumberController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        hintText: "Plate No"),
-                  ),
+                  
                   SizedBox(height: 20),
 
                   //DROPDOWN LIST TO CHOOSE A ROUTE

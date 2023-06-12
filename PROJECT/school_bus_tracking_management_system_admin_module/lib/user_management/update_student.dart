@@ -1,11 +1,10 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_element, dead_code
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 import '../authentication/user_auth_and_registration_service.dart';
-import 'user_details_screens/parents_details.dart';
 
 class UpdateStudentInfo extends StatefulWidget {
   const UpdateStudentInfo({super.key});
@@ -56,13 +55,57 @@ class _UpdateStudentInfoState extends State<UpdateStudentInfo> {
                     },
                     child: Icon(Icons.delete)),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ParentsDetails(data: data),
-                    ),
-                  );
-                  // do something when tile is tapped
+                  void showParentDetailsDialog(
+                    BuildContext context,
+                  ) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Parent Details"),
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'First name :',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(data['firstName']),
+                              SizedBox(height: 8),
+                              Text(
+                                'Last name',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(data['lastName']),
+                              SizedBox(height: 8),
+                              Text(
+                                'contact',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(data['contact']),
+                              SizedBox(height: 8),
+                              Text(
+                                'Residence',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(data['residence']),
+                            ],
+                          ),
+                          actions: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Close'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+
+                  showParentDetailsDialog(context);
                 },
               );
             }).toList(),
@@ -70,6 +113,5 @@ class _UpdateStudentInfoState extends State<UpdateStudentInfo> {
         },
       ),
     );
-    //const Placeholder();
   }
 }

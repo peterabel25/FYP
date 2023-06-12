@@ -57,42 +57,51 @@ class _StudentRegistrationState extends State<StudentRegistration> {
             padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
-                TextFormField(
-                  validator: (value) {
-                    if (value == '') return "First name is required";
-                    if (!nameValidator.hasMatch(value!)) {
-                      return "name not valid";
-                    }
-                    return null;
-                  },
-                  controller: fnameController,
-                  decoration: InputDecoration(
-                      label: Text("First name"),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == '') return "First name is required";
+                          if (!nameValidator.hasMatch(value!)) {
+                            return "name not valid";
+                          }
+                          return null;
+                        },
+                        controller: fnameController,
+                        decoration: InputDecoration(
+                            label: Text("First name"),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            hintText: "First name"),
                       ),
-                      hintText: "First name"),
+                    ),
+                    SizedBox(
+                  width: 20,
                 ),
-                SizedBox(
-                  height: 15,
+                Expanded(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == '') return "Last name is required";
+                      if (!nameValidator.hasMatch(value!)) {
+                        return "name not valid";
+                      }
+                      return null;
+                    },
+                    controller: lnameController,
+                    decoration: InputDecoration(
+                        label: Text("Last name"),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        hintText: "Last name"),
+                    // decoration: InputDecoration(hintText: "Last name"),
+                  ),
                 ),
-                TextFormField(
-                  validator: (value) {
-                    if (value == '') return "Last name is required";
-                    if (!nameValidator.hasMatch(value!)) {
-                      return "name not valid";
-                    }
-                    return null;
-                  },
-                  controller: lnameController,
-                  decoration: InputDecoration(
-                      label: Text("Last name"),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      hintText: "Last name"),
-                  // decoration: InputDecoration(hintText: "Last name"),
+                  ],
                 ),
+                
                 SizedBox(
                   height: 15,
                 ),
@@ -218,9 +227,6 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                 height: 15,
               ),
 
-              //DROPDOWN LIST OF BUSES
-              //Text("Assign Bus :", style: TextStyle(fontSize: 20)),
-              //SizedBox(width: 25),
               DropdownButtonFormField<String>(
                 value: selectedBus,
                 onChanged: (String? newValue) {
@@ -277,9 +283,11 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("User Registration"),
-        centerTitle: true,
-      ),
+           backgroundColor:Colors.grey[200],
+          centerTitle: true, title: Text("USER REGISTRATION",style:TextStyle(
+            color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
+          ))),
+      
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Center(

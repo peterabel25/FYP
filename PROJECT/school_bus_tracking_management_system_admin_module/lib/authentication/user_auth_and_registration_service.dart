@@ -49,7 +49,6 @@ class AuthService {
       String email, String password) async {
     final credential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    // userEmail = email;
     return _userFromFirebase(credential.user);
   }
 
