@@ -1,11 +1,15 @@
+// ignore_for_file: avoid_print, dead_code
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter/material.dart';
 import 'package:school_bus_tracking_management_system_admin_module/authentication/usermodal.dart';
 
 import '../user_management/database.dart';
 
-class AuthService {
+class AuthService with ChangeNotifier{
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
+  String loginError="";
 
   User? _userFromFirebase(auth.User? user) {
     if (user == null) {
@@ -18,7 +22,7 @@ class AuthService {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
-//function to delete a user 
+//function to delete a user
   Future<void> deleteRegisteredUser(String email, String password) async {
     try {
       auth.UserCredential credential =
@@ -28,7 +32,7 @@ class AuthService {
       );
 
       await credential.user?.delete();
-      
+
       print('User deleted from Firebase Authentication successfully.');
     } catch (e) {
       print('Failed to delete user from Firebase Authentication: $e');
@@ -37,7 +41,10 @@ class AuthService {
 
   Future<void> deleteUserData(String userId) async {
     try {
-      await FirebaseFirestore.instance.collection('userRecords').doc(userId).delete();
+      await FirebaseFirestore.instance
+          .collection('userRecords')
+          .doc(userId)
+          .delete();
       print('User data deleted successfully.');
     } catch (e) {
       print('Failed to delete user data: $e');
@@ -45,11 +52,37 @@ class AuthService {
   }
 
 //Function for user(admin) to login to the system
+  // Future<User?> signInWithEmailAndPassword(
+  //     String email, String password) async {
+  //   final credential = await _firebaseAuth.signInWithEmailAndPassword(
+  //       email: email, password: password);
+  //   return _userFromFirebase(credential.user);
+  // }
+
   Future<User?> signInWithEmailAndPassword(
       String email, String password) async {
-    final credential = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
-    return _userFromFirebase(credential.user);
+    try {
+      final credential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return _userFromFirebase(credential.user);
+    } catch (e) {
+      // Handle specific error cases
+      if (e is auth.FirebaseAuthException) {
+        if (e.code == 'user-not-found') {
+         
+          loginError = e.code;
+        } else if (e.code == 'wrong-password') {
+          
+          loginError = e.code;
+          print('Wrong password');
+        }
+      }
+
+      return null; // Return null or throw an exception based on your preference
+    }
+    notifyListeners();
   }
 
 //Function for user to logout of the system
@@ -123,6 +156,4 @@ class AuthService {
         busAssigned: busAssigned);
     return _userFromFirebase(credential.user);
   }
-
-//function to delete a user
 }

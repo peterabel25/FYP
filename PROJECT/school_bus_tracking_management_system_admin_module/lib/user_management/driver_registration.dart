@@ -82,10 +82,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
           centerTitle: true, title: Text("DRIVER REGISTRATION",style:TextStyle(
             color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
           ))),
-      // appBar: AppBar(
-      //   title: Text("Driver Registration"),
-      //   centerTitle: true,
-      // ),
+      
       body: SingleChildScrollView(
         child: Center(
           child: Form(

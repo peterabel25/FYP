@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -98,9 +98,9 @@ class _LoginPageState extends State<LoginPage> {
                           height: 37,
                           width: 150,
                           child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 if (formkey.currentState!.validate()) {
-                                  authservice.signInWithEmailAndPassword(
+                                  await authservice.signInWithEmailAndPassword(
                                       emailController.text,
                                       passwordController.text);
                                   adminprovider.adminEmail =

@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables
-
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables, unused_local_variable, duplicate_ignore
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,42 +33,28 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     final authservice = Provider.of<AuthService>(context);
     final adminprovider = Provider.of<AdminProvider>(context);
- 
+
     return Scaffold(
-         appBar: AppBar(
-          actions:[
-                        Icon(Icons.notifications,color:Colors.black),
-
-                     SizedBox(width:10),
-
-            Icon(Icons.chat,color:Colors.black),
-         SizedBox(width:10),
-          Icon(Icons.person,color:Colors.black),
-                   SizedBox(width:15),
-
-            //  Text("Admin",style:TextStyle(
-            // color:Colors.black,fontWeight:FontWeight.bold,fontSize:15)),
-          
-          ],
-         // leading:Image.asset("assets/udsm.jpg"),
-           backgroundColor:Colors.grey[200],
-          centerTitle: true, title: Text("SCHOOL BUS TRACKER",style:TextStyle(
-            color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
-          ))),
+        appBar: AppBar(
+            actions: [
+              Icon(Icons.notifications, color: Colors.black),
+              SizedBox(width: 10),
+              Icon(Icons.chat, color: Colors.black),
+              SizedBox(width: 10),
+              Icon(Icons.person, color: Colors.black),
+              SizedBox(width: 15),
+            ],
+            //leading:Image.asset("assets/childandparent.jpg",width:50,height:30),
+            backgroundColor: Colors.grey[200],
+            title: Text("SBTMS",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20))),
         body: Row(
           children: [
             SideNavigationBar(
-                // header: SideNavigationBarHeader(
-                //     image: CircleAvatar(
-                //       backgroundColor:Colors.grey[200],
-                //       radius: 25,
-                //       child: Icon(Icons.person, size: 35,color:const Color.fromARGB(255, 139, 139, 139)),
-                //     ),
-                //     title: Text(
-                //       "School Admin",
-                //       style: TextStyle(fontSize: 18),
-                //     ),
-                //     subtitle: Text("${adminprovider.adminEmail}")),
+                initiallyExpanded: true,
                 footer: SideNavigationBarFooter(
                     label: InkWell(
                         onTap: () async {
