@@ -37,18 +37,19 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
         appBar: AppBar(
             actions: [
-              Icon(Icons.notifications, color: Colors.black),
+              Icon(Icons.notifications, 
+              ),
               SizedBox(width: 10),
-              Icon(Icons.chat, color: Colors.black),
+              Icon(Icons.chat,),
               SizedBox(width: 10),
-              Icon(Icons.person, color: Colors.black),
+              Icon(Icons.person,),
               SizedBox(width: 15),
             ],
             //leading:Image.asset("assets/childandparent.jpg",width:50,height:30),
-            backgroundColor: Colors.grey[200],
+            //backgroundColor: Colors.grey[200],
             title: Text("SBTMS",
                 style: TextStyle(
-                    color: Colors.black,
+                    //color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 20))),
         body: Row(

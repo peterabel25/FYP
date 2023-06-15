@@ -16,16 +16,16 @@ class _RouteRegisterState extends State<RouteRegister> {
   TextEditingController startpointController = TextEditingController();
   TextEditingController endpointController = TextEditingController();
 
-  final pointValidator = RegExp(r"^[A-Za-z]+\s[A-Za-z]+$");
+  final pointValidator = RegExp(r"^[A-Za-z ]+$");
 
   @override
   Widget build(BuildContext context) {
     DatabaseService databaseService = DatabaseService();
     return Scaffold(
       appBar: AppBar(
-           backgroundColor:Colors.grey[200],
+          // backgroundColor:Colors.grey[200],
           centerTitle: true, title: Text("ROUTE REGISTRATION",style:TextStyle(
-            color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
+          fontWeight:FontWeight.bold,fontSize:20
           ))),
       // appBar: AppBar(
       //   title: Text("Route Registration"),

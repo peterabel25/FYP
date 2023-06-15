@@ -67,9 +67,9 @@ class _BusRegisterState extends State<BusRegister> {
     return Scaffold(
       backgroundColor:Colors.grey[100],
       appBar: AppBar(
-           backgroundColor:Colors.grey[300],
+          // backgroundColor:Colors.grey[300],
           centerTitle: true, title: Text("REGISTER BUS ",style:TextStyle(
-            color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
+            fontWeight:FontWeight.bold,fontSize:20
           ))),
       // appBar: AppBar(title: Text("Register and Assign Bus"), centerTitle: true),
       body: Center(

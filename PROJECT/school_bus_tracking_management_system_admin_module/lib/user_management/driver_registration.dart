@@ -78,9 +78,9 @@ class _DriverRegistrationState extends State<DriverRegistration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-           backgroundColor:Colors.grey[200],
+          // backgroundColor:Colors.grey[200],
           centerTitle: true, title: Text("DRIVER REGISTRATION",style:TextStyle(
-            color:Colors.black,fontWeight:FontWeight.bold,fontSize:20
+            fontWeight:FontWeight.bold,fontSize:20
           ))),
       
       body: SingleChildScrollView(
