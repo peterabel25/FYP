@@ -9,11 +9,12 @@ import 'package:geolocator/geolocator.dart';
 //import 'package:permission_handler/permission_handler.dart';
 
 class DriverData with ChangeNotifier {
-  String? driverBusNo;
+  late String driverBusNo;
   String? email;
   String? firstName;
   String? lastName;
   List<GeoPoint> pickupPoints = [];
+  List<GeoPoint> emergencyPickupPoints = [];
 
 //METHOD TO FETCH DRIVER'S DATA , PERSONAL INFO,PARENTS IN THE ROUTE ,BUS CURRENT LOCATION AND SEND IT TO DB
   Future fetchDriverData() async {
@@ -34,7 +35,8 @@ class DriverData with ChangeNotifier {
       FirebaseFirestore.instance
           .collection('userRecords')
           .where('role', isEqualTo: 'parent')
-          .where('busAssigned', isEqualTo: 'bus 2')
+          .where('busAssigned', isEqualTo: driverBusNo)
+          .where('isAbsent', isEqualTo: false)
           .get()
           .then((QuerySnapshot snapshot) {
         snapshot.docs.forEach((DocumentSnapshot document) {
@@ -43,25 +45,39 @@ class DriverData with ChangeNotifier {
         });
       });
 
-//Function to send location to db after every 30 seconds
-      Timer.periodic(Duration(seconds: 20), (timer) async {
-        Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-        );
-
-        double latitude = position.latitude;
-        double longitude = position.longitude;
-
-        GeoPoint location = GeoPoint(latitude, longitude);
-
-        await FirebaseFirestore.instance
-            .collection('bus')
-            .doc(driverBusNo)
-            .update({
-          'location': location,
+// function to fetch emergency pickup points
+FirebaseFirestore.instance
+          .collection('userRecords')
+          .where('role', isEqualTo: 'parent')
+          .where('busAssigned', isEqualTo: driverBusNo)
+          .where('isAbsent', isEqualTo: true)
+          .get()
+          .then((QuerySnapshot snapshot) {
+        snapshot.docs.forEach((DocumentSnapshot document) {
+          GeoPoint pickupPoint = document['pickuppoint'];
+          emergencyPickupPoints.add(pickupPoint);
         });
-        print(location.latitude);
       });
+
+//Function to send location to db after every 30 seconds
+      //   Timer.periodic(Duration(seconds: 20), (timer) async {
+      //     Position position = await Geolocator.getCurrentPosition(
+      //       desiredAccuracy: LocationAccuracy.high,
+      //     );
+
+      //     double latitude = position.latitude;
+      //     double longitude = position.longitude;
+
+      //     GeoPoint location = GeoPoint(latitude, longitude);
+
+      //     await FirebaseFirestore.instance
+      //         .collection('bus')
+      //         .doc(driverBusNo)
+      //         .update({
+      //       'location': location,
+      //     });
+      //     print(location.latitude);
+      //   });
     }
     notifyListeners();
   }

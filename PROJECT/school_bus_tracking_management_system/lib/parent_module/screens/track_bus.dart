@@ -68,13 +68,6 @@ GoogleMapController? _mapController;
       ),
     
 
-      // GoogleMap(
-      //   mapType: MapType.normal,
-      //   initialCameraPosition: _kGooglePlex,
-      //   onMapCreated: (GoogleMapController controller) {
-      //     _controller.complete(controller);
-      //   },
-      // ),
     );
   }
 }

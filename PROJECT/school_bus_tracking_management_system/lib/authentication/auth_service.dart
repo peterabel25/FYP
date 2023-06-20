@@ -27,7 +27,6 @@ class AuthService {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
-
 //METHOD TO SIGNIN A USER WITH EMAIL AND PASSWORD
   Future<User?> signInWithEmailAndPassword(
       BuildContext context, String email, String password) async {
@@ -44,10 +43,9 @@ class AuthService {
     if (userRole == 'parent') {
       final PermissionStatus status = await Permission.location.request();
       if (status.isGranted) {
-         Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: ((_) => Homepage())));
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: ((_) => Homepage())));
       }
-      
     } else if (userRole == 'driver') {
       final PermissionStatus status = await Permission.location.request();
       if (status.isGranted) {
@@ -59,7 +57,7 @@ class AuthService {
     return _userFromFirebase(credential.user);
   }
 
-//METHOD TO SEND EMERGENCIES 
+//METHOD TO SEND EMERGENCIES
   void SendEmergency(String dropdownValue, String description) {
     auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
@@ -109,9 +107,32 @@ class AuthService {
     }
   }
 
-//METHOD TO LOGOUT 
+//CHANGE PASSWORD
+  void changePassword(String newPassword) async {
+    auth.User? user = auth.FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      try {
+        await user.updatePassword(newPassword);
+        // print('Password changed successfully');
+      } catch (e) {
+        // print('Failed to change password: $e');
+      }
+    }
+  }
+
+//forgot password
+  void sendPasswordResetEmail(String email) async {
+    try {
+      await auth.FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+     // print('Password reset email sent');
+    } catch (e) {
+    //  print('Failed to send password reset email: $e');
+    }
+  }
+
+//METHOD TO LOGOUT
   Future<void> signOut() async {
     return await _firebaseAuth.signOut();
   }
-  
 }

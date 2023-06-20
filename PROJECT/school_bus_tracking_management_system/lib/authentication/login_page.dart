@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:school_bus_tracking_management_system/authentication/auth_service.dart';
+import 'package:school_bus_tracking_management_system/authentication/password_reset.dart';
 
 //import '../homepage/homepage.dart';
 //import '../parent_module/homepage/homepage.dart';
@@ -98,8 +99,16 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 30,
                   ),
-                  Text("Forgot Password?",
-                      style: TextStyle(fontWeight: FontWeight.bold))
+                  InkWell(
+                    onTap:(){
+       Navigator.of(context).push(
+                        MaterialPageRoute(builder: ((_) => PasswordReset())));
+
+                    },
+
+                    child: Text("Forgot Password?",
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  )
                 ],
               )),
             )

@@ -10,6 +10,11 @@ class DriverProfile extends StatefulWidget {
 }
 
 class _DriverProfileState extends State<DriverProfile> {
+  final nidaValidator = RegExp(r'^\d{20}$');
+  final emailValidator = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +24,7 @@ class _DriverProfileState extends State<DriverProfile> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(18.0),
           child: Center(
             child: Form(
                 child: Column(
@@ -33,9 +38,17 @@ class _DriverProfileState extends State<DriverProfile> {
                   ),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 TextFormField(
+                  validator: (value) {
+                   // if (value == "") return "NIN is required";
+
+                    if (!nidaValidator.hasMatch(value!)) {
+                      return "NIN not valid";
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                       hintText: "National Identity Number (NIDA)",
                       prefixIcon: Icon(Icons.perm_identity),
@@ -47,26 +60,54 @@ class _DriverProfileState extends State<DriverProfile> {
                   height: 15,
                 ),
                 TextFormField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      hintText: "password",
-                      prefixIcon: Icon(Icons.lock),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(14.0),
-                      )),
-                ),
+                    validator: (value) {
+                     // if (value == "") return "Email is required";
+
+                       if (!emailValidator.hasMatch(value!)) {
+                         return "Email not valid";
+                       }
+                      return null;
+                    },
+                    textInputAction: TextInputAction.next,
+                    //controller: emailController,
+                    decoration: InputDecoration(
+                        hintText: "Email",
+                        prefixIcon: Icon(Icons.mail_outline),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14.0),
+                        )),
+                  ),
+                // TextFormField(
+                //   obscureText: true,
+                //   decoration: InputDecoration(
+                //       hintText: "",
+                //       prefixIcon: Icon(Icons.lock),
+                //       border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(14.0),
+                //       )),
+                // ),
                 SizedBox(
                   height: 15,
                 ),
                 TextFormField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      hintText: "confirm password",
-                      prefixIcon: Icon(Icons.lock),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(14.0),
-                      )),
-                ),
+                    validator: (value) {
+                      if (value == "") return "Email is required";
+
+                    //   if (!emailValidator.hasMatch(value!)) {
+                    //     return "Email not valid";
+                    //   }
+                    //   return null;
+                     },
+                    //textInputAction: TextInputAction.next,
+                    //controller: emailController,
+                    decoration: InputDecoration(
+                        hintText: "Contact",
+                        prefixIcon: Icon(Icons.phone),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14.0),
+                        )),
+                  ),
+                
                 SizedBox(
                   height: 15,
                 ),
@@ -85,9 +126,15 @@ class _DriverProfileState extends State<DriverProfile> {
                       minimumSize: Size(160, 43),
                     ),
                     child: Text(
-                      "Submit",
+                      "Save",
                       style: TextStyle(fontSize: 16, letterSpacing: 1.0),
                     )),
+SizedBox(
+                  height: 25,
+                ),
+
+                Text("Change Password ?", style:TextStyle(fontWeight:FontWeight.bold))
+
               ],
             )),
           ),
