@@ -81,4 +81,56 @@ FirebaseFirestore.instance
     }
     notifyListeners();
   }
+
+
+//function to update driver profile
+
+
+Future<void> updateUserDetails({String? email, String? contact, String? NIN}) async {
+  try {
+    auth.User? user = auth.FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      // User is not logged in
+      print('User is not logged in');
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocRef = FirebaseFirestore.instance.collection('userRecords').doc(userId);
+
+    Map<String, dynamic> updatedData = {};
+
+    if (email != null) {
+      updatedData['email'] = email;
+    }
+
+    if (contact != null) {
+      updatedData['contact'] = contact;
+    }
+
+    if (NIN != null) {
+      updatedData['NIN'] = NIN;
+    }
+
+    await userDocRef.update(updatedData);
+
+    print('User details updated successfully!');
+  } catch (error) {
+    print('Error updating user details: $error');
+    // Handle error or display error message to the user
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 }

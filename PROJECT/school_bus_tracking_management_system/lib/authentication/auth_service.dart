@@ -108,19 +108,21 @@ class AuthService {
   }
 
 //CHANGE PASSWORD
-  void changePassword(String newPassword) async {
-    auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
-    if (user != null) {
-      try {
-        await user.updatePassword(newPassword);
-        // print('Password changed successfully');
-      } catch (e) {
-        // print('Failed to change password: $e');
-      }
+Future<void> changePassword(String newPassword) async {
+  auth.User? user = auth.FirebaseAuth.instance.currentUser;
+
+  if (user != null) {
+    try {
+      await user.updatePassword(newPassword);
+      print('Password changed successfully');
+    } catch (e) {
+      print('Failed to change password: $e');
     }
   }
+}
 
+  
 //forgot password
   void sendPasswordResetEmail(String email) async {
     try {

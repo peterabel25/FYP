@@ -68,11 +68,14 @@ class NotificationsPage extends StatelessWidget {
                    String formattedDate = DateFormat('dd/MM hh:mm a').format(date);
                      
                       
-                      return ListTile(
-                        title: Text(message['Title']),
-                        subtitle:Text(message['messageBody']),
-                        trailing:Text(formattedDate) ,
-                        // Text(formattedDate),
+                      return Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: ListTile(
+                          title: Text(message['Title']),
+                          subtitle:Text(message['messageBody']),
+                          trailing:Text(formattedDate) ,
+                          // Text(formattedDate),
+                        ),
                       );
                     },
                   );
