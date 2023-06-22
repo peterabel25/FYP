@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../authentication/auth_service.dart';
+import '../driver_data_provider.dart';
 
 class DriverProfile extends StatefulWidget {
   const DriverProfile({super.key});
@@ -14,12 +16,17 @@ class DriverProfile extends StatefulWidget {
 class _DriverProfileState extends State<DriverProfile> {
   final nidaValidator = RegExp(r'^\d{20}$');
   AuthService authservice = AuthService();
+  TextEditingController nidaController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController contactController = TextEditingController();
 
   final emailValidator = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
   @override
   Widget build(BuildContext context) {
+    DriverData driverdataprovider = Provider.of<DriverData>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Setup your profile"),
@@ -44,6 +51,7 @@ class _DriverProfileState extends State<DriverProfile> {
                   height: 20,
                 ),
                 TextFormField(
+                  controller: nidaController,
                   validator: (value) {
                     // if (value == "") return "NIN is required";
 
@@ -63,6 +71,7 @@ class _DriverProfileState extends State<DriverProfile> {
                   height: 15,
                 ),
                 TextFormField(
+                  controller: emailController,
                   validator: (value) {
                     // if (value == "") return "Email is required";
 
@@ -93,8 +102,9 @@ class _DriverProfileState extends State<DriverProfile> {
                   height: 15,
                 ),
                 TextFormField(
+                  controller: contactController,
                   validator: (value) {
-                    if (value == "") return "Email is required";
+                    //if (value == "") return "Email is required";
 
                     //   if (!emailValidator.hasMatch(value!)) {
                     //     return "Email not valid";
@@ -115,23 +125,41 @@ class _DriverProfileState extends State<DriverProfile> {
                   height: 15,
                 ),
                 ElevatedButton(
-                    onPressed: () async {
+                  onPressed: () async {
+                    if (Form.of(context)!.validate()) {
+                      // Valid form, proceed with updating the values
+                      String updatedNIDA = nidaController.text;
+                      String updatedEmail = emailController.text;
+                      String updatedContact = contactController.text;
+
+                      // Perform the necessary operations with the updated values
+                      driverdataprovider.updateUserDetails(
+                        email:updatedEmail,
+                        contact:updatedContact,
+                        nida:updatedNIDA    
+                      );
+
                       final snackBar = SnackBar(
-                        content: Text('profile updated'),
+                        content: Text('Profile updated'),
                         duration: Duration(seconds: 2),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14.0)),
-                      minimumSize: Size(160, 43),
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14.0),
                     ),
-                    child: Text(
-                      "Save",
-                      style: TextStyle(fontSize: 16, letterSpacing: 1.0),
-                    )),
+                    minimumSize: Size(160, 43),
+                  ),
+                  child: Text(
+                    "Save",
+                    style: TextStyle(fontSize: 16, letterSpacing: 1.0),
+                  ),
+                ),
+
+                
                 SizedBox(
                   height: 25,
                 ),
@@ -153,13 +181,6 @@ class _DriverProfileState extends State<DriverProfile> {
 
   void showPasswordInputDialog(BuildContext context) {
     String newPassword = '';
-    bool isObscure = true;
-
-    void changeObscure() {
-      setState(() {
-        isObscure = false;
-      });
-    }
 
     final _formKey = GlobalKey<FormState>();
 
@@ -176,14 +197,8 @@ class _DriverProfileState extends State<DriverProfile> {
                 newPassword = value;
               },
               decoration: InputDecoration(
-                  labelText: 'New Password',
-                  suffixIcon: isObscure
-                      ? InkWell(
-                          onTap: () {
-                            changeObscure();
-                          },
-                          child: Icon(Icons.block))
-                      : Icon(Icons.remove_red_eye)),
+                labelText: 'New Password',
+              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a new password';
