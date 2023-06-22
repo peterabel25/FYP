@@ -151,100 +151,68 @@ class _DriverProfileState extends State<DriverProfile> {
     );
   }
 
-  // void showPasswordInputDialog(BuildContext context) {
-  //   String newPassword = '';
-
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Change Password'),
-  //         content: TextFormField(
-  //           onChanged: (value) {
-  //             newPassword = value;
-  //           },
-  //           decoration: InputDecoration(
-  //             labelText: 'New Password',
-  //           ),
-  //           validator: (value) {
-  //             if (value == null || value.isEmpty) {
-  //               return 'Please enter a new password';
-  //             }
-  //             return null;
-  //           },
-  //         ),
-  //         actions: [
-  //           ElevatedButton(
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //             child: Text('Close'),
-  //           ),
-  //           ElevatedButton(
-  //             onPressed: () async {
-  //               if (newPassword.isNotEmpty) {
-  //                 await authservice.changePassword(newPassword);
-  //               }
-  //               print(newPassword);
-  //               // Navigator.of(context).pop();
-  //             },
-  //             child: Text('Update'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   void showPasswordInputDialog(BuildContext context) {
-  String newPassword = '';
+    String newPassword = '';
+    bool isObscure = true;
 
-  final _formKey = GlobalKey<FormState>();
+    void changeObscure() {
+      setState(() {
+        isObscure = false;
+      });
+    }
 
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Change Password'),
-        content: Form(
-          key: _formKey,
-          child: TextFormField(
-            onChanged: (value) {
-              newPassword = value;
-            },
-            decoration: InputDecoration(
-              labelText: 'New Password',
+    final _formKey = GlobalKey<FormState>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Change Password'),
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              obscureText: true,
+              onChanged: (value) {
+                newPassword = value;
+              },
+              decoration: InputDecoration(
+                  labelText: 'New Password',
+                  suffixIcon: isObscure
+                      ? InkWell(
+                          onTap: () {
+                            changeObscure();
+                          },
+                          child: Icon(Icons.block))
+                      : Icon(Icons.remove_red_eye)),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a new password';
+                }
+                return null;
+              },
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a new password';
-              }
-              return null;
-            },
           ),
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('Close'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              if (_formKey.currentState?.validate() == true) {
-                await authservice.changePassword(newPassword);
-                               Navigator.of(context).pop();
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState?.validate() == true) {
+                  await authservice.changePassword(newPassword);
+                  Navigator.of(context).pop();
 
-                print(newPassword);
-              }
-            },
-            child: Text('Update'),
-          ),
-        ],
-      );
-    },
-  );
-}
-
+                  print(newPassword);
+                }
+              },
+              child: Text('Update'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

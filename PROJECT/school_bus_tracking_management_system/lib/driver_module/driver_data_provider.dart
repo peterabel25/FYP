@@ -86,7 +86,7 @@ FirebaseFirestore.instance
 //function to update driver profile
 
 
-Future<void> updateUserDetails({String? email, String? contact, String? NIN}) async {
+Future<void> updateUserDetails({String? email, String? contact, String? nida}) async {
   try {
     auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
@@ -109,8 +109,8 @@ Future<void> updateUserDetails({String? email, String? contact, String? NIN}) as
       updatedData['contact'] = contact;
     }
 
-    if (NIN != null) {
-      updatedData['NIN'] = NIN;
+    if (nida != null) {
+      updatedData['nida'] = nida;
     }
 
     await userDocRef.update(updatedData);

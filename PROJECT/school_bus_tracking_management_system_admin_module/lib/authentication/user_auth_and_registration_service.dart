@@ -156,4 +156,39 @@ class AuthService with ChangeNotifier{
         busAssigned: busAssigned);
     return _userFromFirebase(credential.user);
   }
+
+//function to update user data
+Future<void> updateUserData(
+    String userId,
+    String firstName,
+    String lastName,
+    String email,
+    String contact,
+    String residence,
+    String busAssigned,
+  ) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('userRecords')
+          .doc(userId)
+          .update({
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'contact': contact,
+        'residence': residence,
+        'busAssigned': busAssigned,
+      });
+      print('User data updated successfully');
+    } catch (e) {
+      print('Failed to update user data: $e');
+    }
+  }
+
+
+
+
+
+
+
 }
