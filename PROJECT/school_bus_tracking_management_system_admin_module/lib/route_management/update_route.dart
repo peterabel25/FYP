@@ -28,35 +28,48 @@ class _UpdateRouteInfoState extends State<UpdateRouteInfo> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+ final routeDocs = snapshot.data!.docs;
 
-              return Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: ListTile(
-                 title: Row(
-                   children: [
-                     Text('Route Name:'),
-                      SizedBox(width:10 ,),
-              
-                     Text(document.id),
-              
-                   ],
-                 ),
-                  subtitle: Row(
-                    children: [
-                      Text("start Point:"),
-                      SizedBox(width:10 ,),
-                      Text(data['startPoint']),
-                    ],
-                  ),
-                  trailing: Icon(Icons.edit),
-                  onTap: () {
-                    // do something when tile is tapped
-                  },
-                ),
-              );
+          return DataTable(
+            columns: [
+              DataColumn(label: Text('Route Name')),
+              DataColumn(label: Text('Start Point')),
+              DataColumn(label: Text('End Point')),
+              DataColumn(label: Text('')),
+            ],
+            rows: routeDocs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+
+              return DataRow(cells: [
+                DataCell(Text(document.id)),
+                DataCell(Text(data['startPoint'])),
+                DataCell(Text(data['endPoint'])),
+                DataCell(Row(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 233, 38, 24),
+                        ),
+                        child: Text("Delete")),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 42, 148, 45),
+                      ),
+                      child: Text("Edit"),
+                    ),
+                  ],
+                )),
+              ]);
+
+
+
             }).toList(),
           );
         },

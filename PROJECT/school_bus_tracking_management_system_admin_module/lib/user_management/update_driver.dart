@@ -33,81 +33,162 @@ class _UpdateDriverInfoState extends State<UpdateDriverInfo> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+
+final driverDocs = snapshot.data!.docs;
+
+          return DataTable(
+            columns: [
+              DataColumn(label: Text('First Name')),
+              DataColumn(label: Text('Last Name')),
+              DataColumn(label: Text('Email')),
+              DataColumn(label: Text('Contact')),
+              DataColumn(label: Text('License Number')),
+              DataColumn(label: Text('Bus Assigned')),
+              DataColumn(label: Text('')),
+            ],
+            rows: driverDocs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
 
-              return ListTile(
-                title: Row(
+              return DataRow(cells: [
+                DataCell(Text(data['firstName'])),
+                DataCell(Text(data['lastName'])),
+                DataCell(Text(data['email'])),
+                DataCell(Text(data['contact'])),
+                DataCell(Text(data['licenseNo'])),
+                DataCell(Text(data['busPewa'])),
+                DataCell(Row(
                   children: [
-                    Text(data['firstName']),
-                    Text(data['lastName']),
-                  ],
-                ),
-                subtitle: Text(data['email']),
-                trailing: InkWell(
-                    onTap: () {
-                      authservice.deleteRegisteredUser(
-                          data['email'], data['password']);
+                    ElevatedButton(
+                        onPressed: () {
+                          authservice.deleteRegisteredUser(
+                              data['email'], data['password']);
 
-                      authservice.deleteUserData(document.id);
-                    },
-                    child: Icon(Icons.delete)),
-                onTap: () {
-                  void showParentDetailsDialog(
-                    BuildContext context,
-                  ) {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Parent Details"),
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'First name :',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text(data['firstName']),
-                              SizedBox(height: 8),
-                              Text(
-                                'Last name',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text(data['lastName']),
-                              SizedBox(height: 8),
-                              Text(
-                                'contact',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text(data['contact']),
-                              SizedBox(height: 8),
-                              Text(
-                                'Bus Assigned',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              Text(data['busPewa']),
-                            ],
-                          ),
-                          actions: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Close'),
-                            ),
-                          ],
-                        );
+                          authservice.deleteUserData(document.id);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 233, 38, 24),
+                        ),
+                        child: Text("Delete")),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+//function
+                        void openEditDialog(Map<String, dynamic> data) {
+                          //final authservice = Provider.of<AuthService>(context);
+
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              // Extract initial values from the data map
+                              String firstName = data['firstName'];
+                              String lastName = data['lastName'];
+                              String email = data['email'];
+                              String contact = data['contact'];
+                              String licenseno = data['License Number'];
+                              String busPewa = data['busPewa'];
+
+                              // Set initial values for text form fields
+                              TextEditingController firstNameController =
+                                  TextEditingController(text: firstName);
+                              TextEditingController lastNameController =
+                                  TextEditingController(text: lastName);
+                              TextEditingController emailController =
+                                  TextEditingController(text: email);
+                              TextEditingController contactController =
+                                  TextEditingController(text: contact);
+                              TextEditingController licenseController =
+                                  TextEditingController(text:licenseno);
+                              TextEditingController busAssignedController =
+                                  TextEditingController(text: busPewa);
+
+                              return AlertDialog(
+                                title: Text('Edit Driver'),
+                                content: Column(
+                                  children: [
+                                    TextFormField(
+                                      controller: firstNameController,
+                                      decoration: InputDecoration(
+                                          labelText: 'First Name'),
+                                    ),
+                                    TextFormField(
+                                      controller: lastNameController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Last Name'),
+                                    ),
+                                    TextFormField(
+                                      controller: emailController,
+                                      decoration:
+                                          InputDecoration(labelText: 'Email'),
+                                    ),
+                                    TextFormField(
+                                      controller: contactController,
+                                      decoration:
+                                          InputDecoration(labelText: 'Contact'),
+                                    ),
+                                    TextFormField(
+                                      controller: licenseController,
+                                      decoration: InputDecoration(
+                                          labelText: 'License Number'),
+                                    ),
+                                    TextFormField(
+                                      controller: busAssignedController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Bus Assigned'),
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Handle save button press
+                                      String updatedFirstName =
+                                          firstNameController.text;
+                                      String updatedLastName =
+                                          lastNameController.text;
+                                      String updatedEmail =
+                                          emailController.text;
+                                      String updatedContact =
+                                          contactController.text;
+                                      // String updatedResidence =
+                                      //     residenceController.text;
+                                      String updatedBusAssigned =
+                                          busAssignedController.text;
+
+                                      // Update the user's data
+                                      authservice.updateDriverData(
+                                          document.id,
+                                          updatedFirstName,
+                                          updatedLastName,
+                                          updatedEmail,
+                                          updatedContact,
+                                         // updatedResidence,
+                                          updatedBusAssigned);
+
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Save'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+
+                        openEditDialog(data);
                       },
-                    );
-                  }
-
-                  showParentDetailsDialog(context);
-                },
-              );
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 42, 148, 45),
+                      ),
+                      child: Text("Edit"),
+                    ),
+                  ],
+                )),
+              ]);
+          
             }).toList(),
           );
         },

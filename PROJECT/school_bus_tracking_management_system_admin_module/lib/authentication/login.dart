@@ -35,96 +35,98 @@ class _LoginPageState extends State<LoginPage> {
             child: Center(
               child: SizedBox(
                 height: 500,
-                width: 380,
+                width: 350,
                 child: Card(
-                    child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-                  child: Form(
-                    key: formkey,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(children: [
-                        Text("WELCOME BACK !",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20)),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Image.asset("childandparent.png", height: 100),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        TextFormField(
-                          validator: (value) {
-                            if (value == "") return "Email is required";
-                    
-                            if (!emailValidator.hasMatch(value!)) {
-                              return "Email not valid";
-                            }
-                            return null;
-                          },
-                          textInputAction: TextInputAction.next,
-                          controller: emailController,
-                          decoration: InputDecoration(
-                              hintText: "Email",
-                              prefixIcon: Icon(Icons.mail_outline),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              )),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          validator: (value) {
-                            if (value == "") return "Password is required";
-                            if (!passwordValidator.hasMatch(value!)) {
-                              return "password not valid";
-                            }
-                            return null;
-                          },
-                          textInputAction: TextInputAction.next,
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              hintText: "password",
-                              prefixIcon: Icon(Icons.lock),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              )),
-                        ),
-                        SizedBox(
-                          height: 45,
-                        ),
-                        SizedBox(
-                            height: 37,
-                            width: 150,
-                            child: ElevatedButton(
-                                onPressed: () async {
-                                  if (formkey.currentState!.validate()) {
-                                    await authservice.signInWithEmailAndPassword(
-                                        emailController.text,
-                                        passwordController.text);
-                                    adminprovider.adminEmail =
-                                        emailController.text;
-                                  }
-                                },
-                                child: Text("Login",
-                                    style: TextStyle(
-                                        fontSize: 17, letterSpacing: 1)))),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: ((_) => AdminRegister())));
+                  elevation:0,
+                    child: Form(
+                      key: formkey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(children: [
+                          Text("WELCOME BACK !",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20)),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Image.asset("childandparent.png", height: 100),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          TextFormField(
+                            validator: (value) {
+                              if (value == "") return "Email is required";
+                      
+                              if (!emailValidator.hasMatch(value!)) {
+                                return "Email not valid";
+                              }
+                              return null;
                             },
-                            child: Text("New User ? Register Account",style:TextStyle(fontWeight:FontWeight.bold ) ,))
-                      ]),
-                    ),
-                  ),
-                )),
+                            textInputAction: TextInputAction.next,
+                            controller: emailController,
+                            decoration: InputDecoration(
+                                hintText: "Email",
+                                prefixIcon: Icon(Icons.mail_outline),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                )),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            validator: (value) {
+                              if (value == "") return "Password is required";
+                              if (!passwordValidator.hasMatch(value!)) {
+                                return "password not valid";
+                              }
+                              return null;
+                            },
+                            textInputAction: TextInputAction.next,
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                                hintText: "password",
+                                prefixIcon: Icon(Icons.lock),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                )),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                              height: 40,
+                              width: 310,
+                              child: OutlinedButton(
+style: OutlinedButton.styleFrom(
+    backgroundColor: Colors.deepPurple, 
+  ),
+                                  onPressed: () async {
+                                    if (formkey.currentState!.validate()) {
+                                      await authservice.signInWithEmailAndPassword(
+                                          emailController.text,
+                                          passwordController.text);
+                                      adminprovider.adminEmail =
+                                          emailController.text;
+                                    }
+                                  },
+                                  child: Text("Login",
+                                      style: TextStyle(
+                                        color:Colors.white,
+                                          fontSize: 17, letterSpacing: 1)))),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: ((_) => AdminRegister())));
+                              },
+                              child: Text("New User ? Register Account",style:TextStyle( ) ,))
+                        ]),
+                      ),
+                    )),
               ),
             ),
           ),

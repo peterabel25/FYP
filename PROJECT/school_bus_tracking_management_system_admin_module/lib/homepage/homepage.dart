@@ -55,6 +55,7 @@ class _HomepageState extends State<Homepage> {
         body: Row(
           children: [
             SideNavigationBar(
+            //  header:SideNavigationBarHeader(image:Image.asset("assets/childandparent.jpg",width:50,height:30) , title:Text(""),subtitle:Text("")),
                 initiallyExpanded: true,
                 footer: SideNavigationBarFooter(
                     label: InkWell(
@@ -82,3 +83,5 @@ class _HomepageState extends State<Homepage> {
         ));
   }
 }
+
+

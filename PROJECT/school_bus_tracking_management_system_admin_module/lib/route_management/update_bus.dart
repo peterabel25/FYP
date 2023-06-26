@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class UpdateBusInfo extends StatefulWidget {
   const UpdateBusInfo({super.key});
 
@@ -15,11 +14,8 @@ class _UpdateBusInfoState extends State<UpdateBusInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-        title:Text('Registered Buses') ,
-        centerTitle:true
-      ) ,
-      body:StreamBuilder<QuerySnapshot>(
+      appBar: AppBar(title: Text('Registered Buses'), centerTitle: true),
+      body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('bus').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -29,32 +25,46 @@ class _UpdateBusInfoState extends State<UpdateBusInfo> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
-              return ListTile(
-               title: Row(
-                 children: [
-                   Text('Bus Number :'),
-                    SizedBox(width:10 ,),
+          final busDocs = snapshot.data!.docs;
 
-                   Text(document.id),
+          return DataTable(
+            columns: [
+              DataColumn(label: Text('Bus Number')),
+              DataColumn(label: Text('Plate Number')),
+              DataColumn(label: Text('Route Assigned')),
+              DataColumn(label: Text('')),
+            ],
+            rows: busDocs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
 
-                 ],
-               ),
-                subtitle: Row(
+              return DataRow(cells: [
+                DataCell(Text(document.id)),
+                DataCell(Text(data['plateNo'])),
+                DataCell(Text(data['routeAssigned'])),
+                DataCell(Row(
                   children: [
-                    Text("Plate Number:"),
-                    SizedBox(width:10 ,),
-                    Text(data['plateNo']),
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 233, 38, 24),
+                        ),
+                        child: Text("Delete")),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 42, 148, 45),
+                      ),
+                      child: Text("Edit"),
+                    ),
                   ],
-                ),
-               // trailing: Icon(Icons.arrow_forward),
-                onTap: () {
-                  // do something when tile is tapped
-                },
-              );
+                )),
+              ]);
             }).toList(),
           );
         },

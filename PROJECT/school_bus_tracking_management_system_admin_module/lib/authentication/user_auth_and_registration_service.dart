@@ -188,6 +188,36 @@ Future<void> updateUserData(
 
 
 
+Future<void> updateDriverData(
+    String userId,
+    String firstName,
+    String lastName,
+    String email,
+    String contact,
+   // String residence,
+    String busPewa,
+  ) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('userRecords')
+          .doc(userId)
+          .update({
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'contact': contact,
+       // 'residence': residence,
+        'busPewa': busPewa,
+      });
+      print('User data updated successfully');
+    } catch (e) {
+      print('Failed to update user data: $e');
+    }
+  }
+
+
+
+
 
 
 
