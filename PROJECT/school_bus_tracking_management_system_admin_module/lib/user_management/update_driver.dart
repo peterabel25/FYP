@@ -56,7 +56,7 @@ final driverDocs = snapshot.data!.docs;
                 DataCell(Text(data['email'])),
                 DataCell(Text(data['contact'])),
                 DataCell(Text(data['licenseNo'])),
-                DataCell(Text(data['busPewa'])),
+                DataCell(Text(data['busAssigned'])),
                 DataCell(Row(
                   children: [
                     ElevatedButton(
@@ -89,7 +89,7 @@ final driverDocs = snapshot.data!.docs;
                               String email = data['email'];
                               String contact = data['contact'];
                               String licenseno = data['License Number'];
-                              String busPewa = data['busPewa'];
+                              String busAssigned = data['busAssigned'];
 
                               // Set initial values for text form fields
                               TextEditingController firstNameController =
@@ -103,7 +103,7 @@ final driverDocs = snapshot.data!.docs;
                               TextEditingController licenseController =
                                   TextEditingController(text:licenseno);
                               TextEditingController busAssignedController =
-                                  TextEditingController(text: busPewa);
+                                  TextEditingController(text: busAssigned);
 
                               return AlertDialog(
                                 title: Text('Edit Driver'),
