@@ -24,7 +24,7 @@ class NotificationsPage extends StatelessWidget {
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: _userRecordsCollection
             .where('role', isEqualTo: 'driver')
-            .where('busPewa', isEqualTo: userdataprovider.busNo)
+            .where('busAssigned', isEqualTo: userdataprovider.busNo)
             .snapshots(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {

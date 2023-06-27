@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print, no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +15,9 @@ class DriverProfile extends StatefulWidget {
 
 class _DriverProfileState extends State<DriverProfile> {
   final nidaValidator = RegExp(r'^\d{20}$');
+  final phoneNumberValidator =
+      RegExp(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$');
+
   AuthService authservice = AuthService();
   TextEditingController nidaController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -32,7 +35,8 @@ class _DriverProfileState extends State<DriverProfile> {
         title: Text("Setup your profile"),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body:
+       SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Center(
@@ -53,7 +57,6 @@ class _DriverProfileState extends State<DriverProfile> {
                 TextFormField(
                   controller: nidaController,
                   validator: (value) {
-                    // if (value == "") return "NIN is required";
 
                     if (!nidaValidator.hasMatch(value!)) {
                       return "NIN not valid";
@@ -73,7 +76,6 @@ class _DriverProfileState extends State<DriverProfile> {
                 TextFormField(
                   controller: emailController,
                   validator: (value) {
-                    // if (value == "") return "Email is required";
 
                     if (!emailValidator.hasMatch(value!)) {
                       return "Email not valid";
@@ -81,7 +83,6 @@ class _DriverProfileState extends State<DriverProfile> {
                     return null;
                   },
                   textInputAction: TextInputAction.next,
-                  //controller: emailController,
                   decoration: InputDecoration(
                       hintText: "Email",
                       prefixIcon: Icon(Icons.mail_outline),
@@ -89,30 +90,21 @@ class _DriverProfileState extends State<DriverProfile> {
                         borderRadius: BorderRadius.circular(14.0),
                       )),
                 ),
-                // TextFormField(
-                //   obscureText: true,
-                //   decoration: InputDecoration(
-                //       hintText: "",
-                //       prefixIcon: Icon(Icons.lock),
-                //       border: OutlineInputBorder(
-                //         borderRadius: BorderRadius.circular(14.0),
-                //       )),
-                // ),
+                
                 SizedBox(
                   height: 15,
                 ),
                 TextFormField(
                   controller: contactController,
                   validator: (value) {
-                    //if (value == "") return "Email is required";
+                    if (!phoneNumberValidator.hasMatch(value!)) {
+                      return "Phone number not valid";
+                    }
+                    return null;
 
-                    //   if (!emailValidator.hasMatch(value!)) {
-                    //     return "Email not valid";
-                    //   }
-                    //   return null;
+                    
                   },
-                  //textInputAction: TextInputAction.next,
-                  //controller: emailController,
+                 
                   decoration: InputDecoration(
                       hintText: "Contact",
                       prefixIcon: Icon(Icons.phone),

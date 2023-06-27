@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_conditional_assignment, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_conditional_assignment, non_constant_identifier_names, avoid_print
 import 'package:permission_handler/permission_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -79,6 +79,7 @@ class AuthService {
       };
 
       messagesCollectionRef.add(newMessage);
+      parentDocRef.update({'isAbsent': true});
     }
   }
 
@@ -109,27 +110,26 @@ class AuthService {
 
 //CHANGE PASSWORD
 
-Future<void> changePassword(String newPassword) async {
-  auth.User? user = auth.FirebaseAuth.instance.currentUser;
+  Future<void> changePassword(String newPassword) async {
+    auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
-  if (user != null) {
-    try {
-      await user.updatePassword(newPassword);
-      print('Password changed successfully');
-    } catch (e) {
-      print('Failed to change password: $e');
+    if (user != null) {
+      try {
+        await user.updatePassword(newPassword);
+        print('Password changed successfully');
+      } catch (e) {
+        print('Failed to change password: $e');
+      }
     }
   }
-}
 
-  
 //forgot password
   void sendPasswordResetEmail(String email) async {
     try {
       await auth.FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-     // print('Password reset email sent');
+      // print('Password reset email sent');
     } catch (e) {
-    //  print('Failed to send password reset email: $e');
+      //  print('Failed to send password reset email: $e');
     }
   }
 

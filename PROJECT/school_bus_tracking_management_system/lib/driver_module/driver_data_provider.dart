@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, avoid_function_literals_in_foreach_calls
+// ignore_for_file: prefer_const_constructors, avoid_print, avoid_function_literals_in_foreach_calls, unused_import
 
 import 'dart:async';
 
@@ -22,11 +22,12 @@ class DriverData with ChangeNotifier {
 
     if (user != null) {
       String uid = user.uid;
+      //fetch driver details
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection('userRecords')
           .doc(uid)
           .get();
-      driverBusNo = snapshot['busPewa'];
+      driverBusNo = snapshot['busAssigned'];
       email = snapshot['email'];
       firstName = snapshot['firstName'];
       lastName = snapshot['lastName'];
@@ -84,8 +85,6 @@ FirebaseFirestore.instance
 
 
 //function to update driver profile
-
-
 Future<void> updateUserDetails({String? email, String? contact, String? nida}) async {
   try {
     auth.User? user = auth.FirebaseAuth.instance.currentUser;
@@ -123,6 +122,83 @@ Future<void> updateUserDetails({String? email, String? contact, String? nida}) a
 }
 
 
+
+Future<void> updateParentDetails({String? email, String? contact}) async {
+  try {
+    auth.User? user = auth.FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      // User is not logged in
+      print('User is not logged in');
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocRef = FirebaseFirestore.instance.collection('userRecords').doc(userId);
+
+    Map<String, dynamic> updatedData = {};
+
+    if (email != null) {
+      updatedData['email'] = email;
+    }
+
+    if (contact != null) {
+      updatedData['contact'] = contact;
+    }
+
+    
+
+    await userDocRef.update(updatedData);
+
+    print('User details updated successfully!');
+  } catch (error) {
+    print('Error updating user details: $error');
+    // Handle error or display error message to the user
+  }
+}
+
+
+
+Future<void> setPickuppoint() async {
+  
+    auth.User? user = auth.FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      // User is not logged in
+      print('User is not logged in');
+      return;
+    }
+
+    Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high,
+          );
+
+          double latitude = position.latitude;
+          double longitude = position.longitude;
+
+          GeoPoint location = GeoPoint(latitude, longitude);
+
+          await FirebaseFirestore.instance
+              .collection('userRecords')
+              .doc(user.uid)
+              .update({
+            'pickuppoint': location,
+          });
+        
+
+
+}
+
+
+
+
+
+
+
+
+
+//Function to send location to db after every 30 seconds
+          
 
 
 

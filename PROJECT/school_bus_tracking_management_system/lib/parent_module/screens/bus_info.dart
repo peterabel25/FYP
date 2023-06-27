@@ -121,7 +121,7 @@ class _BusInfoState extends State<BusInfo> {
                         StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
                 .collection("userRecords")
-                .where('busPewa', isEqualTo: userdataprovider.busNo)
+                .where('busAssigned', isEqualTo: userdataprovider.busNo)
                 .where('role', isEqualTo: 'driver')
                 .snapshots()
                 .map((snapshot) => snapshot.docs.first),
