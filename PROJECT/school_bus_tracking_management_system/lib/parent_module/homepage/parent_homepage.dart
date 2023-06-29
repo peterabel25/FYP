@@ -34,6 +34,7 @@ class _HomepageState extends State<Homepage> {
     TrackBus(),
     BusInfo(),
     EmergencyPage(),
+    NotificationsPage()
   ];
 
   _changeTab(int index) {
@@ -49,14 +50,7 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         title: Text("School bus Tracker"),
         centerTitle: true,
-        actions: [
-          IconButton(onPressed: () {
-
-             Navigator.of(context)
-                         .push(MaterialPageRoute(builder: ((_) => NotificationsPage())));
-
-          }, icon: Icon(Icons.notifications_active))
-        ],
+        
       ),
       drawer: Drawer(
         backgroundColor: Colors.grey[300],
@@ -99,7 +93,9 @@ class _HomepageState extends State<Homepage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedTab,
         onTap: (index) => _changeTab(index),
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: const Color.fromARGB(255, 127, 126, 126),
+        //unselectedLabelStyle:TextStyle(color:Colors.black ) ,
+        selectedItemColor:Colors.deepPurple ,
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.telegram), label: "Track bus"),
@@ -107,6 +103,8 @@ class _HomepageState extends State<Homepage> {
               icon: Icon(Icons.info_outline), label: "Bus Info"),
           BottomNavigationBarItem(
               icon: Icon(Icons.bus_alert), label: "Emergency"),
+              BottomNavigationBarItem(
+              icon: Icon(Icons.notifications), label: "Notifications"),
         ],
       ),
      

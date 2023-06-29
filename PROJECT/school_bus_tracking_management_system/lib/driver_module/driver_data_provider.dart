@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:geolocator/geolocator.dart';
+import 'package:firebase_database/firebase_database.dart';
 //import 'package:permission_handler/permission_handler.dart';
 
 class DriverData with ChangeNotifier {
@@ -47,7 +48,7 @@ class DriverData with ChangeNotifier {
       });
 
 // function to fetch emergency pickup points
-FirebaseFirestore.instance
+      FirebaseFirestore.instance
           .collection('userRecords')
           .where('role', isEqualTo: 'parent')
           .where('busAssigned', isEqualTo: driverBusNo)
@@ -60,107 +61,84 @@ FirebaseFirestore.instance
         });
       });
 
-//Function to send location to db after every 30 seconds
-      //   Timer.periodic(Duration(seconds: 20), (timer) async {
-      //     Position position = await Geolocator.getCurrentPosition(
-      //       desiredAccuracy: LocationAccuracy.high,
-      //     );
 
-      //     double latitude = position.latitude;
-      //     double longitude = position.longitude;
-
-      //     GeoPoint location = GeoPoint(latitude, longitude);
-
-      //     await FirebaseFirestore.instance
-      //         .collection('bus')
-      //         .doc(driverBusNo)
-      //         .update({
-      //       'location': location,
-      //     });
-      //     print(location.latitude);
-      //   });
     }
     notifyListeners();
   }
 
-
 //function to update driver profile
-Future<void> updateUserDetails({String? email, String? contact, String? nida}) async {
-  try {
-    auth.User? user = auth.FirebaseAuth.instance.currentUser;
+  Future<void> updateUserDetails(
+      {String? email, String? contact, String? nida}) async {
+    try {
+      auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
-    if (user == null) {
-      // User is not logged in
-      print('User is not logged in');
-      return;
+      if (user == null) {
+        // User is not logged in
+        print('User is not logged in');
+        return;
+      }
+
+      final userId = user.uid;
+      final userDocRef =
+          FirebaseFirestore.instance.collection('userRecords').doc(userId);
+
+      Map<String, dynamic> updatedData = {};
+
+      if (email != null) {
+        updatedData['email'] = email;
+      }
+
+      if (contact != null) {
+        updatedData['contact'] = contact;
+      }
+
+      if (nida != null) {
+        updatedData['nida'] = nida;
+      }
+
+      await userDocRef.update(updatedData);
+
+      print('User details updated successfully!');
+    } catch (error) {
+      print('Error updating user details: $error');
+      // Handle error or display error message to the user
     }
-
-    final userId = user.uid;
-    final userDocRef = FirebaseFirestore.instance.collection('userRecords').doc(userId);
-
-    Map<String, dynamic> updatedData = {};
-
-    if (email != null) {
-      updatedData['email'] = email;
-    }
-
-    if (contact != null) {
-      updatedData['contact'] = contact;
-    }
-
-    if (nida != null) {
-      updatedData['nida'] = nida;
-    }
-
-    await userDocRef.update(updatedData);
-
-    print('User details updated successfully!');
-  } catch (error) {
-    print('Error updating user details: $error');
-    // Handle error or display error message to the user
   }
-}
 
+  Future<void> updateParentDetails({String? email, String? contact}) async {
+    try {
+      auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
+      if (user == null) {
+        // User is not logged in
+        print('User is not logged in');
+        return;
+      }
 
-Future<void> updateParentDetails({String? email, String? contact}) async {
-  try {
-    auth.User? user = auth.FirebaseAuth.instance.currentUser;
+      final userId = user.uid;
+      final userDocRef =
+          FirebaseFirestore.instance.collection('userRecords').doc(userId);
 
-    if (user == null) {
-      // User is not logged in
-      print('User is not logged in');
-      return;
+      Map<String, dynamic> updatedData = {};
+
+      if (email != null) {
+        updatedData['email'] = email;
+      }
+
+      if (contact != null) {
+        updatedData['contact'] = contact;
+      }
+
+      await userDocRef.update(updatedData);
+
+      print('User details updated successfully!');
+    } catch (error) {
+      print('Error updating user details: $error');
+      // Handle error or display error message to the user
     }
-
-    final userId = user.uid;
-    final userDocRef = FirebaseFirestore.instance.collection('userRecords').doc(userId);
-
-    Map<String, dynamic> updatedData = {};
-
-    if (email != null) {
-      updatedData['email'] = email;
-    }
-
-    if (contact != null) {
-      updatedData['contact'] = contact;
-    }
-
-    
-
-    await userDocRef.update(updatedData);
-
-    print('User details updated successfully!');
-  } catch (error) {
-    print('Error updating user details: $error');
-    // Handle error or display error message to the user
   }
-}
 
-
-
-Future<void> setPickuppoint() async {
-  
+  Future<void> setPickuppoint() async {
     auth.User? user = auth.FirebaseAuth.instance.currentUser;
 
     if (user == null) {
@@ -170,24 +148,21 @@ Future<void> setPickuppoint() async {
     }
 
     Position position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high,
-          );
+      desiredAccuracy: LocationAccuracy.high,
+    );
 
-          double latitude = position.latitude;
-          double longitude = position.longitude;
+    double latitude = position.latitude;
+    double longitude = position.longitude;
 
-          GeoPoint location = GeoPoint(latitude, longitude);
+    GeoPoint location = GeoPoint(latitude, longitude);
 
-          await FirebaseFirestore.instance
-              .collection('userRecords')
-              .doc(user.uid)
-              .update({
-            'pickuppoint': location,
-          });
-        
-
-
-}
+    await FirebaseFirestore.instance
+        .collection('userRecords')
+        .doc(user.uid)
+        .update({
+      'pickuppoint': location,
+    });
+  }
 
 
 
@@ -197,8 +172,10 @@ Future<void> setPickuppoint() async {
 
 
 
-//Function to send location to db after every 30 seconds
-          
+
+
+
+
 
 
 

@@ -17,10 +17,10 @@ class NotificationsPage extends StatelessWidget {
     UserData userdataprovider = Provider.of<UserData>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Notifications'),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: Text('Notifications'),
+      //   centerTitle: true,
+      // ),
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: _userRecordsCollection
             .where('role', isEqualTo: 'driver')

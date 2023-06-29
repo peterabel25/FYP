@@ -88,35 +88,35 @@ class _BusInfoState extends State<BusInfo> {
                                 
                           ],
                         ),
-                        Row(
-                          children: [
-                            Text("latitude:",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(latitude.toString() ,
-                                style: TextStyle(fontSize: 17)),
+                        // Row(
+                        //   children: [
+                        //     Text("latitude:",
+                        //         style: TextStyle(
+                        //             fontSize: 15, fontWeight: FontWeight.bold)),
+                        //     SizedBox(
+                        //       width: 10,
+                        //     ),
+                        //     Text(latitude.toString() ,
+                        //         style: TextStyle(fontSize: 17)),
 
                                 
-                          ],
-                        ),
+                        //   ],
+                        // ),
 
-                        Row(
-                          children: [
-                            Text("longitude:",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold)),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(longitude.toString() ,
-                                style: TextStyle(fontSize: 17)),
+                        // Row(
+                        //   children: [
+                        //     Text("longitude:",
+                        //         style: TextStyle(
+                        //             fontSize: 15, fontWeight: FontWeight.bold)),
+                        //     SizedBox(
+                        //       width: 10,
+                        //     ),
+                        //     Text(longitude.toString() ,
+                        //         style: TextStyle(fontSize: 17)),
 
                                 
-                          ],
-                        ),
+                        //   ],
+                        // ),
 
                         StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance

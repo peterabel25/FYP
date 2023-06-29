@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers, dead_code, prefer_collection_literals
 
 import 'dart:async';
 
@@ -25,51 +24,46 @@ class _ViewRouteState extends State<ViewRoute> {
     zoom: 16.4746,
   );
 
+  List<Marker> markers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadPickupPoints();
+  }
+
+  void loadPickupPoints() {
+    final driverDataProvider = Provider.of<DriverData>(context, listen: false);
+    List<GeoPoint> pickupPoints = driverDataProvider.pickupPoints;
+    List<GeoPoint> emergencyPickupPoints =
+        driverDataProvider.emergencyPickupPoints;
+
+    setState(() {
+      markers = [];
+      markers.addAll(pickupPoints.map((point) {
+        LatLng latLng = LatLng(point.latitude, point.longitude);
+        return Marker(
+          markerId: MarkerId(latLng.toString()),
+          position: latLng,
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          infoWindow: InfoWindow(title: 'pickuppoint'),
+        );
+      }));
+
+      markers.addAll(emergencyPickupPoints.map((point) {
+        LatLng latLng = LatLng(point.latitude, point.longitude);
+        return Marker(
+          markerId: MarkerId(latLng.toString()),
+          position: latLng,
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          infoWindow: InfoWindow(title: 'Emergency'),
+        );
+      }));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final driverdataProvider = Provider.of<DriverData>(context);
-    List<GeoPoint> pickupPoints = driverdataProvider.pickupPoints;
-    List<GeoPoint> emergencyPickupPoints =
-        driverdataProvider.emergencyPickupPoints;
-
-    List<Marker> markers = pickupPoints.map((point) {
-      LatLng latLng = LatLng(point.latitude, point.longitude);
-      return Marker(
-        markerId: MarkerId(latLng.toString()),
-        position: latLng,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-        infoWindow: InfoWindow(title: 'pickuppoint'),
-      );
-    }).toList();
-
-    List<Marker> emergencyMarkers = emergencyPickupPoints.map((point) {
-      LatLng latLng = LatLng(point.latitude, point.longitude);
-      return Marker(
-        markerId: MarkerId(latLng.toString()),
-        position: latLng,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow: InfoWindow(title: 'Emergency'),
-      );
-    }).toList();
-
-    // List<Marker> allMarkers = [];
-    // setState(() {
-    //   allMarkers.addAll(markers);
-    //   allMarkers.addAll(emergencyMarkers);
-    
-    // });
-    
-    List<LatLng> polylinePoints = pickupPoints .map((point) {
-      return LatLng(point.latitude, point.longitude);
-    }).toList();
-
-    Polyline polyline = Polyline(
-      polylineId: PolylineId('pickup_route'),
-      color: Colors.blue,
-      points: polylinePoints,
-      width: 5,
-    );
-
     return Scaffold(
       body: GoogleMap(
         mapType: MapType.normal,
@@ -77,8 +71,7 @@ class _ViewRouteState extends State<ViewRoute> {
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
-        markers: Set<Marker>.of(emergencyMarkers+markers),
-        polylines: Set<Polyline>.of([polyline]),
+        markers: Set<Marker>.of(markers),
       ),
     );
   }

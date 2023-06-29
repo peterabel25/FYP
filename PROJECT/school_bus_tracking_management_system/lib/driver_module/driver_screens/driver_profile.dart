@@ -14,6 +14,14 @@ class DriverProfile extends StatefulWidget {
 }
 
 class _DriverProfileState extends State<DriverProfile> {
+//  @override
+//   void initState() {
+//     DriverData driverdataprovider =
+//         Provider.of<DriverData>(context, listen: false);
+//    // driverdataprovider.listenToBusLocation();
+//     super.initState();
+//   }
+
   final nidaValidator = RegExp(r'^\d{20}$');
   final phoneNumberValidator =
       RegExp(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$');
@@ -125,11 +133,11 @@ class _DriverProfileState extends State<DriverProfile> {
                       String updatedContact = contactController.text;
 
                       // Perform the necessary operations with the updated values
-                      driverdataprovider.updateUserDetails(
-                        email:updatedEmail,
-                        contact:updatedContact,
-                        nida:updatedNIDA    
-                      );
+                      // driverdataprovider.updateUserDetails(
+                      //   email:updatedEmail,
+                      //   contact:updatedContact,
+                      //   nida:updatedNIDA    
+                      // );
 
                       final snackBar = SnackBar(
                         content: Text('Profile updated'),

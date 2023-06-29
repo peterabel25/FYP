@@ -1,73 +1,197 @@
-// ignore_for_file: prefer_const_constructors, unused_field
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_database/firebase_database.dart';
+// import 'package:flutter/material.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-//import 'dart:async';
+// class TrackBus extends StatefulWidget {
+//   const TrackBus({Key? key}) : super(key: key);
+
+//   @override
+//   State<TrackBus> createState() => _TrackBusState();
+// }
+
+// class _TrackBusState extends State<TrackBus> {
+//   GoogleMapController? _mapController;
+//   DatabaseReference? locationRef;
+//   Set<Marker> markers = {};
+
+//   @override
+//   void initState() {
+//     super.initState();
+
+// FirebaseFirestore.instance
+//           .collection('userRecords')
+//           .where('role', isEqualTo: 'parent')
+//           .where('busAssigned', isEqualTo: 'bus 2')
+//           //.where('isAbsent', isEqualTo: false)
+//           .get()
+//           .then((QuerySnapshot snapshot) {
+//         snapshot.docs.forEach((DocumentSnapshot document) {
+//           GeoPoint pickupPoint = document['pickuppoint'];
+//             List<GeoPoint> pickupPoints = [];
+//          pickupPoints.add(pickupPoint);
+//         });
+//       });
+
+
+
+
+//     locationRef = FirebaseDatabase.instance
+//         .ref()
+//         .child('bus/UMGDchJFToQ8qwJd2hFRnzYegzG3/bus 2/location');
+
+//     locationRef!.onValue.listen((event) {
+//       if (event.snapshot.value != null) {
+//         final locationData = event.snapshot.value as Map<dynamic, dynamic>;
+
+//         if (locationData['latitude'] != null &&
+//             locationData['longitude'] != null) {
+//           final latitude = double.tryParse(locationData['latitude'].toString());
+//           final longitude =
+//               double.tryParse(locationData['longitude'].toString());
+
+//           if (latitude != null && longitude != null) {
+//             setState(() {
+//               markers = {
+//                 Marker(
+//                   markerId: MarkerId('bus'),
+//                   position: LatLng(latitude, longitude),
+//                   icon: BitmapDescriptor.defaultMarkerWithHue(
+//                     BitmapDescriptor.hueGreen),
+
+
+                 
+//                 ),
+//               };
+//             });
+//           }
+//         }
+//       }
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GoogleMap(
+//       initialCameraPosition: CameraPosition(
+//         target: LatLng(-6.7725830, 39.2408590),
+//         zoom: 18,
+//       ),
+//       markers: markers,
+//       onMapCreated: (controller) {
+//         _mapController = controller;
+//       },
+//     );
+//   }
+
+//   @override
+//   void dispose() {
+//     locationRef?.onValue.drain();
+//     super.dispose();
+//   }
+// }
+
+
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/parent_data_provider.dart';
 
 class TrackBus extends StatefulWidget {
-  const TrackBus({super.key});
+  const TrackBus({Key? key}) : super(key: key);
 
   @override
   State<TrackBus> createState() => _TrackBusState();
 }
 
 class _TrackBusState extends State<TrackBus> {
-GoogleMapController? _mapController;
-//Set<Marker> _markers = {};
-   //final Completer<GoogleMapController> _controller =
-     // Completer<GoogleMapController>();
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(-6.7726096, 39.2410419),
-    zoom: 16.4746,
-  );
+  GoogleMapController? _mapController;
+  DatabaseReference? locationRef;
+  Set<Marker> markers = {};
+
   @override
-  Widget build(BuildContext context) {
-    UserData userdataprovider = Provider.of<UserData>(context, listen: false);
-    return Scaffold(
-      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: FirebaseFirestore.instance
-            .collection('bus')
-            .doc(userdataprovider.busNo) // Assuming busId is stored in the UserData provider
-            .snapshots(),
-        builder: (context, snapshot) {
-         LatLng initialPosition = LatLng(-6.7726096, 39.2410419);
-          Set<Marker> markers = {};
+  void initState() {
+    super.initState();
 
-          if (snapshot.hasData) {
-            final busData = snapshot.data!.data();
+    // Fetch bus location
+    locationRef = FirebaseDatabase.instance
+        .ref()
+        .child('bus/UMGDchJFToQ8qwJd2hFRnzYegzG3/bus 2/location');
 
-            if (busData != null && busData.containsKey('location')) {
-              final geoPoint = busData['location'] as GeoPoint;
-              final latLng = LatLng(geoPoint.latitude, geoPoint.longitude);
+    locationRef!.onValue.listen((event) {
+      if (event.snapshot.value != null) {
+        final locationData = event.snapshot.value as Map<dynamic, dynamic>;
 
+        if (locationData['latitude'] != null &&
+            locationData['longitude'] != null) {
+          final latitude = double.tryParse(locationData['latitude'].toString());
+          final longitude =
+              double.tryParse(locationData['longitude'].toString());
+
+          if (latitude != null && longitude != null) {
+            setState(() {
               markers = {
                 Marker(
                   markerId: MarkerId('bus'),
-                  position: latLng,
-                  icon: BitmapDescriptor.defaultMarker,
-                  
+                  position: LatLng(latitude, longitude),
+                  icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueGreen,
+                  ),
                 ),
               };
-
-              initialPosition = latLng;
-            }
+            });
           }
-          return GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: initialPosition,
-              zoom: 12,
-            ),
-            markers: markers,
-          );
-          },
-      ),
-    
+        }
+      }
+    });
 
+    // Fetch pickup points
+    fetchPickupPoints();
+  }
+
+  Future<void> fetchPickupPoints() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('userRecords')
+        .where('role', isEqualTo: 'parent')
+        .where('busAssigned', isEqualTo: 'bus 2')
+        .get();
+
+    final pickupPoints = snapshot.docs
+        .map((doc) => doc['pickuppoint'] as GeoPoint?)
+        .where((geoPoint) => geoPoint != null)
+        .map((geoPoint) => Marker(
+              markerId: MarkerId(geoPoint.toString()),
+              position: LatLng(geoPoint!.latitude, geoPoint.longitude),
+              icon: BitmapDescriptor.defaultMarker,
+            ))
+        .toSet();
+
+    setState(() {
+      markers.addAll(pickupPoints);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GoogleMap(
+      initialCameraPosition: CameraPosition(
+        target: LatLng(-6.7725830, 39.2408590),
+        zoom: 15,
+      ),
+      markers: markers,
+      onMapCreated: (controller) {
+        _mapController = controller;
+      },
     );
   }
+
+  @override
+  void dispose() {
+    locationRef?.onValue.drain();
+    super.dispose();
+  }
 }
+
+
