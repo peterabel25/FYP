@@ -7,9 +7,10 @@ import 'package:school_bus_tracking_management_system_admin_module/authenticatio
 
 import '../user_management/database.dart';
 
-class AuthService with ChangeNotifier{
+class AuthService with ChangeNotifier {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
-  String loginError="";
+  String loginError = "";
+  String userRegistrationError = "";
 
   User? _userFromFirebase(auth.User? user) {
     if (user == null) {
@@ -71,10 +72,8 @@ class AuthService with ChangeNotifier{
       // Handle specific error cases
       if (e is auth.FirebaseAuthException) {
         if (e.code == 'user-not-found') {
-         
           loginError = e.code;
         } else if (e.code == 'wrong-password') {
-          
           loginError = e.code;
           print('Wrong password');
         }
@@ -103,62 +102,151 @@ class AuthService with ChangeNotifier{
   }
 
 //Function to register driver into the system
-  Future<User?> createDriverWithEmailAndPassword(
-      {required String firstName,
-      required String lastName,
-      required String licenseNo,
-      required String contact,
-      required String email,
-      required String password,
-      required String busAssigned}) async {
-    final credential = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
 
-    await UserDatabaseService(uid: credential.user!.uid).createDriverRecord(
+  Future<User?> createDriverWithEmailAndPassword({
+    required String firstName,
+    required String lastName,
+    required String licenseNo,
+    required String contact,
+    required String email,
+    required String password,
+    required String busAssigned,
+  }) async {
+    try {
+      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      await UserDatabaseService(uid: credential.user!.uid).createDriverRecord(
         busAssigned: busAssigned,
         contact: contact,
         email: email,
         firstName: firstName,
         lastName: lastName,
         licenseNo: licenseNo,
-        password: password);
-    return _userFromFirebase(credential.user);
+        password: password,
+      );
+
+      return _userFromFirebase(credential.user);
+    } catch (error) {
+      // Handle specific exceptions here
+      if (error is auth.FirebaseAuthException) {
+        // Handle FirebaseAuthException
+        userRegistrationError = error.message!;
+        print('FirebaseAuthException: ${error.message}');
+      } else {
+        // Handle other types of exceptions
+        print('Error: $error');
+      }
+
+      return null;
+    }
+    notifyListeners();
   }
 
+  // Future<User?> createDriverWithEmailAndPassword(
+  //     {required String firstName,
+  //     required String lastName,
+  //     required String licenseNo,
+  //     required String contact,
+  //     required String email,
+  //     required String password,
+  //     required String busAssigned}) async {
+  //   final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+  //       email: email, password: password);
+
+  //   await UserDatabaseService(uid: credential.user!.uid).createDriverRecord(
+  //       busAssigned: busAssigned,
+  //       contact: contact,
+  //       email: email,
+  //       firstName: firstName,
+  //       lastName: lastName,
+  //       licenseNo: licenseNo,
+  //       password: password);
+  //   return _userFromFirebase(credential.user);
+  // }
+
 //Function to register parent and student
+  Future<User?> createParentWithEmailAndPassword({
+    required String firstName,
+    required String lastName,
+    required String contact,
+    required String email,
+    required String password,
+    required String studentFname,
+    required String studentClass,
+    required String residence,
+    required String busAssigned,
+  }) async {
+    try {
+      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-  Future<User?> createParentWithEmailAndPassword(
-      {required String firstName,
-      required String lastName,
-      required String contact,
-      required String email,
-      required String password,
-      required String studentFname,
-      // required String studentLname,
-      required String studentClass,
-      required String residence,
-      // required String pickuppoint,
-      required String busAssigned}) async {
-    final credential = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
-
-    await UserDatabaseService(uid: credential.user!.uid).createParentRecord(
+      await UserDatabaseService(uid: credential.user!.uid).createParentRecord(
         firstName: firstName,
         lastName: lastName,
         contact: contact,
         email: email,
         password: password,
         studentFname: studentFname,
-        // studentLname: studentLname,
         studentClass: studentClass,
         residence: residence,
-        // pickuppoint: pickuppoint,
-        busAssigned: busAssigned);
-    return _userFromFirebase(credential.user);
+        busAssigned: busAssigned,
+      );
+
+      return _userFromFirebase(credential.user);
+    } catch (error) {
+      // Handle specific exceptions here
+      if (error is auth.FirebaseAuthException) {
+        // Handle FirebaseAuthException
+        userRegistrationError = error.message!;
+        print('FirebaseAuthException: ${error.message}');
+      } else {
+        // Handle other types of exceptions
+        //userRegistrationError = error.toString;
+        print('Error: $error');
+      }
+
+      return null;
+    }
+    notifyListeners();
   }
 
+  // Future<User?> createParentWithEmailAndPassword(
+  //     {required String firstName,
+  //     required String lastName,
+  //     required String contact,
+  //     required String email,
+  //     required String password,
+  //     required String studentFname,
+  //     // required String studentLname,
+  //     required String studentClass,
+  //     required String residence,
+  //     // required String pickuppoint,
+  //     required String busAssigned}) async {
+  //   final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+  //       email: email, password: password);
+
+  //   await UserDatabaseService(uid: credential.user!.uid).createParentRecord(
+  //       firstName: firstName,
+  //       lastName: lastName,
+  //       contact: contact,
+  //       email: email,
+  //       password: password,
+  //       studentFname: studentFname,
+  //       // studentLname: studentLname,
+  //       studentClass: studentClass,
+  //       residence: residence,
+  //       // pickuppoint: pickuppoint,
+  //       busAssigned: busAssigned);
+  //   return _userFromFirebase(credential.user);
+  // }
+
 //function to update user data
-Future<void> updateUserData(
+  Future<void> updateUserData(
     String userId,
     String firstName,
     String lastName,
@@ -185,17 +273,14 @@ Future<void> updateUserData(
     }
   }
 
-
-
-
-Future<void> updateDriverData(
+  Future<void> updateDriverData(
     String userId,
     String firstName,
     String lastName,
     String email,
     String contact,
-   // String residence,
-    String busPewa,
+    // String residence,
+    String busAssigned,
   ) async {
     try {
       await FirebaseFirestore.instance
@@ -206,19 +291,12 @@ Future<void> updateDriverData(
         'lastName': lastName,
         'email': email,
         'contact': contact,
-       // 'residence': residence,
-        'busPewa': busPewa,
+        // 'residence': residence,
+        'busAssigned': busAssigned,
       });
       print('User data updated successfully');
     } catch (e) {
       print('Failed to update user data: $e');
     }
   }
-
-
-
-
-
-
-
 }

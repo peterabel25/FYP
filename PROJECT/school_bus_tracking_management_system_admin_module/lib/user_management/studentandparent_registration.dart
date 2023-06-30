@@ -29,7 +29,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   TextEditingController bussAssignedController = TextEditingController();
   TextEditingController studentfnameController = TextEditingController();
   TextEditingController studentlnameController = TextEditingController();
-  TextEditingController studentclassController = TextEditingController();
+ // TextEditingController studentclassController = TextEditingController();
   TextEditingController residenceController = TextEditingController();
   TextEditingController pickuppointController = TextEditingController();
   TextEditingController busassignedController = TextEditingController();
@@ -177,23 +177,41 @@ class _StudentRegistrationState extends State<StudentRegistration> {
               SizedBox(
                 height: 15,
               ),
-              TextFormField(
-                validator: (value) {
-                  if (value == '') return "Student class is required";
-                  if (!studentClassValidator.hasMatch(value!)) {
-                    return "enter valid student class";
-                  }
-                  return null;
-                },
-                controller: studentclassController,
-                decoration: InputDecoration(
-                    label: Text("Student's class"),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    hintText: "Student's Class"),
-                // decoration: InputDecoration(hintText: "student's class"),
-              ),
+              DropdownButtonFormField<String>(
+  // Step 3.
+  value: classdropdownValue,
+  // Step 4.
+  items: <String>[
+    'Nursery',
+    'Grade 1',
+    'Grade 2',
+    'Grade 3',
+    'Grade 4',
+    'Grade 5',
+    'Grade 6',
+    'Grade 7',
+  ].map<DropdownMenuItem<String>>((String value) {
+    return DropdownMenuItem<String>(
+      value: value,
+      child: Text(
+        value,
+        style: TextStyle(fontSize: 18),
+      ),
+    );
+  }).toList(),
+  onChanged: (String? newValue) {
+    setState(() {
+      classdropdownValue = newValue!;
+    });
+  },
+  decoration: InputDecoration(
+    labelText: "Student's class",
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    hintText: "Student's Class",
+  ),
+)
             ],
           ),
         ),
@@ -255,6 +273,9 @@ class _StudentRegistrationState extends State<StudentRegistration> {
     ];
   }
 
+
+  String classdropdownValue = 'Nursery';
+
   List<String> busList = []; // List to store bus IDs
   String selectedBus = ''; // Selected bus ID
 
@@ -309,7 +330,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                   email: emailController.text,
                   password: contactController.text,
                   studentFname: studentfnameController.text,
-                  studentClass: studentclassController.text,
+                  studentClass: classdropdownValue,
                   residence: residenceController.text,
                   busAssigned:
                       selectedBus, // Use selectedBus instead of busassignedController.text
@@ -326,7 +347,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                 bussAssignedController.clear();
                 studentfnameController.clear();
                 studentlnameController.clear();
-                studentclassController.clear();
+              //  studentclassController.clear();
                 residenceController.clear();
                 pickuppointController.clear();
                 busassignedController.clear();

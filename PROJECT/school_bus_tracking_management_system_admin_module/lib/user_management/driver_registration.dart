@@ -46,7 +46,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
     QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
         .instance
         .collection('userRecords')
-        .where('busPewa', isEqualTo: busAssigned)
+        .where('busAssigned', isEqualTo: busAssigned)
         .where('role', isEqualTo: 'driver')
         .get();
 
@@ -223,7 +223,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                     ),
                     SizedBox(
                       height: 40,
-                      width: 150,
+                      width: 500,
                       child: ElevatedButton(
                           onPressed: () async {
                             if (formkey.currentState!.validate()) {

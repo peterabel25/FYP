@@ -74,14 +74,14 @@ class _EmergencyPageState extends State<EmergencyPage> {
         SizedBox(
           height: 45,
           child: ElevatedButton(
-            onPressed: (DateTime.now().hour >= 6 && DateTime.now().hour <=4  )
+            onPressed: (DateTime.now().hour < 6 || DateTime.now().hour >= 12)
                 ? null
                 : () {
                     _showAlertDialog();
                   },
             child: Text("Declare emergency"),
             style: ElevatedButton.styleFrom(
-              primary: (DateTime.now().hour >= 6 && DateTime.now().hour <=4  )
+              primary: (DateTime.now().hour < 6 || DateTime.now().hour >= 12)
                   ? Colors.grey
                   : Colors.deepPurple,
             ),

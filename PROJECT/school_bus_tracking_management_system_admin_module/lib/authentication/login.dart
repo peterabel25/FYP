@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 500,
                 width: 350,
                 child: Card(
-                  elevation:0,
+                    elevation: 0,
                     child: Form(
                       key: formkey,
                       child: Padding(
@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                             validator: (value) {
                               if (value == "") return "Email is required";
-                      
+
                               if (!emailValidator.hasMatch(value!)) {
                                 return "Email not valid";
                               }
@@ -99,22 +99,49 @@ class _LoginPageState extends State<LoginPage> {
                               height: 40,
                               width: 310,
                               child: OutlinedButton(
-style: OutlinedButton.styleFrom(
-    backgroundColor: Colors.deepPurple, 
-  ),
+                                  style: OutlinedButton.styleFrom(
+                                    backgroundColor: Colors.deepPurple,
+                                  ),
                                   onPressed: () async {
                                     if (formkey.currentState!.validate()) {
-                                      await authservice.signInWithEmailAndPassword(
+                                      try {
+                                        await authservice
+                                            .signInWithEmailAndPassword(
                                           emailController.text,
-                                          passwordController.text);
-                                      adminprovider.adminEmail =
-                                          emailController.text;
+                                          passwordController.text,
+                                        );
+                                        adminprovider.adminEmail =
+                                            emailController.text;
+                                      } catch (error) {
+                                        // Display the error message
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title:
+                                                  Text('Authentication Error'),
+                                              content: Text(error.toString()),
+                                              actions: [
+                                                TextButton(
+                                                  child: Text('OK'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
                                     }
+
+                                    
                                   },
                                   child: Text("Login",
                                       style: TextStyle(
-                                        color:Colors.white,
-                                          fontSize: 17, letterSpacing: 1)))),
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                          letterSpacing: 1)))),
                           SizedBox(
                             height: 30,
                           ),
@@ -123,7 +150,10 @@ style: OutlinedButton.styleFrom(
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: ((_) => AdminRegister())));
                               },
-                              child: Text("New User ? Register Account",style:TextStyle( ) ,))
+                              child: Text(
+                                "New User ? Register Account",
+                                style: TextStyle(),
+                              ))
                         ]),
                       ),
                     )),
