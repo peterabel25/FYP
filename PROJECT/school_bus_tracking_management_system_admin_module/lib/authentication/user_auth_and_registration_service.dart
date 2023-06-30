@@ -52,13 +52,6 @@ class AuthService with ChangeNotifier {
     }
   }
 
-//Function for user(admin) to login to the system
-  // Future<User?> signInWithEmailAndPassword(
-  //     String email, String password) async {
-  //   final credential = await _firebaseAuth.signInWithEmailAndPassword(
-  //       email: email, password: password);
-  //   return _userFromFirebase(credential.user);
-  // }
 
   Future<User?> signInWithEmailAndPassword(
       String email, String password) async {
