@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, use_key_in_widget_constructors, depend_on_referenced_packages
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, use_key_in_widget_constructors, depend_on_referenced_packages, dead_code
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +17,7 @@ class NotificationsPage extends StatelessWidget {
     UserData userdataprovider = Provider.of<UserData>(context);
 
     return Scaffold(
+      backgroundColor:Colors.grey[300] ,
       // appBar: AppBar(
       //   title: Text('Notifications'),
       //   centerTitle: true,
@@ -69,14 +70,18 @@ class NotificationsPage extends StatelessWidget {
                      
                       
                       return Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: ListTile(
-                          title: Text(message['Title']),
-                          subtitle:Text(message['messageBody']),
-                          trailing:Text(formattedDate) ,
-                          // Text(formattedDate),
+                        padding: const EdgeInsets.fromLTRB(5, 2, 5, 0),
+                        child: Card(
+                          child: ListTile(
+                            title: Text(message['Title']),
+                            subtitle:Text(message['messageBody']),
+                            trailing:Text(formattedDate) ,
+                            // Text(formattedDate),
+                          ),
                         ),
+                        
                       );
+                    Divider();
                     },
                   );
                 },

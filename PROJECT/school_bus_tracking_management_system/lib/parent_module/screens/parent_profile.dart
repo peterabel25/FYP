@@ -187,7 +187,7 @@ class _ParentProfileState extends State<ParentProfile> {
             ElevatedButton(
               onPressed: () async {
                 if (formKey.currentState!.validate() == true) {
-                  await authservice.changePassword(newPassword);
+                  await authservice.changePassword(newPassword,context);
                   Navigator.of(context).pop();
 
                   print(newPassword);

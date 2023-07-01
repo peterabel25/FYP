@@ -24,6 +24,7 @@ class _DriverNotificationState extends State<DriverNotification> {
       DriverData driverdataprovider = Provider.of<DriverData>(context);
 
     return Scaffold(
+      backgroundColor:Colors.grey[200] ,
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: _userRecordsCollection
             .where('role', isEqualTo: 'parent')
@@ -70,10 +71,15 @@ class _DriverNotificationState extends State<DriverNotification> {
 
                        DateTime date = message['timestamp'].toDate();
                        String formattedDate = DateFormat('dd/MM hh:mm a').format(date);
-                      return ListTile(
-                        title: Text(message['Title']),
-                        subtitle:Text(message['messageBody']),
-                        trailing:Text(formattedDate) ,
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 2, 5, 0),
+                        child: Card(
+                          child: ListTile(
+                            title: Text(message['Title']),
+                            subtitle:Text(message['messageBody']),
+                            trailing:Text(formattedDate) ,
+                          ),
+                        ),
                       );
                     },
                   );

@@ -56,7 +56,7 @@ class _PasswordResetState extends State<PasswordReset> {
               ElevatedButton(
                   onPressed: () async {
                     if (formkey.currentState!.validate()) {
-                      authservice.sendPasswordResetEmail(emailController.text);
+                      authservice.sendPasswordResetEmail(emailController.text,context);
                       _showAlertDialog();
                     }
                   },

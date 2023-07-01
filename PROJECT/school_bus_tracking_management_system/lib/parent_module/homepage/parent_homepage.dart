@@ -80,9 +80,11 @@ class _HomepageState extends State<Homepage> {
               ),
               InkWell(
                   onTap: () {
-                    authservice.signOut();
-                     Navigator.of(context)
-                         .pushReplacement(MaterialPageRoute(builder: ((_) => LoginPage())));
+                                        _showAlertDialog();
+
+                   // authservice.signOut();
+                    //  Navigator.of(context)
+                    //      .pushReplacement(MaterialPageRoute(builder: ((_) => LoginPage())));
                   },
                   child: Text("Logout")),
             ],
@@ -108,6 +110,42 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
      
+    );
+  }
+
+   Future<void> _showAlertDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          // <-- SEE HERE
+          title: const Text('Logout'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Are you sure want to logout?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                authservice.signOut();
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: ((_) => LoginPage())));
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -19,67 +19,66 @@ class _DriverEmergencyState extends State<DriverEmergency> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:Colors.grey[200] ,
         body: Padding(
-      padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
-      child: Form(
-          child: Column(children: [
-        //dropdown list widget to contain the options
-
-        Row(
-          children: [
-            Text("Emergency:", style: TextStyle(fontSize: 23)),
-            SizedBox(width: 15),
-            DropdownButton<String>(
-              // Step 3.
-              value: dropdownValue,
-              // Step 4.
-              items: <String>['Heavy Traffic', 'Car Breakdown', 'Delay']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownValue = newValue!;
-                });
-              },
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        SizedBox(
-          width: 300, // <-- TextField width
-          height: 127, // <-- TextField height
-          child: TextField(
-            controller: descriptionController,
-            maxLines: null,
-            expands: true,
-            keyboardType: TextInputType.multiline,
-            decoration:
-                InputDecoration(filled: true, hintText: 'Add more Description'),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      child: SingleChildScrollView(
+        child: Form(
+            child: Column(children: [
+          //dropdown list widget to contain the options
+      
+          Text("State Emergency:", style: TextStyle(fontSize: 23)),
+          SizedBox(height: 19),
+          DropdownButton<String>(
+            // Step 3.
+            value: dropdownValue,
+            // Step 4.
+            items: <String>['Heavy Traffic', 'Car Breakdown', 'Delay']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(
+                  value,
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                dropdownValue = newValue!;
+              });
+            },
           ),
-        ),
-
-        SizedBox(
-          height: 15,
-        ),
-
-        SizedBox(
-          height: 45,
-          child: ElevatedButton(
-              onPressed: () {
-                _showAlertDialog();
-              },
-              child: Text("Declare emergency")),
-        )
-      ])),
+          SizedBox(
+            height: 15,
+          ),
+          SizedBox(
+            width: 300, // <-- TextField width
+            height: 150, // <-- TextField height
+            child: TextField(
+              controller: descriptionController,
+              maxLines: null,
+              expands: true,
+              keyboardType: TextInputType.multiline,
+              decoration:
+                  InputDecoration(filled: true, hintText: 'Add more Description'),
+            ),
+          ),
+      
+          SizedBox(
+            height: 19,
+          ),
+      
+          SizedBox(
+            height: 37,
+            child: ElevatedButton(
+                onPressed: () {
+                  _showAlertDialog();
+                },
+                child: Text("Declare emergency")),
+          )
+        ])),
+      ),
     ));
   }
 

@@ -44,6 +44,9 @@ dependencies:
   google_maps_flutter: ^2.2.6
   permission_handler: ^10.2.0
   firebase_database: ^10.2.3
+  http: ^0.13.1
+  intl: ^0.18.1
+  flutter_polyline_points: ^1.0.0
 
 dev_dependencies:
   flutter_test:

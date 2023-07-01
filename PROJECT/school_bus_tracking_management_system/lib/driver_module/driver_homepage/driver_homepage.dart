@@ -42,7 +42,7 @@ class _DriverHomepageState extends State<DriverHomepage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("School bus Tracker"),
-        centerTitle: true,
+        //centerTitle: true,
       ),
       drawer: Drawer(
         width: 240,

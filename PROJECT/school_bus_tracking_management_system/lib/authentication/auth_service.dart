@@ -28,34 +28,63 @@ class AuthService {
   }
 
 //METHOD TO SIGNIN A USER WITH EMAIL AND PASSWORD
-  Future<User?> signInWithEmailAndPassword(
-      BuildContext context, String email, String password) async {
-    final credential = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
 
-    currentUserUid = credential.user!.uid;
 
-    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+Future<User?> signInWithEmailAndPassword(
+    BuildContext context, String email, String password) async {
+  try {
+    final credential = await auth.FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
+
+    final currentUserUid = credential.user!.uid;
+
+    final snapshot = await FirebaseFirestore.instance
         .collection('userRecords')
         .doc(currentUserUid)
         .get();
-    String userRole = snapshot['role'];
+    final userRole = snapshot['role'];
+
     if (userRole == 'parent') {
       final PermissionStatus status = await Permission.location.request();
       if (status.isGranted) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: ((_) => Homepage())));
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => Homepage()),
+        );
+      } else {
+        throw Exception('Location permission not granted');
       }
     } else if (userRole == 'driver') {
       final PermissionStatus status = await Permission.location.request();
       if (status.isGranted) {
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: ((_) => DriverHomepage())));
+          MaterialPageRoute(builder: (_) => DriverHomepage()),
+        );
+      } else {
+        throw Exception('Location permission not granted');
       }
     }
 
     return _userFromFirebase(credential.user);
+  } catch (e) {
+    // Handle any exceptions here
+    print('Sign in failed: $e');
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Sign In Failed'),
+        content: const Text('An error occurred while signing in. Please try again.'),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+    return null;
   }
+}
+
 
 //METHOD TO SEND EMERGENCIES
   void SendEmergency(String dropdownValue, String description) {
@@ -110,28 +139,78 @@ class AuthService {
 
 //CHANGE PASSWORD
 
-  Future<void> changePassword(String newPassword) async {
-    auth.User? user = auth.FirebaseAuth.instance.currentUser;
+
+Future<void> changePassword(String newPassword, BuildContext context) async {
+  try {
+    final user = auth.FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      try {
-        await user.updatePassword(newPassword);
-        print('Password changed successfully');
-      } catch (e) {
-        print('Failed to change password: $e');
-      }
+      await user.updatePassword(newPassword);
+      print('Password changed successfully');
+    } else {
+      throw Exception('User not found');
     }
+  } catch (e) {
+    print('Failed to change password: $e');
+    // Show error dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('Failed to change password: $e'),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
+}
+
 
 //forgot password
-  void sendPasswordResetEmail(String email) async {
-    try {
-      await auth.FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      // print('Password reset email sent');
-    } catch (e) {
-      //  print('Failed to send password reset email: $e');
-    }
+
+void sendPasswordResetEmail(String email, BuildContext context) async {
+  try {
+    await auth.FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    // print('Password reset email sent');
+  } catch (e) {
+    print('Failed to send password reset email: $e');
+    // Show error dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('Failed to send password reset email: $e'),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
+}
+
+  // void sendPasswordResetEmail(String email) async {
+  //   try {
+  //     await auth.FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  //     // print('Password reset email sent');
+  //   } catch (e) {
+  //     //  print('Failed to send password reset email: $e');
+  //   }
+  // }
 
 //METHOD TO LOGOUT
   Future<void> signOut() async {
