@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:school_bus_tracking_management_system_admin_module/authentication/usermodal.dart';
 
 import '../user_management/database.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 class AuthService with ChangeNotifier {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
@@ -94,6 +96,9 @@ class AuthService with ChangeNotifier {
     return _userFromFirebase(credential.user);
   }
 
+
+
+
 //Function to register driver into the system
 
   Future<User?> createDriverWithEmailAndPassword({
@@ -111,6 +116,8 @@ class AuthService with ChangeNotifier {
         password: password,
       );
 
+
+
       await UserDatabaseService(uid: credential.user!.uid).createDriverRecord(
         busAssigned: busAssigned,
         contact: contact,
@@ -120,6 +127,8 @@ class AuthService with ChangeNotifier {
         licenseNo: licenseNo,
         password: password,
       );
+
+    await credential.user!.sendEmailVerification();
 
       return _userFromFirebase(credential.user);
     } catch (error) {

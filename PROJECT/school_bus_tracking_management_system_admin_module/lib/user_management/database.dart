@@ -51,6 +51,8 @@ return await userRecords.doc(uid).collection('students').add({
       required String email,
       required String password,
       required String busAssigned}) async {
+
+        
     return await userRecords.doc(uid).set({
       'firstName': firstName,
       'lastName': lastName,

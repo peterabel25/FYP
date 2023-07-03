@@ -19,7 +19,7 @@ class _BusInfoState extends State<BusInfo> {
     UserData userdataprovider = Provider.of<UserData>(context);
 
     return Scaffold(
-      backgroundColor:Colors.grey[300] ,
+        backgroundColor: Colors.grey[300],
         body: Padding(
             padding: const EdgeInsets.fromLTRB(8, 20, 8, 30),
             child: Card(
@@ -41,125 +41,117 @@ class _BusInfoState extends State<BusInfo> {
                     }
                     Map<String, dynamic> data =
                         snapshot.data!.data() as Map<String, dynamic>;
-            
-                        GeoPoint location = data['location'];
-                       double latitude = location.latitude;
-                       double longitude = location.longitude;
-            
+
+                    GeoPoint location = data['location'];
+                    double latitude = location.latitude;
+                    double longitude = location.longitude;
+
                     // Use the data to build your widget
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                       child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: AssetImage("assets/bus.jpeg"),
-                        radius: 75,
-                      ),
-                      SizedBox(
-                        height: 18,
-                      ),
-                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(
-                            "Bus Number:",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                          CircleAvatar(
+                            backgroundImage: AssetImage("assets/bus.jpeg"),
+                            radius: 60,
                           ),
                           SizedBox(
-                            width: 10,
+                            height: 10,
                           ),
-                          Text(
-                            "${userdataprovider.busNo}",
-                            style: TextStyle(fontSize: 17),
+                          Row(
+                            children: [
+                              Text(
+                                "Bus Number:",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "${userdataprovider.busNo}",
+                                style: TextStyle(fontSize: 17),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text("Plate No:",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(data['plateNo'],
+                                  style: TextStyle(fontSize: 17)),
+                            ],
+                          ),
+                          StreamBuilder<DocumentSnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection("userRecords")
+                                .where('busAssigned',
+                                    isEqualTo: userdataprovider.busNo)
+                                .where('role', isEqualTo: 'driver')
+                                .snapshots()
+                                .map((snapshot) => snapshot.docs.first),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+
+                              final data =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+
+                              // generate a widget to store the data
+                              return Column(
+                                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Driver's Name:",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        //'PETER',
+                                        data['firstName'] +
+                                            " " +
+                                            data['lastName'],
+                                        style: TextStyle(fontSize: 17),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(height: 18),
+                                  Row(
+                                    children: [
+                                      
+                                      Text("Contacts:",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold)),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+
+                                      Text(
+                                          //'56784903',
+                                          data['contact'],
+                                          style: TextStyle(fontSize: 17))
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
                           )
                         ],
-                      ),
-                      Row(
-                        children: [
-                          Text("Plate No:",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(data['plateNo'] ,
-                              style: TextStyle(fontSize: 17)),
-            
-                              
-                        ],
-                      ),
-                      
-            
-                      StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("userRecords")
-                  .where('busAssigned', isEqualTo: userdataprovider.busNo)
-                  .where('role', isEqualTo: 'driver')
-                  .snapshots()
-                  .map((snapshot) => snapshot.docs.first),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                }
-            
-                final data = snapshot.data!.data() as Map<String, dynamic>;
-            
-                // generate a widget to store the data
-                return Column(
-                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      children: [
-                    Text(
-                      "Driver's Name:",
-                      style: TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      //'PETER',
-                      data['firstName'] +"  "+
-                          data['lastName'],
-                      style: TextStyle(fontSize: 17),
-                    )
-                      ],
-                    ),
-                    SizedBox(height:18
-                    ),
-                    Row(
-                      children: [
-                         Icon(Icons.phone),
-                         SizedBox(
-                      width: 7,
-                    ),
-                    Text("Contacts:",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold)),
-                    SizedBox(
-                      width: 10,
-                    ),
-                   
-                      
-                    Text(
-                        //'56784903',
-                        data['contact'],
-                        style: TextStyle(fontSize: 17))
-                      ],
-                    ),
-                  ],
-                );
-                
-              },
-                      )
-            
-            
-            
-            
-                      
-                    ],
                       ),
                     );
                   }),
