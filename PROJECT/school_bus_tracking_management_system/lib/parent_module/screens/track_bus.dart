@@ -114,13 +114,7 @@
 // //   }
 // // }
 
-
-
-
-
-
-
-// // draws a polyline btn specified points 
+// // draws a polyline btn specified points
 
 // // import 'package:flutter/material.dart';
 // // import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -302,8 +296,6 @@
 
 // //   // _getPolyline(destination:LatLng(latitude, longitude));
 
-
-
 // // Future<void> _getPolyline({LatLng? destination, LatLng? origin}) async {
 // //   try {
 // //     auth.User? user = auth.FirebaseAuth.instance.currentUser;
@@ -417,9 +409,6 @@
 // //     super.dispose();
 // //   }
 // // }
-
-
-
 
 // //fetch point
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -558,7 +547,6 @@
 //     print('Error fetching pickup point: $e');
 //   }
 // }
- 
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -595,9 +583,6 @@
 //     super.dispose();
 //   }
 // }
-
-
-
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -647,6 +632,7 @@ class _TrackBusState extends State<TrackBus> {
               markers.removeWhere((marker) => marker.markerId.value == 'bus');
               markers.add(
                 Marker(
+                  infoWindow: InfoWindow(title: "bus"),
                   markerId: MarkerId('bus'),
                   position: LatLng(latitude, longitude),
                   icon: BitmapDescriptor.defaultMarkerWithHue(
@@ -680,13 +666,25 @@ class _TrackBusState extends State<TrackBus> {
         .snapshots()
         .map((QuerySnapshot snapshot) {
       return snapshot.docs
-          .map((doc) => doc['pickuppoint'] as GeoPoint?)
-          .where((geoPoint) => geoPoint != null)
-          .map((geoPoint) => Marker(
+          .map((doc) {
+            final geoPoint = doc['pickuppoint'] as GeoPoint?;
+            final isAbsent = doc['isAbsent'] as bool?;
+            if (geoPoint != null && isAbsent != null) {
+              return Marker(
                 markerId: MarkerId(geoPoint.toString()),
-                position: LatLng(geoPoint!.latitude, geoPoint.longitude),
-                icon: BitmapDescriptor.defaultMarker,
-              ))
+                infoWindow: InfoWindow(title: "Pickuppoint"),
+                position: LatLng(geoPoint.latitude, geoPoint.longitude),
+                icon: isAbsent
+                    ? BitmapDescriptor.defaultMarkerWithHue(
+                        BitmapDescriptor.hueRed)
+                    : BitmapDescriptor.defaultMarkerWithHue(
+                        BitmapDescriptor.hueBlue),
+              );
+            } else {
+              return null;
+            }
+          })
+          .whereType<Marker>()
           .toSet();
     });
   }
@@ -725,7 +723,7 @@ class _TrackBusState extends State<TrackBus> {
             PolylineId id = PolylineId("poly");
             Polyline polyline = Polyline(
               polylineId: id,
-              width:2,
+              width: 2,
               color: Colors.red,
               points: polylineCoordinates,
             );
