@@ -39,21 +39,19 @@ class _DriverHomepageState extends State<DriverHomepage> {
   @override
   Widget build(BuildContext context) {
     DriverData driverdataprovider = Provider.of<DriverData>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("School bus Tracker"),
-        //centerTitle: true,
-      ),
-      drawer: Drawer(
-        width: 240,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 50),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("School bus Tracker"),
+        ),
+        drawer: Drawer(
+          width: 240,
           child: Column(
             children: [
               UserAccountsDrawerHeader(
                   currentAccountPicture: CircleAvatar(
                     radius: 45,
-                    backgroundImage: AssetImage("assets/schoolbus.png"),
+                    backgroundImage: AssetImage("assets/userprofile.png"),
                   ),
                   accountName: Text("${driverdataprovider.firstName}" +
                       "${driverdataprovider.lastName}"),
@@ -66,7 +64,35 @@ class _DriverHomepageState extends State<DriverHomepage> {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: ((_) => DriverProfile())));
                   },
-                  child: Text(" Profile Settings")),
+                  child: Row(
+                      children: [
+                        SizedBox(width: 5),
+                        Icon(Icons.settings),
+                        SizedBox(width: 5),
+                        Text("Profile Settings", style: TextStyle(fontSize: 18)),
+                       // Divider()
+                      ],
+                    )
+                  ),
+                  SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: ((_) => DriverProfile())));
+                  },
+                  child: Row(
+                      children: [
+                        SizedBox(width: 5),
+                        Icon(Icons.help),
+                        SizedBox(width: 5),
+                        Text("Help & Support", style: TextStyle(fontSize: 18)),
+                       // Divider()
+                      ],
+                    )
+                  ),
+              
               SizedBox(
                 height: 20,
               ),
@@ -74,24 +100,35 @@ class _DriverHomepageState extends State<DriverHomepage> {
                   onTap: () {
                     _showAlertDialog();
                   },
-                  child: Text("Logout")),
+                  //child: Text("Logout",style:TextStyle(fontSize:18 ))
+                  child: Row(
+                      children: [
+                        SizedBox(width: 5),
+                        Icon(Icons.logout),
+                        SizedBox(width: 5),
+                        Text("Logout", style: TextStyle(fontSize: 18)),
+                       // Divider()
+                      ],
+                    )
+                  
+                  ),
             ],
           ),
         ),
-      ),
-      body: _pages[_selectedTab],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedTab,
-        onTap: (index) => _changeTab(index),
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.telegram), label: "View Route"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bus_alert), label: "Emergency"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: "Notifications"),
-        ],
+        body: _pages[_selectedTab],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedTab,
+          onTap: (index) => _changeTab(index),
+          unselectedItemColor: Colors.grey,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.telegram), label: "View Route"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.bus_alert), label: "Emergency"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.notifications), label: "Notifications"),
+          ],
+        ),
       ),
     );
   }

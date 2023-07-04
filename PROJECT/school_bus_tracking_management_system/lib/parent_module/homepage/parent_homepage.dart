@@ -30,12 +30,7 @@ class _HomepageState extends State<Homepage> {
   AuthService authservice = AuthService();
 
   int _selectedTab = 0;
-  List _pages = [
-    TrackBus(),
-    BusInfo(),
-    EmergencyPage(),
-    NotificationsPage()
-  ];
+  List _pages = [TrackBus(), BusInfo(), EmergencyPage(), NotificationsPage()];
 
   _changeTab(int index) {
     setState(() {
@@ -46,74 +41,104 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     UserData userdataprovider = Provider.of<UserData>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("School bus Tracker"),
-        centerTitle: true,
-        
-      ),
-      drawer: Drawer(
-        backgroundColor: Colors.grey[300],
-        width: 240,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 50),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("School bus Tracker"),
+          //centerTitle: true,
+        ),
+        drawer: Drawer(
+          backgroundColor: Colors.grey[300],
+          width: 240,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-               UserAccountsDrawerHeader(currentAccountPicture:CircleAvatar(radius: 45, backgroundImage:AssetImage("assets/childandparent.jpg") ,) ,
-                // ignore: prefer_adjacent_string_concatenation
-                accountName: Text("${userdataprovider.firstName}" + " " + "${userdataprovider.lastName}"), 
-                accountEmail: Text("${userdataprovider.email }")),
-             
-              SizedBox(
-                height: 40,
-              ),
-             
-              InkWell(
-                onTap:(){
-                   Navigator.of(context)
-                         .push(MaterialPageRoute(builder: ((_) => ParentProfile())));
-                } ,
-                child: Text("Profile Settings")),
+              UserAccountsDrawerHeader(
+                  currentAccountPicture: CircleAvatar(
+                    radius: 45,
+                    backgroundImage: AssetImage("assets/userprofile.png"),
+                  ),
+                  // ignore: prefer_adjacent_string_concatenation
+                  accountName: Text("${userdataprovider.firstName}" +
+                      " " +
+                      "${userdataprovider.lastName}"),
+                  accountEmail: Text("${userdataprovider.email}")),
               SizedBox(
                 height: 20,
               ),
               InkWell(
                   onTap: () {
-                                        _showAlertDialog();
-
-                   // authservice.signOut();
-                    //  Navigator.of(context)
-                    //      .pushReplacement(MaterialPageRoute(builder: ((_) => LoginPage())));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: ((_) => ParentProfile())));
                   },
-                  child: Text("Logout")),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 5),
+                      Icon(Icons.settings),
+                      SizedBox(width: 5),
+                      Text("Profile Settings", style: TextStyle(fontSize: 18)),
+                    ],
+                  )
+                  ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: ((_) => ParentProfile())));
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: 5),
+                      Icon(Icons.help),
+                      SizedBox(width: 5),
+                      Text("Help & Support", style: TextStyle(fontSize: 18)),
+                    ],
+                  )
+                  ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                  onTap: () {
+                    _showAlertDialog();
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(width: 5),
+                      Icon(Icons.logout),
+                      SizedBox(width: 5),
+                      Text("Logout", style: TextStyle(fontSize: 18)),
+                    ],
+                  )
+                  ),
             ],
           ),
         ),
+        body: _pages[_selectedTab],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedTab,
+          onTap: (index) => _changeTab(index),
+          unselectedItemColor: const Color.fromARGB(255, 127, 126, 126),
+          //unselectedLabelStyle:TextStyle(color:Colors.black ) ,
+          selectedItemColor: Colors.deepPurple,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.telegram), label: "Track bus"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.info_outline), label: "Bus Info"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.bus_alert), label: "Emergency"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.notifications), label: "Notifications"),
+          ],
+        ),
       ),
-      body: _pages[_selectedTab],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedTab,
-        onTap: (index) => _changeTab(index),
-        unselectedItemColor: const Color.fromARGB(255, 127, 126, 126),
-        //unselectedLabelStyle:TextStyle(color:Colors.black ) ,
-        selectedItemColor:Colors.deepPurple ,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.telegram), label: "Track bus"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.info_outline), label: "Bus Info"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bus_alert), label: "Emergency"),
-              BottomNavigationBarItem(
-              icon: Icon(Icons.notifications), label: "Notifications"),
-        ],
-      ),
-     
     );
   }
 
-   Future<void> _showAlertDialog() async {
+  Future<void> _showAlertDialog() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!

@@ -23,6 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   final emailValidator = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
+    
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Image.asset("assets/childandparent.jpg",height:150, ),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20, top: 50),
+              padding: const EdgeInsets.only(left: 30.0, right: 30, top: 50),
               child: Form(
                   child: Column(
                 children: [
@@ -90,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                         elevation: 3,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32.0)),
-                        minimumSize: Size(160, 43),
+                        minimumSize: Size(160, 48),
                       ),
                       child: Text(
                         "Login",
