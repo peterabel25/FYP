@@ -29,7 +29,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   TextEditingController bussAssignedController = TextEditingController();
   TextEditingController studentfnameController = TextEditingController();
   TextEditingController studentlnameController = TextEditingController();
- // TextEditingController studentclassController = TextEditingController();
+  // TextEditingController studentclassController = TextEditingController();
   TextEditingController residenceController = TextEditingController();
   TextEditingController pickuppointController = TextEditingController();
   TextEditingController busassignedController = TextEditingController();
@@ -78,30 +78,29 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                       ),
                     ),
                     SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == '') return "Last name is required";
-                      if (!nameValidator.hasMatch(value!)) {
-                        return "name not valid";
-                      }
-                      return null;
-                    },
-                    controller: lnameController,
-                    decoration: InputDecoration(
-                        label: Text("Last name"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        hintText: "Last name"),
-                    // decoration: InputDecoration(hintText: "Last name"),
-                  ),
-                ),
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == '') return "Last name is required";
+                          if (!nameValidator.hasMatch(value!)) {
+                            return "name not valid";
+                          }
+                          return null;
+                        },
+                        controller: lnameController,
+                        decoration: InputDecoration(
+                            label: Text("Last name"),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            hintText: "Last name"),
+                        // decoration: InputDecoration(hintText: "Last name"),
+                      ),
+                    ),
                   ],
                 ),
-                
                 SizedBox(
                   height: 15,
                 ),
@@ -178,40 +177,40 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                 height: 15,
               ),
               DropdownButtonFormField<String>(
-  // Step 3.
-  value: classdropdownValue,
-  // Step 4.
-  items: <String>[
-    'Nursery',
-    'Grade 1',
-    'Grade 2',
-    'Grade 3',
-    'Grade 4',
-    'Grade 5',
-    'Grade 6',
-    'Grade 7',
-  ].map<DropdownMenuItem<String>>((String value) {
-    return DropdownMenuItem<String>(
-      value: value,
-      child: Text(
-        value,
-        style: TextStyle(fontSize: 18),
-      ),
-    );
-  }).toList(),
-  onChanged: (String? newValue) {
-    setState(() {
-      classdropdownValue = newValue!;
-    });
-  },
-  decoration: InputDecoration(
-    labelText: "Student's class",
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10.0),
-    ),
-    hintText: "Student's Class",
-  ),
-)
+                // Step 3.
+                value: classdropdownValue,
+                // Step 4.
+                items: <String>[
+                  'Nursery',
+                  'Grade 1',
+                  'Grade 2',
+                  'Grade 3',
+                  'Grade 4',
+                  'Grade 5',
+                  'Grade 6',
+                  'Grade 7',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    classdropdownValue = newValue!;
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: "Student's class",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  hintText: "Student's Class",
+                ),
+              )
             ],
           ),
         ),
@@ -244,7 +243,6 @@ class _StudentRegistrationState extends State<StudentRegistration> {
               SizedBox(
                 height: 15,
               ),
-
               DropdownButtonFormField<String>(
                 value: selectedBus,
                 onChanged: (String? newValue) {
@@ -272,7 +270,6 @@ class _StudentRegistrationState extends State<StudentRegistration> {
       ),
     ];
   }
-
 
   String classdropdownValue = 'Nursery';
 
@@ -305,10 +302,9 @@ class _StudentRegistrationState extends State<StudentRegistration> {
     return Scaffold(
       appBar: AppBar(
           // backgroundColor:Colors.grey[200],
-          centerTitle: true, title: Text("USER REGISTRATION",style:TextStyle(
-            fontWeight:FontWeight.bold,fontSize:20
-          ))),
-      
+          centerTitle: true,
+          title: Text("USER REGISTRATION",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Center(
@@ -323,40 +319,42 @@ class _StudentRegistrationState extends State<StudentRegistration> {
             onStepContinue: () {
               bool isLastStep = (currentStep == getSteps().length - 1);
               if (isLastStep) {
-                authService.createParentWithEmailAndPassword(
-                  firstName: fnameController.text,
-                  lastName: lnameController.text,
-                  contact: contactController.text,
-                  email: emailController.text,
-                  password: contactController.text,
-                  studentFname: studentfnameController.text,
-                  studentClass: classdropdownValue,
-                  residence: residenceController.text,
-                  busAssigned:
-                      selectedBus, // Use selectedBus instead of busassignedController.text
-                );
+                if (formKeys[currentStep].currentState!.validate()) {
+                  authService.createParentWithEmailAndPassword(
+                    firstName: fnameController.text,
+                    lastName: lnameController.text,
+                    contact: contactController.text,
+                    email: emailController.text,
+                    password: contactController.text,
+                    studentFname: studentfnameController.text,
+                    studentClass: classdropdownValue,
+                    residence: residenceController.text,
+                    busAssigned:
+                        selectedBus, // Use selectedBus instead of busassignedController.text
+                  );
 
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text('User Registered')));
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('User Registered')));
 
-                emailController.clear();
-                fnameController.clear();
-                lnameController.clear();
-                contactController.clear();
-                licensenoController.clear();
-                bussAssignedController.clear();
-                studentfnameController.clear();
-                studentlnameController.clear();
-              //  studentclassController.clear();
-                residenceController.clear();
-                pickuppointController.clear();
-                busassignedController.clear();
+                  emailController.clear();
+                  fnameController.clear();
+                  lnameController.clear();
+                  contactController.clear();
+                  licensenoController.clear();
+                  bussAssignedController.clear();
+                  studentfnameController.clear();
+                  studentlnameController.clear();
+                  //  studentclassController.clear();
+                  residenceController.clear();
+                  pickuppointController.clear();
+                  busassignedController.clear();
 
-                setState(() {
-                  currentStep = 0;
-                });
+                  setState(() {
+                    currentStep = 0;
+                  });
 
-                //Do something with this information
+                  //Do something with this information
+                }
               } else {
                 if (formKeys[currentStep].currentState!.validate()) {
                   setState(() {

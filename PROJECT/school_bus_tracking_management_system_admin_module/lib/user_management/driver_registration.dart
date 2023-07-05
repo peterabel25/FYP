@@ -26,8 +26,7 @@ class _DriverRegistrationState extends State<DriverRegistration> {
   final emailValidator = RegExp(
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
-
-  final licenseValidator = RegExp(r"^[A-Z](?:\d[- ]*){14}$");
+  final licenseValidator = RegExp(r'^[1-9]\d{9}$');
   final phoneNumberValidator =
       RegExp(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$');
 
@@ -79,10 +78,9 @@ class _DriverRegistrationState extends State<DriverRegistration> {
     return Scaffold(
       appBar: AppBar(
           // backgroundColor:Colors.grey[200],
-          centerTitle: true, title: Text("DRIVER REGISTRATION",style:TextStyle(
-            fontWeight:FontWeight.bold,fontSize:20
-          ))),
-      
+          centerTitle: true,
+          title: Text("DRIVER REGISTRATION",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
       body: SingleChildScrollView(
         child: Center(
           child: Form(
@@ -140,9 +138,9 @@ class _DriverRegistrationState extends State<DriverRegistration> {
                     TextFormField(
                         validator: (value) {
                           if (value == '') return "License Number is required";
-                          // if (!licenseValidator.hasMatch(value!)) {
-                          // return "license number not valid";
-                          // }
+                          if (!licenseValidator.hasMatch(value!)) {
+                            return "license number not valid";
+                          }
 
                           return null;
                         },

@@ -8,6 +8,8 @@ import 'package:school_bus_tracking_management_system_admin_module/authenticatio
 import '../user_management/database.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:flutter/material.dart';
+
 
 class AuthService with ChangeNotifier {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
@@ -57,25 +59,11 @@ class AuthService with ChangeNotifier {
 
   Future<User?> signInWithEmailAndPassword(
       String email, String password) async {
-    try {
       final credential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       return _userFromFirebase(credential.user);
-    } catch (e) {
-      // Handle specific error cases
-      if (e is auth.FirebaseAuthException) {
-        if (e.code == 'user-not-found') {
-          loginError = e.code;
-        } else if (e.code == 'wrong-password') {
-          loginError = e.code;
-          print('Wrong password');
-        }
-      }
-
-      return null; // Return null or throw an exception based on your preference
-    }
     notifyListeners();
   }
 

@@ -113,29 +113,11 @@ class _LoginPageState extends State<LoginPage> {
                                         adminprovider.adminEmail =
                                             emailController.text;
                                       } catch (error) {
-                                        // Display the error message
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title:
-                                                  Text('Authentication Error'),
-                                              content: Text(error.toString()),
-                                              actions: [
-                                                TextButton(
-                                                  child: Text('OK'),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
+                                        
+                                        showAlertDialog(context);
+                                        
                                       }
                                     }
-
-                                    
                                   },
                                   child: Text("Login",
                                       style: TextStyle(
@@ -161,5 +143,75 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ));
+  }
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Authentication Error'),
+          content: Text("Authentication failed"),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // String newPassword = '';
+
+    // final formKey = GlobalKey<FormState>();
+
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     return AlertDialog(
+    //       title: Text('Change Password'),
+    //       content: Form(
+    //         key: formKey,
+    //         child: TextFormField(
+    //           obscureText: true,
+    //           onChanged: (value) {
+    //             newPassword = value;
+    //           },
+    //           decoration: InputDecoration(
+    //             labelText: 'New Password',
+    //           ),
+    //           validator: (value) {
+    //             if (value == null || value.isEmpty) {
+    //               return 'Please enter a new password';
+    //             }
+    //             return null;
+    //           },
+    //         ),
+    //       ),
+    //       actions: [
+    //         ElevatedButton(
+    //           onPressed: () {
+    //             Navigator.of(context).pop();
+    //           },
+    //           child: Text('Close'),
+    //         ),
+    //         ElevatedButton(
+    //           onPressed: () async {
+    //             if (formKey.currentState!.validate() == true) {
+    //               await authservice.changePassword(newPassword,context);
+    //               Navigator.of(context).pop();
+
+    //               print(newPassword);
+    //             }
+    //           },
+    //           child: Text('Update'),
+    //         ),
+    //       ],
+    //     );
+    //   },
+    // );
   }
 }

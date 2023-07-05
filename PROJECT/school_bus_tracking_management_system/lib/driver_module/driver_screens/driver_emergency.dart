@@ -15,7 +15,7 @@ class _DriverEmergencyState extends State<DriverEmergency> {
   String dropdownValue = 'Heavy Traffic';
   AuthService authservice = AuthService();
   TextEditingController descriptionController = TextEditingController();
-  final descriptionvalidator = RegExp(r'^[a-zA-Z ]+$');
+  final descriptionValidator = RegExp(r'^[a-zA-Z ]+$');
   final formkey = GlobalKey<FormState>();
 
   @override
@@ -69,7 +69,7 @@ class _DriverEmergencyState extends State<DriverEmergency> {
                           validator: (value) {
                             if (value == "") return "description is required";
 
-                            if (!descriptionvalidator.hasMatch(value!)) {
+                            if (!descriptionValidator.hasMatch(value!)) {
                               return "description not valid";
                             }
                             return null;

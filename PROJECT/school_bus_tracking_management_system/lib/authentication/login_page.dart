@@ -75,7 +75,6 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                         hintText: "Password",
                        prefixIcon: Icon(Icons.lock),
-                        // suffixIcon: Icon(Icons.remove_red_eye_rounded),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         )),
