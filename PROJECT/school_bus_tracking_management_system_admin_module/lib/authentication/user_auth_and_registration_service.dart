@@ -43,7 +43,7 @@ class AuthService with ChangeNotifier {
       print('Failed to delete user from Firebase Authentication: $e');
     }
   }
-
+//DELETE USER RECORD
   Future<void> deleteUserData(String userId) async {
     try {
       await FirebaseFirestore.instance
@@ -56,7 +56,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
-
+//LOGIN
   Future<User?> signInWithEmailAndPassword(
       String email, String password) async {
       final credential = await _firebaseAuth.signInWithEmailAndPassword(
